@@ -8,7 +8,7 @@
  * The purpose of addressing modes is to determine how to get, and return, the
  * operand of an operation. So for example in the case of Accumulator, the
  * operand is the Accumulator. In the case of Immediate addressing, the operand
- * is 8 bit value that the PC is pointing to itself.
+ * is the 8 bit value that the PC is pointing to.
  *
  * */
 

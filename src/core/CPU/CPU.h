@@ -111,6 +111,8 @@ public:
 
   // A - C
 
+  void ADC();
+
   // D - L
 
   // N - T
