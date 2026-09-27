@@ -1,10 +1,10 @@
-1. Learn more about FTXUI as its my first time working on it 
-2. Build FTXUI example project
-3. Rebuild 6502 cpu core 
-4. Test output against nestest 
-5. build out ppu 
-6. build out mappers 
 
-Will finish the rest of the plan once I get around to actually coding it 
+1. Create basic UI with a button that will open a rom, and a window that displays the cart info, status of the CPU registers and running instructions.
+2. Implement cartridge, test parsing rom data.
+3. Wire up to basic UI.
+4. Build out CPU core, wire it up to UI.
+
+
+Right now this is the short term plan.
 
 
