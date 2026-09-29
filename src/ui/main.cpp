@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ftxui/component/component_options.hpp>
 #include <ftxui/dom/node.hpp>
+#include <i18ncpp.h>
 #include <iostream>
 
 #include <ftxui/component/component.hpp>
