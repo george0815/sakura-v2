@@ -17,12 +17,12 @@ UI
 --------
 - Need to do research on i18n, don't want to have to replace strings after building the UI [DONE: Using i18ncpp]
 - Need to decide how to structure the UI, what components to use 
-- Need to decide what to do about the debugging information that I plan to include (Have a section in the TUI or render it in the SDL window?)
+- Need to decide what to do about the debugging information that I plan to include (Have a section in the TUI or render it in the SDL window?) [DONE:  Will have a separate debugging screen then switch to it on rom load, then switch back to the normal UI when the rom is stopped]
 
 CURRENT UI PLAN 
 -------------------- 
 1. Decide on i18n, how to switch strings based on the culture/lang setting [DONE: Using i18ncpp]
-2. Once, decided, start implementing the resource string (assuming whatever solution I implement uses resource strings)
+2. Once, decided, start implementing the resource string (assuming whatever solution I implement uses resource strings) [DONE]
 3. Once i18n is setup, plan out the UI, boot up sakura v1 and plan the layout, decide the debugging question above 
 4. Once everything is decided, start implementing the basic layout 
 
