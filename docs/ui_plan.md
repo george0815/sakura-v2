@@ -21,9 +21,12 @@ OVERALL NOTES
 
 
 
-With that in mind I'm planning to have one screen, with two documents. One document will be the main UI, then when the user starts a run the screen will switch to a different document containing elements that display the state of the emulator/rom such as register values.
+With that in mind I'm planning to have one screen, with two major component. One component will be the main UI, then when the user starts a run the screen will switch to a different component containing elements that display the state of the emulator/rom such as register values.
 
 
+*******************************************************
+MAIN 
+*******************************************************
 
 =========================
 MAIN DOCUMENT
@@ -106,5 +109,71 @@ LOG
 
     - Container::Vertical 
         - Text 
+
+
+
+
+
+
+
+*******************************************************
+DEBUGGING SCREEN
+*******************************************************
+
+
+
+=========================
+MAIN LAYOUT
+=========================
+
+
+- Window 
+    - Container::Vertical 
+        - cpu state subcomponent
+        - instructions subcomponents
+
+=========================
+PPU STATE
+=========================
+
+
+- Window 
+    - Container::Vertical 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+
+
+
+=========================
+CPU STATE
+=========================
+
+
+- Window 
+    - Container::Vertical 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+        - Text 
+
+
+=========================
+INSTRUCTIONS
+=========================
+
+- Window 
+    - Container::Vertical
+
+
+
+
 
 
