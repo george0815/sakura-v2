@@ -5,11 +5,13 @@ OVERALL NOTES
 
 - ftxui::Dimension controls screen size
 
-- elements manage layout and are responsive to dimension changes
+- Elements manage layout and are responsive to dimension changes
 
-- will be able to handle the color dialogues fairly easily with the built in dropdown component, but since ftxui does not have a built in file dialog/browser, that may be tricky. 
+- Will be able to handle the color dialogues fairly easily with the built in dropdown component, but since ftxui does not have a built in file dialog/browser, that may be tricky. 
 
 - With FTXUI, it seems like the main hierarchy goes [Component -> Screen -> Loop]
+
+- In this plan, when I say "subcomponent" I basically mean a custom component comprised of other components
 
 - Remember to use Renderer to decorate 
 
@@ -40,7 +42,8 @@ MAIN DOCUMENT
         - Tab menu: vbox with border
             - menu component
             - exit button
-        - Tab container: Container::Tab with window (border with name)
+        - Tab container: Container::Tab 
+            - window (menu named passed as arg)
 
 
 
@@ -49,8 +52,7 @@ MAIN DOCUMENT
 ROMS
 =========================
 
-
-
+    - Table 
 
 
 
@@ -58,29 +60,51 @@ ROMS
 SAVES
 =========================
 
-
-
-
+    - Tab menu: Container::Vertical with border 
+    - Tab container: Container::Tab 
+        - Save menu subcomponent 
+            - Window 
+                - Table 
 
 
 =========================
 SETTINGS
 =========================
 
+    - Container::Vertical 
+        - Checkbox 
+        - Checkbox 
+        - Checkbox 
+        - Checkbox 
+        - TextInput subcomponent (hbox with text + input)
+        - TextInput subcomponent (hbox with text + input)
+        - TextInput subcomponent (hbox with text + input)
+        - TextInput subcomponent (hbox with text + input)
+        - TextInput subcomponent (hbox with text + input)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - ColorInput subcomponent (hbox with text + dropdown)
+        - Checkbox 
+        - Button 
+        
 
-
-
-
-  
 =========================
 CONTROLS
 =========================
+
+    - Container::Vertical
+        - Control setting subcomponents (text and button)
+        - Save button
 
 
 =========================
 LOG
 =========================
 
-
+    - Container::Vertical 
+        - Text 
 
 
