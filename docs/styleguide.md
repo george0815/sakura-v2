@@ -3,7 +3,7 @@
 - local variables are snake case
 - functions are pascal case
 - component folders are all caps
-- all other folders are lowercase 
+- all other folders are lowercase with underscores for spaces 
 - components filenames are all caps
 - all other filenames are all lowercase 
 

@@ -129,7 +129,9 @@ MAIN LAYOUT
 
 - Window 
     - Container::Vertical 
-        - cpu state subcomponent
+        - Container::Horizontal
+            - cpu state subcomponent
+            - ppu state subcomponent
         - instructions subcomponents
 
 =========================
