@@ -39,10 +39,10 @@ int main() {
   auto exitButton = Button("Exit", [&] { ExitScreen(screen); }, Style());
 
   int row = 0;
-  auto buttons = Container::Vertical(
+  auto tmpContainer = Container::Vertical(
       {Container::Horizontal({parseRomButton, exitButton}, &row) | flex});
 
-  auto component = Renderer(buttons, [&] {
+  auto component = Renderer(tmpContainer, [&] {
     return vbox({
         text("sakura-v2"),
         separator(),
@@ -80,7 +80,7 @@ int main() {
             }),
 
         }),
-        buttons->Render() | flex,
+        tmpContainer->Render() | flex,
     });
   });
 
