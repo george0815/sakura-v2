@@ -1,9 +1,9 @@
 - Hardware components are all caps (ex. CPU, PPU, BUS, etc)
-- class fields/variables are camel case
-- local variables are snake case
-- functions are pascal case
-- component folders are all caps
-- all other folders are lowercase with underscores for spaces 
-- components filenames are all caps
-- all other filenames are all lowercase 
+- Class fields/variables are camel case
+- Local variables are snake case
+- Functions, classes are pascal case
+- Component folders are all caps
+- All other folders are lowercase with underscores for spaces 
+- Hardware components filenames are all caps
+- All other filenames are all lowercase 
 
