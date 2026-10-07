@@ -41,7 +41,15 @@ FetchContent_Declare(i18ncpp
 )
 FetchContent_MakeAvailable(i18ncpp)
 
-add_executable(sakura-v2 ui/main.cpp)
+
+file(GLOB_RECURSE SRC CONFIGURE_DEPENDS
+
+  "core/*.cpp"
+  "ui/*.cpp"
+
+)
+
+add_executable(sakura-v2 ${SRC})
 target_include_directories(sakura-v2 PRIVATE ui PRIVATE core)
 
 target_link_libraries(sakura-v2

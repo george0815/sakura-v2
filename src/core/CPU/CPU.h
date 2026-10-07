@@ -15,6 +15,8 @@
 class CPU {
 
 public:
+  CPU();
+
   /*-------------------------
    * REGISTERS
    ------------------------*/
@@ -90,9 +92,7 @@ public:
    * INTERRUPT HANDLERS
    ------------------------*/
 
-  void NMI() {
-
-  };
+  void NMI();
 
   void IRQ() {
 
