@@ -9,3 +9,8 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;
+
+Component TopRow::TopRowComponent() {
+  return Container::Horizontal(
+      {AsciiBox(), InfoContainer(), ControlsContainer()});
+}

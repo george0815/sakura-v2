@@ -85,9 +85,7 @@ int main() {
     });
   */
 
-  TopRow *top_row = new TopRow();
-
-  screen.Loop(top_row->TopRowComponent);
+  screen.Loop(TopRow::TopRowComponent());
 
   return EXIT_SUCCESS;
 }

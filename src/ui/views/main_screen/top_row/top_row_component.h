@@ -5,19 +5,12 @@
 
 using namespace ftxui;
 
-class TopRow {
+namespace TopRow {
 
-public:
-  Component AsciiBox();
+Component AsciiBox();
 
-  Component InfoContainer();
+Component InfoContainer();
+Component ControlsContainer();
+Component TopRowComponent();
 
-  TopRow() {
-    TopRowComponent = Container::Horizontal(
-        {AsciiBox(), InfoContainer(), ControlsContainer()});
-  }
-
-  Component TopRowComponent;
-
-  Component ControlsContainer();
-};
+}; // namespace TopRow
