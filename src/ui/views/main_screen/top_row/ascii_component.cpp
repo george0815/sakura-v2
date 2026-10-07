@@ -5,6 +5,18 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
+/**
+ * TODO: SET DIMENSIONS
+ * TEXT COLOR
+ * SET ASCII
+ * COMMENTS
+ *
+ *
+ *
+ *
+ *
+ */
+
 using namespace ftxui;
 
 Component TopRow::AsciiBox() {

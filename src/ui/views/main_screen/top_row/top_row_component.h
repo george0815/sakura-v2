@@ -8,7 +8,6 @@ using namespace ftxui;
 namespace TopRow {
 
 Component AsciiBox();
-
 Component InfoContainer();
 Component ControlsContainer();
 Component TopRowComponent();

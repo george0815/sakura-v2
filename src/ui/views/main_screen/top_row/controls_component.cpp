@@ -7,6 +7,11 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
+/* TODO: PADDING
+ * SET COLOR
+ * COMMENTS
+ * GET VALUES FROM SETTINGS CONFIG / VARIABLES*/
+
 using namespace ftxui;
 
 Component TopRow::ControlsContainer() {
