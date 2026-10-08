@@ -32,7 +32,10 @@ int main() {
 
   CPU *cpu = new CPU();
 
-  ScreenInteractive screen = ScreenInteractive::TerminalOutput();
+  ScreenInteractive screen = ScreenInteractive::Fullscreen();
+
+  screen.CaptureMouse();
+  screen.Fullscreen();
   string value = "not changed";
 
   auto parseRomButton = Button("Parse rom", [&] { parseRom(value); }, Style());

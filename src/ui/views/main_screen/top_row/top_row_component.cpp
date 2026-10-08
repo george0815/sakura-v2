@@ -11,6 +11,13 @@
 using namespace ftxui;
 
 Component TopRow::TopRowComponent() {
-  return Container::Horizontal(
-      {AsciiBox(), InfoContainer(), ControlsContainer()});
+  return Container::Horizontal({
+
+             AsciiBox(), Renderer([] { return text("     "); }),
+             InfoContainer(),
+
+             Renderer([] { return text("            "); }),
+
+             ControlsContainer()}) |
+         size(ftxui::HEIGHT, ftxui::LESS_THAN, 100);
 }
