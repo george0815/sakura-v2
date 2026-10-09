@@ -1,5 +1,5 @@
 #include "../core/CPU/CPU.h"
-#include "views/main_screen/top_row/top_row_component.h"
+#include "views/main_screen/main_screen.h"
 #include <cstdlib>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_options.hpp>
@@ -88,7 +88,7 @@ int main() {
     });
   */
 
-  screen.Loop(TopRow::TopRowComponent());
+  screen.Loop(MainScreen::MainScreenComponent() | border);
 
   return EXIT_SUCCESS;
 }

@@ -1,4 +1,6 @@
 
+#include "bottom_row/bottom_row_component.h"
+#include "top_row/top_row_component.h"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -6,10 +8,8 @@
 
 using namespace ftxui;
 
-namespace BottomRow {
+namespace MainScreen {
 
-Component BottomRowComponent();
-Component TabMenuComponent();
-Component TabContainerComponent();
+Component MainScreenComponent();
 
-}; // namespace BottomRow
+}; // namespace MainScreen
