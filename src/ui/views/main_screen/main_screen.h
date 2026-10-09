@@ -11,7 +11,7 @@ using namespace ftxui;
 namespace MainScreen {
 
 Component MainScreenComponent();
-static int selected_menu = 0;
-static bool exit = false;
+inline int selected_menu = 0;
+inline bool exit = false;
 
 }; // namespace MainScreen

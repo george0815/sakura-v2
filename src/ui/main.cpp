@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_options.hpp>
+#include <ftxui/component/loop.hpp>
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
@@ -31,7 +32,17 @@ int main() {
 
   screen.CaptureMouse();
   screen.Fullscreen();
-  string value = "not changed";
+
+  Loop loop(&screen, MainScreen::MainScreenComponent());
+
+  while (!loop.HasQuitted()) {
+
+    if (MainScreen::exit == true) {
+      std::cout << "TEST$WRTES" << endl;
+      ExitScreen(screen);
+    }
+    loop.RunOnce();
+  }
 
   int row = 0;
   /*
@@ -78,7 +89,7 @@ int main() {
     });
   */
 
-  screen.Loop(MainScreen::MainScreenComponent());
+  // screen.Loop(MainScreen::MainScreenComponent());
 
   return EXIT_SUCCESS;
 }

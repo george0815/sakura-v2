@@ -1,4 +1,3 @@
-
 #include "../main_screen.h"
 #include "bottom_row_component.h"
 #include <ftxui/component/component.hpp>
@@ -7,6 +6,7 @@
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
+#include <iostream>
 
 /* TODO: PADDING, COLOR
  * COMMENTS
@@ -15,7 +15,7 @@
 using namespace ftxui;
 
 ButtonOption Style() {
-  auto option = ButtonOption::Ascii();
+  auto option = ButtonOption::Animated();
   return option;
 };
 
@@ -41,7 +41,12 @@ Component BottomRow::TabMenuComponent() {
           size(ftxui::WIDTH, ftxui::GREATER_THAN, 18) | flex,
 
       Button(
-          "[ Exit ]", [&] { MainScreen::exit = true; }, Style()) |
+          "[ Exit ]",
+          [&] {
+            MainScreen::exit = true;
+            std::cout << MainScreen::exit << std::endl;
+          },
+          Style()) |
           borderEmpty | center,
 
   });
