@@ -9,7 +9,7 @@ Component MainScreen::MainScreenComponent() {
 
   return Container::Vertical(
 
-      {TopRow::TopRowComponent(), BottomRow::BottomRowComponent()}
+      {TopRow::TopRowComponent(), BottomRow::BottomRowComponent() | flex}
 
   );
 }

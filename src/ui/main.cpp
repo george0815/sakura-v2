@@ -15,11 +15,6 @@
 using namespace ftxui;
 using namespace std;
 
-ButtonOption Style() {
-  auto option = ButtonOption::Animated();
-  return option;
-};
-
 // stub for parseRom function
 void parseRom(string &value) {
   value = "CHANGED";
@@ -38,12 +33,7 @@ int main() {
   screen.Fullscreen();
   string value = "not changed";
 
-  auto parseRomButton = Button("Parse rom", [&] { parseRom(value); }, Style());
-  auto exitButton = Button("Exit", [&] { ExitScreen(screen); }, Style());
-
   int row = 0;
-  auto tmpContainer = Container::Vertical(
-      {Container::Horizontal({parseRomButton, exitButton}, &row) | flex});
   /*
     auto component = Renderer(tmpContainer, [&] {
       return vbox({
@@ -88,7 +78,7 @@ int main() {
     });
   */
 
-  screen.Loop(MainScreen::MainScreenComponent() | border);
+  screen.Loop(MainScreen::MainScreenComponent());
 
   return EXIT_SUCCESS;
 }

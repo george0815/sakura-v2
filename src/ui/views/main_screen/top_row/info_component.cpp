@@ -1,5 +1,4 @@
 #include "top_row_component.h"
-#include <chrono>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>

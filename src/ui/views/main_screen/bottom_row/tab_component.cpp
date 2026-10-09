@@ -1,4 +1,5 @@
 
+#include "../main_screen.h"
 #include "bottom_row_component.h"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -13,33 +14,35 @@
 
 using namespace ftxui;
 
+ButtonOption Style() {
+  auto option = ButtonOption::Ascii();
+  return option;
+};
+
 std::vector<std::string> submenus = {"Roms", "Saves", "Settings", "Controls",
                                      "log"};
 
-int selected_menu = 0;
-auto tab_menu = Menu(&submenus, &selected_menu);
+Component BottomRow::TabContainerComponent() {
+  return Container::Tab(
 
-auto submenu_container = Container::Tab(
+      {
 
-    {
+          Renderer([] { return text("sakura-v2") | borderEmpty; }),
+          Renderer([] { return text("sakura-v2") | borderEmpty; }),
 
-        Renderer([] { return text("sakura-v2") | borderEmpty; }),
-        Renderer([] { return text("sakura-v2") | borderEmpty; }),
-
-    },
-    &selected_menu);
-
-auto container = Container::Horizontal({tab_menu | border, submenu_container
-
-});
-
-Component BottomRow::TabContainerComponent() { return container; }
+      },
+      &MainScreen::selected_menu);
+}
 
 Component BottomRow::TabMenuComponent() {
 
   return Container::Vertical({
+      Menu(&submenus, &MainScreen::selected_menu) |
+          size(ftxui::WIDTH, ftxui::GREATER_THAN, 18) | flex,
 
-      Renderer([&] { return text("sakura-v2") | borderEmpty; }),
-      Renderer([&] { return text("Roms: 0") | borderEmpty; }),
+      Button(
+          "[ Exit ]", [&] { MainScreen::exit = true; }, Style()) |
+          borderEmpty | center,
+
   });
 }

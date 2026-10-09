@@ -10,6 +10,8 @@ namespace BottomRow {
 
 Component BottomRowComponent();
 Component TabMenuComponent();
+
 Component TabContainerComponent();
 
-}; // namespace BottomRow
+std::string MenuTitle(int menu_index);
+} // namespace BottomRow
