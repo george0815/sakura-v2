@@ -45,51 +45,6 @@ int main() {
   }
 
   int row = 0;
-  /*
-    auto component = Renderer(tmpContainer, [&] {
-      return vbox({
-          text("sakura-v2"),
-          separator(),
-          vbox({
-
-              // FOR ROM DATA
-              text("ROM DATA"),
-              separator(),
-              text("Constant: " +
-                   std::to_string(cpu->S)), // should be "NES" in ASCII
-              text("PRG_ROM_SiZE: " + std::to_string(cpu->P)),
-              text("CHR: " + std::to_string(cpu->Y)),
-              text("FLAGS_6: " + std::to_string(cpu->A)),
-              text("FLAGS_7: " + std::to_string(cpu->A)),
-              text("FLAGS_8: " + std::to_string(cpu->A)),
-              text("FLAGS_0: " + std::to_string(cpu->A)),
-              text("FLAGS_10: " + std::to_string(cpu->A)),
-
-              // FOR CPU STATE
-              separator(),
-              text("CPU STATE"),
-              separator(),
-              text("PC: " + std::to_string(cpu->PC)),
-              text("S: " + std::to_string(cpu->S)),
-              text("Y: " + std::to_string(cpu->P)),
-              text("Y: " + std::to_string(cpu->Y)),
-              text("X: " + std::to_string(cpu->X)),
-              text("A: " + std::to_string(cpu->A)),
-
-              // FOR OPCODES
-              vbox({
-                  separator(),
-                  text("INSTRUCTIONS"),
-                  separator(),
-              }),
-
-          }),
-          tmpContainer->Render() | flex,
-      });
-    });
-  */
-
-  // screen.Loop(MainScreen::MainScreenComponent());
 
   return EXIT_SUCCESS;
 }

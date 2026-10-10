@@ -15,7 +15,7 @@
 using namespace ftxui;
 
 ButtonOption Style() {
-  auto option = ButtonOption::Animated();
+  auto option = ButtonOption::Ascii();
   return option;
 };
 
@@ -41,13 +41,13 @@ Component BottomRow::TabMenuComponent() {
           size(ftxui::WIDTH, ftxui::GREATER_THAN, 18) | flex,
 
       Button(
-          "[ Exit ]",
+          " Exit ",
           [&] {
             MainScreen::exit = true;
             std::cout << MainScreen::exit << std::endl;
           },
           Style()) |
-          borderEmpty | center,
+          center | size(ftxui::HEIGHT, ftxui::LESS_THAN, 3) | borderEmpty,
 
   });
 }

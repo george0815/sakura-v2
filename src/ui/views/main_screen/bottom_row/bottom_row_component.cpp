@@ -28,15 +28,15 @@ std::string BottomRow::MenuTitle(int menu_index) {
   switch (menu_index) {
 
   case (0):
-    return "Roms";
+    return " Roms ";
   case (1):
-    return "Saves";
+    return " Saves ";
   case (2):
-    return "Settings";
+    return " Settings ";
   case (3):
-    return "Controls";
+    return " Controls ";
   case (4):
-    return "Log";
+    return " Log ";
   }
-  return "Roms";
+  return " Roms ";
 }
