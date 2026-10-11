@@ -1,6 +1,7 @@
 
 
 #include "bottom_row_component.h"
+#include "../../../state.h"
 #include "../main_screen.h"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -16,8 +17,8 @@ Component BottomRow::BottomRowComponent() {
       TabMenuComponent() | border,
 
       Renderer([&] {
-        return ftxui::window(text(MenuTitle(MainScreen::selected_menu)),
-                             TabContainerComponent()->Render());
+        return ftxui::window(text(MenuTitle(UIState::SelectedMenu)),
+                             (TabContainerComponent() | flex)->Render());
       }) | flex,
 
   });

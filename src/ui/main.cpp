@@ -1,4 +1,5 @@
 #include "../core/CPU/CPU.h"
+#include "state.h"
 #include "views/main_screen/main_screen.h"
 #include <cstdlib>
 #include <ftxui/component/component.hpp>
@@ -37,7 +38,7 @@ int main() {
 
   while (!loop.HasQuitted()) {
 
-    if (MainScreen::exit == true) {
+    if (UIState::Exit == true) {
       std::cout << "TEST$WRTES" << endl;
       ExitScreen(screen);
     }
