@@ -32,7 +32,7 @@ Component BottomRow::TabContainerComponent() {
 
              {
 
-                 RomsComponent::test,
+                 RomsComponent::RomSubmenuComponent,
                  Renderer([] { return text("Saves") | borderEmpty; }),
                  Renderer([] { return text("Settings") | borderEmpty; }),
                  Renderer([] { return text("Controls") | borderEmpty; }),

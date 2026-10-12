@@ -6,12 +6,14 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;
+using namespace std;
+
 namespace RomsComponent {
 
+// Returns rom component
 ftxui::Component RomTableComponent();
 
-inline Component test = RomTableComponent();
-
-void AddRow();
+// Variable that holds rom component
+inline Component RomSubmenuComponent = RomTableComponent();
 
 } // namespace RomsComponent

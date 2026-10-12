@@ -1,5 +1,6 @@
 
 #include "roms_component.h"
+#include "../../../../general/general_views.h"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -8,58 +9,19 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
-#include "../../../../general/general_views.h"
+//==========================
+//
+// Rom Component, as of now just returns a table but as settings are implemented
+// and the emulator is built out more behavior will be added
+//
+// Current memebers: RomTableComponent
+//
+//==========================
 
 using namespace ftxui;
+using namespace std;
 
-void RomsComponent::AddRow() {
-
-  // Add name
-  RomsComponent::test->ChildAt(0)->Add(Renderer([&](bool focuesd) {
-    if (focuesd) {
-
-      return text(" Mario ") | bgcolor(Color::White);
-    }
-
-    return text(" Mario ");
-  }));
-
-  // Add path
-  string test = "gferewr";
-  RomsComponent::test->ChildAt(2)->Add(
-      GeneralViews::FocusableTextComponent(test));
-
-  // Add SRAM data path
-  RomsComponent::test->ChildAt(4)->Add(
-      Renderer([&] { return text(" test sram path "); }));
-}
-
+// Simple roms table
 Component RomsComponent::RomTableComponent() {
-
-  return Container::Horizontal({
-
-      Container::Vertical({Renderer([&](bool focused) {
-        if (focused) {
-
-          return vbox({text("  Name  ") | bgcolor(Color::White), separator()});
-        }
-
-        return vbox({text("  Name  "), separator()});
-      })}),
-
-      Renderer([&] { return separator(); }),
-      Container::Vertical(
-          {Renderer([&] { return vbox({text("  Path  "), separator()}); })}),
-
-      Renderer([&] { return separator(); }),
-      Container::Vertical({Renderer(
-          [] { return vbox({text("  SRAM Data Path  "), separator()}); })
-
-      }),
-
-      Container::Vertical(
-          {Renderer([&] { return vbox({text(""), separator()}); })}) |
-          flex,
-
-  });
+  return GeneralViews::TableComponent("Name", "Path", "SRAM Data Path", 3);
 }

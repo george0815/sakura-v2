@@ -1,5 +1,7 @@
 #include "../core/CPU/CPU.h"
 #include "state.h"
+#include "views/general/general_views.h"
+#include "views/main_screen/bottom_row/bottom_row_component.h"
 #include "views/main_screen/bottom_row/submenus/roms/roms_component.h"
 #include "views/main_screen/main_screen.h"
 #include <cstdlib>
@@ -36,9 +38,11 @@ int main() {
   screen.CaptureMouse();
   screen.Fullscreen();
 
-  Loop loop(&screen, MainScreen::MainScreenComponent() | color(Color::White));
+  Loop loop(&screen,
+            MainScreen::MainScreenComponent() | border | color(Color::White));
 
-  RomsComponent::AddRow();
+  GeneralViews::AddRow(RomsComponent::RomSubmenuComponent, "Mario",
+                       "/home/Hunter/roms/", "home/apps/sakura-v2");
 
   while (!loop.HasQuitted()) {
 
