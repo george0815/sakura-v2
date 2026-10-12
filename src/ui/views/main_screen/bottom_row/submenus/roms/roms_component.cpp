@@ -7,7 +7,8 @@
 #include <ftxui/dom/table.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <iostream>
+
+#include "../../../../general/general_views.h"
 
 using namespace ftxui;
 
@@ -24,8 +25,9 @@ void RomsComponent::AddRow() {
   }));
 
   // Add path
+  string test = "gferewr";
   RomsComponent::test->ChildAt(2)->Add(
-      Renderer([&] { return text(" test path "); }));
+      GeneralViews::FocusableTextComponent(test));
 
   // Add SRAM data path
   RomsComponent::test->ChildAt(4)->Add(
