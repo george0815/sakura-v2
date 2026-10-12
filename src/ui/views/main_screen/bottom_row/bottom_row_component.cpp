@@ -14,14 +14,18 @@ using namespace ftxui;
 
 Component BottomRow::BottomRowComponent() {
   return Container::Horizontal({
-      TabMenuComponent() | border,
+             TabMenuComponent() | border,
 
-      Renderer([&] {
-        return ftxui::window(text(MenuTitle(UIState::SelectedMenu)),
-                             (TabContainerComponent() | flex)->Render());
-      }) | flex,
+             Container::Vertical({Renderer([&] {
+                                    return text(
+                                        " ROM LOADED -  Super Mario Bros. 3 - "
+                                        "CHR_ROM: 8KB - MAPPER: 4");
+                                  }) | border,
+                                  TabContainerComponent() | flex | border}) |
+                 flex,
 
-  });
+         }) |
+         flex;
 }
 
 std::string BottomRow::MenuTitle(int menu_index) {

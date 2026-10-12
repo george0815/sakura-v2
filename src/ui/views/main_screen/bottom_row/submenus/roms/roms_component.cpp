@@ -7,29 +7,57 @@
 #include <ftxui/dom/table.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <vector>
+#include <iostream>
 
 using namespace ftxui;
 
-ftxui::Component RomsComponent::RomTableComponent() {
+void RomsComponent::AddRow() {
 
-  return
+  // Add name
+  RomsComponent::test->ChildAt(0)->Add(Renderer([&](bool focuesd) {
+    if (focuesd) {
 
-      Renderer([&] {
-        auto tmpTable = ftxui::Table(std::vector<std::vector<std::string>>{
+      return text(" Mario ") | bgcolor(Color::White);
+    }
 
-            {"Name", "Size"},
-            {"Mario", "2GB"},
-            {"Kirby", "1GB"},
+    return text(" Mario ");
+  }));
 
-        });
+  // Add path
+  RomsComponent::test->ChildAt(2)->Add(
+      Renderer([&] { return text(" test path "); }));
 
-        tmpTable.SelectAll().Border(LIGHT);
-        tmpTable.SelectRow(0).SeparatorVertical(LIGHT);
-        tmpTable.SelectRow(0).Decorate(bold);
-        tmpTable.SelectColumn(1).Decorate(flex);
-        tmpTable.SelectRow(2).Decorate(flex);
+  // Add SRAM data path
+  RomsComponent::test->ChildAt(4)->Add(
+      Renderer([&] { return text(" test sram path "); }));
+}
 
-        return tmpTable.Render() | flex;
-      });
+Component RomsComponent::RomTableComponent() {
+
+  return Container::Horizontal({
+
+      Container::Vertical({Renderer([&](bool focused) {
+        if (focused) {
+
+          return vbox({text("  Name  ") | bgcolor(Color::White), separator()});
+        }
+
+        return vbox({text("  Name  "), separator()});
+      })}),
+
+      Renderer([&] { return separator(); }),
+      Container::Vertical(
+          {Renderer([&] { return vbox({text("  Path  "), separator()}); })}),
+
+      Renderer([&] { return separator(); }),
+      Container::Vertical({Renderer(
+          [] { return vbox({text("  SRAM Data Path  "), separator()}); })
+
+      }),
+
+      Container::Vertical(
+          {Renderer([&] { return vbox({text(""), separator()}); })}) |
+          flex,
+
+  });
 }

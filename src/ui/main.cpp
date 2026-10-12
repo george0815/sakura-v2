@@ -1,5 +1,6 @@
 #include "../core/CPU/CPU.h"
 #include "state.h"
+#include "views/main_screen/bottom_row/submenus/roms/roms_component.h"
 #include "views/main_screen/main_screen.h"
 #include <cstdlib>
 #include <ftxui/component/component.hpp>
@@ -9,6 +10,7 @@
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/dom/node.hpp>
+#include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <ftxui/screen/string.hpp>
 #include <i18ncpp.h>
@@ -34,7 +36,9 @@ int main() {
   screen.CaptureMouse();
   screen.Fullscreen();
 
-  Loop loop(&screen, MainScreen::MainScreenComponent());
+  Loop loop(&screen, MainScreen::MainScreenComponent() | color(Color::White));
+
+  RomsComponent::AddRow();
 
   while (!loop.HasQuitted()) {
 

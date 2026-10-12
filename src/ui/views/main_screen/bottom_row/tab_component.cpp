@@ -27,11 +27,12 @@ std::vector<std::string> submenus = {"Roms", "Saves", "Settings", "Controls",
                                      "log"};
 
 Component BottomRow::TabContainerComponent() {
+
   return Container::Tab(
 
              {
 
-                 RomsComponent::RomTableComponent() | flex,
+                 RomsComponent::test,
                  Renderer([] { return text("Saves") | borderEmpty; }),
                  Renderer([] { return text("Settings") | borderEmpty; }),
                  Renderer([] { return text("Controls") | borderEmpty; }),

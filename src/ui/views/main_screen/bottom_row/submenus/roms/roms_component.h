@@ -5,8 +5,13 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
+using namespace ftxui;
 namespace RomsComponent {
 
 ftxui::Component RomTableComponent();
 
-}
+inline Component test = RomTableComponent();
+
+void AddRow();
+
+} // namespace RomsComponent
