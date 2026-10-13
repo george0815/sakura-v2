@@ -37,7 +37,8 @@ Component BottomRow::TabContainerComponent() {
 
                  RomsComponent::RomSubmenuComponent,
                  SavesComponent::SavesSubmenuComponent,
-                 SettingsComponent::SettingsSubmenuComponent,
+                 SettingsComponent::SettingsSubmenuComponent |
+                     vscroll_indicator | frame | focus,
                  ControlsComponent::ControlsSubmenuComponent,
                  LogComponent::LogSubmenuComponent,
 

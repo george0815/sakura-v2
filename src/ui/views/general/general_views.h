@@ -1,11 +1,13 @@
 
+
+#include <string>
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <string>
 
 using namespace ftxui;
 using namespace std;
@@ -26,11 +28,11 @@ Component ControlOptionComponent(string str, int index);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
-Component TextInputComponent(string label, string &var, int index);
+Component TextInputComponent(string label, string &var);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component
-Component ColorComponent(int index);
+Component ColorComponent(string str, int index, int &selection);
 
 //==========================
 // TABLE COMPONENTS

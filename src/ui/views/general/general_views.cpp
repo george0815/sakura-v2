@@ -7,6 +7,7 @@
 #include <ftxui/component/component_options.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
+#include <vector>
 
 using namespace std;
 
@@ -47,6 +48,13 @@ Component FocusableTextComponent(string str, int padding) {
 // SETTINGS COMPONENTS
 //==========================
 
+// Color entries
+vector<string> color_entries = {
+    "Black ",    "Blue",          "Red",          "Green",
+    "Cyan",      "Magenta",       "Brown",        "Gray",
+    "DarkGray",  "BrightBlue",    "BrightGreen",  "BrightCyan",
+    "BrightRed", "BrightMagenta", "BrightYellow", "White"};
+
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
 Component ControlOptionComponent(string str, int index) {
@@ -67,11 +75,29 @@ Component ControlOptionComponent(string str, int index) {
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
-Component TextInputComponent(string label, string &var, int index);
+Component TextInputComponent(string label, string &var) {
+
+  return Container::Horizontal({
+
+      // Used as a label
+      Renderer([label] { return text(" " + format("{:<{}}", label, 30)); }) |
+          center,
+      Input(&var) | color(Color::Black) | bgcolor(Color::White)});
+}
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component
-Component ColorComponent(int index);
+Component ColorComponent(string str, int index, int &selection) {
+
+  return Container::Horizontal({
+
+      // Used as a label
+      Renderer([str] { return text(" " + format("{:<{}}", str, 30)); }) |
+          center,
+      Dropdown(&color_entries, &selection)
+
+  });
+}
 
 //==========================
 // TABLE COMPONENTS
