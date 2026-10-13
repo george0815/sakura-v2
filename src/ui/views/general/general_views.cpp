@@ -1,7 +1,10 @@
 #include "general_views.h"
+#include <iostream>
 
 // ftxui
+#include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
+#include <ftxui/component/component_options.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 
@@ -16,10 +19,6 @@ using namespace std;
 //==========================
 
 namespace GeneralViews {
-
-//==========================
-// TABLE COMPONENTS
-//==========================
 
 // Returns a text comopoent that the use can focus on, this is needed for
 // navigating the tables.
@@ -43,6 +42,40 @@ Component FocusableTextComponent(string str, int padding) {
     return text(format("{:^{}}", str, final_padding_amount));
   });
 }
+
+//==========================
+// SETTINGS COMPONENTS
+//==========================
+
+// Used in the controls submenu, consists of a Container::Horizontal with a text
+// element and a button
+Component ControlOptionComponent(string str, int index) {
+
+  return Container::Horizontal({
+
+      // Used as a label
+      Renderer([str] { return text(str); }),
+
+      // User clicks button -> wait for input -> next input is the value of the
+      // NES control being configured TODO:: Replace logic once settings are
+      // implemented
+      Button(
+          str, [&] { cout << "test"; }, ButtonOption::Ascii()),
+
+  });
+}
+
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an input component
+Component TextInputComponent(int index);
+
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an dropdown component
+Component ColorComponent(int index);
+
+//==========================
+// TABLE COMPONENTS
+//==========================
 
 // Returns a table header that consists of the text and the lower separator
 

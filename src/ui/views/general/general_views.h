@@ -16,6 +16,26 @@ namespace GeneralViews {
 // in definition)
 Component FocusableTextComponent(string str, int padding = 3);
 
+//==========================
+// SETTINGS COMPONENTS
+//==========================
+
+// Used in the controls submenu, consists of a Container::Horizontal with a text
+// element and a button
+Component ControlOptionComponent(int index);
+
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an input component
+Component TextInputComponent(int index);
+
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an dropdown component
+Component ColorComponent(int index);
+
+//==========================
+// TABLE COMPONENTS
+//==========================
+
 // Returns a table header (text + seperator) (see more detiled comment
 // in definition)
 Component TableHeader(string str, int padding);
