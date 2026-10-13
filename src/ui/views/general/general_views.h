@@ -22,11 +22,11 @@ Component FocusableTextComponent(string str, int padding = 3);
 
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
-Component ControlOptionComponent(int index);
+Component ControlOptionComponent(string str, int index);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
-Component TextInputComponent(int index);
+Component TextInputComponent(string label, string &var, int index);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component

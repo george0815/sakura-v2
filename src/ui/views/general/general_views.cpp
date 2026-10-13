@@ -54,20 +54,20 @@ Component ControlOptionComponent(string str, int index) {
   return Container::Horizontal({
 
       // Used as a label
-      Renderer([str] { return text(str); }),
+      Renderer([str] { return text(" " + format("{:<{}}", str, 25)); }),
 
       // User clicks button -> wait for input -> next input is the value of the
       // NES control being configured TODO:: Replace logic once settings are
       // implemented
       Button(
-          str, [&] { cout << "test"; }, ButtonOption::Ascii()),
+          "ESC", [&] { cout << "test"; }, ButtonOption::Ascii()),
 
   });
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
-Component TextInputComponent(int index);
+Component TextInputComponent(string label, string &var, int index);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component

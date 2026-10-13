@@ -9,8 +9,11 @@
 #include <ftxui/screen/screen.hpp>
 
 // Submenus
+#include "submenus/controls/controls_component.h"
 #include "submenus/log/log_component.h"
 #include "submenus/roms/roms_component.h"
+#include "submenus/saves/saves_component.h"
+#include "submenus/settings/settings_component.h"
 
 /* TODO: PADDING, COLOR
  * COMMENTS
@@ -33,9 +36,9 @@ Component BottomRow::TabContainerComponent() {
              {
 
                  RomsComponent::RomSubmenuComponent,
-                 Renderer([] { return text("Saves") | borderEmpty; }),
-                 Renderer([] { return text("Settings") | borderEmpty; }),
-                 Renderer([] { return text("Controls") | borderEmpty; }),
+                 SavesComponent::SavesSubmenuComponent,
+                 SettingsComponent::SettingsSubmenuComponent,
+                 ControlsComponent::ControlsSubmenuComponent,
                  LogComponent::LogSubmenuComponent,
 
              },

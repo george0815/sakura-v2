@@ -10,7 +10,7 @@ using namespace std;
 
 namespace RomsComponent {
 
-// Returns rom component
+// Returns rom submenu component
 ftxui::Component RomTableComponent();
 
 // Variable that holds rom component
