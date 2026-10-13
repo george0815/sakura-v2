@@ -1,28 +1,38 @@
 
 #include "log_component.h"
+#include "../../../../general/general_views.h"
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
-#include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
-#include <ftxui/dom/table.hpp>
 #include <ftxui/screen/color.hpp>
-#include <ftxui/screen/screen.hpp>
-#include <vector>
 
-using namespace ftxui;
+//==========================
+//
+// This namespace is for the log submenu and any logic that is associated
+// with it.
+//
+// Current memebers:
+//
+//==========================
 
-ftxui::Component LogComponent::LogTableComponent() {
+namespace LogComponent {
 
-  return
-
-      Renderer([&] {
-        return ftxui::Table(std::vector<std::vector<std::string>>{
-
-                                {"Time", "Event"},
-                                {"23:12", "CHR_ROM init"},
-                                {"23:43", "PRG_ROM init"},
-
-                            })
-            .Render();
-      });
+// Uses GeneralViews::AddFocusableText to add a log Entry
+void AddLogEntry(Component &comp, string str) {
+  comp->Add(GeneralViews::FocusableTextComponent(str));
 }
+
+// Returns log component, basically just a Container::Vertical
+Component LogComponent() {
+  return Container::Vertical({{
+
+      // It was seg faulting unless I had at least one component here, so the
+      // log will always start with this entry
+      GeneralViews::FocusableTextComponent("sakura-v2 INIT"),
+
+  }});
+}
+
+} // namespace LogComponent

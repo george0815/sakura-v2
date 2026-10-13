@@ -6,9 +6,17 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;
+using namespace std;
 
 namespace LogComponent {
 
-Component LogTableComponent();
+// Uses GeneralViews::AddFocusableText to add a log Entry
+void AddLogEntry(Component &comp, string str);
 
-}
+// Returns log component, basically just a Container::Vertical
+Component LogComponent();
+
+// Holds actual component returned from LogComponent()
+inline Component LogSubmenuComponent = LogComponent();
+
+} // namespace LogComponent

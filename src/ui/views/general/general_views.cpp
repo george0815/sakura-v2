@@ -1,4 +1,6 @@
 #include "general_views.h"
+
+// ftxui
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
@@ -9,7 +11,7 @@ using namespace std;
 //
 // This namespace is for general compenents that will be resused.
 //
-// Current memebers: FocusableTextComponent, TableHeader
+// Current memebers: FocusableTextComponent, TableHeader, AddRow, TableComponent
 //
 //==========================
 

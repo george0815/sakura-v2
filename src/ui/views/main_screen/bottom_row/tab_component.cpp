@@ -36,7 +36,7 @@ Component BottomRow::TabContainerComponent() {
                  Renderer([] { return text("Saves") | borderEmpty; }),
                  Renderer([] { return text("Settings") | borderEmpty; }),
                  Renderer([] { return text("Controls") | borderEmpty; }),
-                 LogComponent::LogTableComponent(),
+                 LogComponent::LogSubmenuComponent,
 
              },
              &UIState::SelectedMenu) |
