@@ -79,10 +79,13 @@ Component TextInputComponent(string label, string &var) {
 
   return Container::Horizontal({
 
-      // Used as a label
-      Renderer([label] { return text(" " + format("{:<{}}", label, 30)); }) |
-          center,
-      Input(&var) | border});
+             // Used as a label
+             Renderer([label] {
+               return text(" " + format("{:<{}}", label, 30));
+             }) | center,
+             Input(&var) | color(Color::Red) | bgcolor(Color::White)}) |
+         border;
+
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text

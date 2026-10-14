@@ -35,6 +35,7 @@ int main() {
   CPU *cpu = new CPU();
 
   ScreenInteractive screen = ScreenInteractive::Fullscreen();
+  screen.TrackMouse(true);
 
   screen.CaptureMouse();
   screen.Fullscreen();

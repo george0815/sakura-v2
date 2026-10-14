@@ -1,4 +1,5 @@
 
+
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -13,6 +14,8 @@ namespace SavesComponent {
 
 // Returns controls menu component
 Component SavesComponent();
+Component SavesTabContainerComponent();
+Component SavesTabMenuComponent();
 
 // Variable that holds controls component
 inline Component SavesSubmenuComponent = SavesComponent();
