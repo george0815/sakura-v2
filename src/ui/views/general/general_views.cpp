@@ -83,9 +83,11 @@ Component TextInputComponent(string label, string &var) {
              Renderer([label] {
                return text(" " + format("{:<{}}", label, 30));
              }) | center,
-             Input(&var) | color(Color::Red) | bgcolor(Color::White)}) |
+             // For some reason the color decorator refuses to work, so I can't
+             // make inputs have a white background since the actual text wont
+             // be visible
+             Input(&var)}) |
          border;
-
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text

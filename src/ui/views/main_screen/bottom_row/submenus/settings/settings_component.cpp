@@ -49,9 +49,6 @@ Component SettingsComponent() {
                  Checkbox("Disable colored hotekey info", &test),
                  Renderer([&] { return text(""); }),
 
-                 Checkbox("Hide text cursor", &test),
-                 Renderer([&] { return text(""); }),
-
                  Checkbox("Disable ASCII", &test),
                  Renderer([&] { return text(""); }),
 
@@ -108,7 +105,7 @@ Component SettingsComponent() {
                                                   UIState::TestTextValue),
                  Renderer([&] { return text(""); }),
 
-                 Checkbox("Disable ASCII", &test),
+                 Checkbox("Disable detailed logging", &test),
                  Renderer([&] { return text(""); }),
 
                  // Save button
