@@ -45,7 +45,7 @@ Component SavesTabContainerComponent() {
                  SaveSubmenuComponent::SRAMTable,
                  SaveSubmenuComponent::SaveStatesTable,
              },
-             &UIState::SelectedMenu) |
+             &UIState::SelectedSaveMenu) |
          flex;
 }
 

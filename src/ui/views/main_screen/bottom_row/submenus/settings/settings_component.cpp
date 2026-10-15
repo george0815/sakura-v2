@@ -1,5 +1,6 @@
 
 #include "settings_component.h"
+#include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
 #include <ftxui/component/captured_mouse.hpp>
@@ -30,90 +31,87 @@ bool test = false;
 Component SettingsComponent() {
 
   // Main container
-  return Container::Vertical(
-             {
+  return Container::Vertical({
 
-                 //************
-                 // UI OPTIONS
-                 //************
+             //************
+             // UI OPTIONS
+             //************
 
-                 Renderer([&] {
-                   return text("UI");
-                 }), // Disabled colored hotkey info, hide text cursor, bg
-                     // color,
-                     // text color, focus background color, focus text color,
-                     // ascii color, diable ascii
-                 Renderer([&] { return separator(); }),
-                 Renderer([&] { return text(""); }),
+             Renderer([&] { return text("UI"); }),
 
-                 Checkbox("Disable colored hotekey info", &test),
-                 Renderer([&] { return text(""); }),
+             // UI bools
 
-                 Checkbox("Disable ASCII", &test),
-                 Renderer([&] { return text(""); }),
+             Renderer([&] { return separator(); }),
+             Renderer([&] { return text(""); }),
 
-                 // Color options
+             Checkbox("Disable colored hotekey info",
+                      &Settings::disable_colored_hotkey_info),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::ColorComponent("Background color :", 0,
-                                              UIState::TestColorSelection),
-                 Renderer([&] { return text(""); }),
+             Checkbox("Disable ASCII", &Settings::disable_ascii),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::ColorComponent("Text color :", 0,
-                                              UIState::TestColorSelection),
-                 Renderer([&] { return text(""); }),
+             // Color options
 
-                 GeneralViews::ColorComponent("Focus background color :", 0,
-                                              UIState::TestColorSelection),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent("Background color :", 0,
+                                          Settings::background_color),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::ColorComponent("Focus text color :", 0,
-                                              UIState::TestColorSelection),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent("Text color :", 0,
+                                          Settings::text_color),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::ColorComponent("ASCII color :", 0,
-                                              UIState::TestColorSelection),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent("Focus background color :", 0,
+                                          Settings::focus_background_color),
+             Renderer([&] { return text(""); }),
 
-                 //************
-                 // SYSTEM OPTIONS
-                 //************
+             GeneralViews::ColorComponent("Focus text color :", 0,
+                                          Settings::focus_text_color),
+             Renderer([&] { return text(""); }),
 
-                 Renderer([&] {
-                   return text("System");
-                 }), // Roms paths, Default rom path, Log path, SRAM path, save
-                     // state path, Enable detailed logging
-                 Renderer([&] { return separator(); }),
+             GeneralViews::ColorComponent("ASCII color :", 0,
+                                          Settings::ascii_color),
+             Renderer([&] { return text(""); }),
 
-                 Renderer([&] { return text(""); }),
-                 GeneralViews::TextInputComponent("Roms paths :",
-                                                  UIState::TestTextValue),
-                 Renderer([&] { return text(""); }),
+             //************
+             // SYSTEM OPTIONS
+             //************
 
-                 GeneralViews::TextInputComponent("Default rom path :",
-                                                  UIState::TestTextValue),
-                 Renderer([&] { return text(""); }),
+             Renderer([&] {
+               return text("System");
+             }), // Roms paths, Default rom path, Log path, SRAM path, save
+                 // state path, Enable detailed logging
+             Renderer([&] { return separator(); }),
 
-                 GeneralViews::TextInputComponent("Log path :",
-                                                  UIState::TestTextValue),
-                 Renderer([&] { return text(""); }),
+             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent("Roms paths :",
+                                              Settings::roms_paths),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::TextInputComponent("SRAM path :",
-                                                  UIState::TestTextValue),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent("Default rom path :",
+                                              Settings::default_rom_path),
+             Renderer([&] { return text(""); }),
 
-                 GeneralViews::TextInputComponent("Save state path :",
-                                                  UIState::TestTextValue),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent("Log path :", Settings::log_path),
+             Renderer([&] { return text(""); }),
 
-                 Checkbox("Disable detailed logging", &test),
-                 Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent("SRAM path :",
+                                              Settings::sram_path),
+             Renderer([&] { return text(""); }),
 
-                 // Save button
-                 Button(
-                     "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
+             GeneralViews::TextInputComponent("Save state path :",
+                                              Settings::save_state_path),
+             Renderer([&] { return text(""); }),
 
-             },
-             &UIState::TestSelectedIndex) |
+             Checkbox("Enable detailed logging",
+                      &Settings::enable_detailed_logging),
+             Renderer([&] { return text(""); }),
+
+             // Save button
+             Button(
+                 "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
+
+         }) |
          borderEmpty;
 }
 
