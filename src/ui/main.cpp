@@ -1,4 +1,5 @@
 #include "../core/CPU/CPU.h"
+#include "./settings/settings.h"
 #include "state.h"
 #include "views/general/general_views.h"
 #include "views/main_screen/bottom_row/bottom_row_component.h"
@@ -32,6 +33,10 @@ void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
 
 int main() {
 
+  if (Settings::load_settings() != 0) {
+    cout << "Error";
+  }
+
   CPU *cpu = new CPU();
 
   ScreenInteractive screen = ScreenInteractive::Fullscreen();
@@ -51,8 +56,13 @@ int main() {
   while (!loop.HasQuitted()) {
 
     if (UIState::Exit == true) {
-      std::cout << "TEST$WRTES" << endl;
-      ExitScreen(screen);
+
+      // Save settings
+      if (Settings::save_settings() == 0) {
+
+        std::cout << "TEST$WRTES" << endl;
+        ExitScreen(screen);
+      }
     }
     loop.RunOnce();
   }

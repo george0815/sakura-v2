@@ -51,7 +51,7 @@ Component SavesTabContainerComponent() {
 
 Component SavesTabMenuComponent() {
 
-  return Menu(&submenus, &UIState::SelectedMenu) |
+  return Menu(&submenus, &UIState::SelectedSaveMenu) |
          size(ftxui::WIDTH, ftxui::EQUAL, 15);
 }
 

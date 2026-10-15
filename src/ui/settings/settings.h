@@ -51,10 +51,10 @@ inline int right_control = 0;
 //=======================
 
 // Serializes the namepsace to JSON
-int to_json();
+int save_settings();
 
 // Deerializes, maps values from JSON to the namepsace
-void from_json();
+int load_settings();
 
 //=======================
 // VERIFICATION

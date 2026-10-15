@@ -25,8 +25,6 @@ using namespace std;
 
 namespace SettingsComponent {
 
-bool test = false;
-
 // Returns controls menu component
 Component SettingsComponent() {
 
@@ -107,7 +105,7 @@ Component SettingsComponent() {
                       &Settings::enable_detailed_logging),
              Renderer([&] { return text(""); }),
 
-             // Save button
+             // Save button TODO: implement logic
              Button(
                  "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
 
