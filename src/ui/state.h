@@ -15,4 +15,13 @@ inline int SelectedSaveMenu = 0;
 // Loads the ASCII art for the given menu (TODO: implement later)
 void load_ascii();
 
+// Hold the index of the current focus tab in the roms table
+inline int SelectedRomTableIndex = 0;
+
+// Hold the index of the current focus tab in the roms table
+inline int SelectedSRAMTableIndex = 0;
+
+// Hold the index of the current focus tab in the roms table
+inline int SelectedSaveStateTableIndex = 0;
+
 } // namespace UIState

@@ -40,13 +40,13 @@ Component ColorComponent(string str, int index, int &selection);
 
 // Returns a table header (text + seperator) (see more detiled comment
 // in definition)
-Component TableHeader(string str, int padding);
+Component TableHeader(string str, int padding, int &selected_tab);
 
 // Given table component as reference, adds row to that table
 void AddRow(Component &comp, string column1, string column2, string column3);
 
 // Returns table component given header string values
 Component TableComponent(string column1, string column2, string column3,
-                         int padding);
+                         int padding, int &selected_tab);
 
 } // namespace GeneralViews

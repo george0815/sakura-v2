@@ -1,7 +1,10 @@
 
 
 #include "save_submenu.h"
+#include "../../../../../../state.h"
 #include "../../../../../general/general_views.h"
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -23,6 +26,12 @@ using namespace ftxui;
 using namespace std;
 
 // Simple roms table
-Component SaveSubmenuComponent::SaveTableComponent() {
-  return GeneralViews::TableComponent("Name", "Created", "Size", 10);
+Component SaveSubmenuComponent::SaveStateTableComponent() {
+  return GeneralViews::TableComponent("Name", "Created", "Size", 10,
+                                      UIState::SelectedSaveStateTableIndex);
+}
+
+Component SaveSubmenuComponent::SaveSRAMTableComponent() {
+  return GeneralViews::TableComponent("Name", "Created", "Size", 10,
+                                      UIState::SelectedSRAMTableIndex);
 }

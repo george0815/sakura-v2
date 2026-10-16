@@ -110,20 +110,25 @@ Component ColorComponent(string str, int index, int &selection) {
 
 // Returns a table header that consists of the text and the lower separator
 
-Component TableHeader(string str, int padding) {
+Component TableHeader(string str, int padding, int &selected_tab) {
 
   // Calculate padding amount from str len
   int final_padding_amount = padding + str.length();
 
   // Doesnt matter if headers are focusable, so focused bool isn't needed
-  return Container::Vertical({Renderer([str, final_padding_amount]() {
-    return vbox(
-        // To be honest the format syntax is still a mystery to me, the docs
-        // said do this so I did
-        {text(format("{:^{}}", str, final_padding_amount)), separator()});
-  })}
+  return Container::Vertical(
+      {
+          Renderer([str, final_padding_amount]() {
+            return vbox(
+                // To be honest the format syntax is still a mystery to me, the
+                // docs said do this so I did
+                {text(format("{:^{}}", str, final_padding_amount)),
+                 separator()});
+          }),
+      }
 
-  );
+      ,
+      &selected_tab);
 }
 
 // Given table component as reference, adds a row to that component
@@ -143,22 +148,22 @@ void AddRow(Component &comp, string column1, string column2, string column3) {
 // divider (I know I can generalize this for tables that aren't 3 columns, but
 // coincidentally all the tables in this UI use 3)
 Component TableComponent(string column1, string column2, string column3,
-                         int padding) {
+                         int padding, int &selected_tab) {
 
   return Container::Horizontal({
 
       // Column 1
-      GeneralViews::TableHeader(column1, padding),
+      GeneralViews::TableHeader(column1, padding, selected_tab),
       Renderer([&] { return separator(); }),
 
       // Column 2
-      GeneralViews::TableHeader(column2, padding),
+      GeneralViews::TableHeader(column2, padding, selected_tab),
       Renderer([&] { return separator(); }),
 
       // Column 3 (for some reason whenever I tried to use flex on column3 it
       // would make all its children disappear, so I have an empty
       // Container::Vertical as a hack for now)
-      GeneralViews::TableHeader(column3, padding),
+      GeneralViews::TableHeader(column3, padding, selected_tab),
       Container::Vertical(
           {Renderer([&] { return vbox({text(""), separator()}); })}) |
           flex,

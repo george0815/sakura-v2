@@ -1,6 +1,10 @@
 #include "../../../state.h"
 #include "../main_screen.h"
 #include "bottom_row_component.h"
+#include <ftxui/component/event.hpp>
+#include <iostream>
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -31,11 +35,30 @@ std::vector<std::string> submenus = {"Roms", "Saves", "Settings", "Controls",
 
 Component BottomRow::TabContainerComponent() {
 
+  auto wrapped_roms =
+      CatchEvent(RomsComponent::RomSubmenuComponent, [](Event event) {
+        if (event == Event::F3 || event == Event::Return) {
+          cout << UIState::SelectedRomTableIndex;
+          cout << "TEREWREWREWR";
+          UIState::Exit = true;
+        }
+
+        return false;
+      });
+
   return Container::Tab(
 
              {
 
-                 RomsComponent::RomSubmenuComponent,
+                 // RomsComponent::RomSubmenuComponent |=
+                 /*         CatchEvent([&](Event event) {
+                            if (event == Event::F3) {
+                              cout << UIState::SelectedRomTableIndex;
+                            }
+
+                            return false;
+                          }),*/
+                 wrapped_roms,
                  SavesComponent::SavesSubmenuComponent,
                  SettingsComponent::SettingsSubmenuComponent |
                      vscroll_indicator | frame,

@@ -1,6 +1,10 @@
 
 #include "roms_component.h"
+#include "../../../../../state.h"
 #include "../../../../general/general_views.h"
+#include <iostream>
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -21,7 +25,18 @@
 using namespace ftxui;
 using namespace std;
 
-// Simple roms table
-Component RomsComponent::RomTableComponent() {
-  return GeneralViews::TableComponent("Name", "Path", "SRAM Data Path", 3);
+namespace RomsComponent {
+
+void start_rom(Component &comp, int index) {
+
+  // Get focused child of internal Container::Vertical in the table
+  cout << UIState::SelectedRomTableIndex;
 }
+
+// Simple roms table
+Component RomTableComponent() {
+  return GeneralViews::TableComponent("Name", "Path", "SRAM Data Path", 3,
+                                      UIState::SelectedRomTableIndex);
+}
+
+} // namespace RomsComponent
