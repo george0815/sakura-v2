@@ -40,10 +40,28 @@ int load_settings() {
   ifstream test("test");
 
   stringstream buffer;
-  buffer << test.rdbuf();
-  settings_json = json::parse(buffer.str());
-  Settings::enable_detailed_logging =
-      settings_json["enable_detailed_logging"].get<bool>();
+  buffer << test.rdbuf(); // TODO:: Clean this up later
+
+  try {
+    ifstream test("test");
+
+    stringstream buffer;
+    buffer << test.rdbuf();
+
+    settings_json = json::parse(buffer.str());
+    Settings::enable_detailed_logging =
+        settings_json["enable_detailed_logging"].get<bool>();
+
+  } catch (...) {
+    save_settings();
+    ifstream test("test");
+
+    stringstream buffer;
+    buffer << test.rdbuf();
+    settings_json = json::parse(buffer.str());
+    Settings::enable_detailed_logging =
+        settings_json["enable_detailed_logging"].get<bool>();
+  }
 
   return 0;
 }

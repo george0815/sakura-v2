@@ -1,6 +1,8 @@
 #include "controls_component.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../general/general_views.h"
+#include <SDL3/SDL_keycode.h>
+#include <ftxui/component/event.hpp>
 #include <iostream>
 
 // ftxui
@@ -75,6 +77,122 @@ Component ControlsComponent() {
 
          }) |
          borderEmpty;
+}
+
+// Converts a SDL3 keycode to one that can be easily used by FTXUI. This
+// function is called whenever settings are being deserialized from JSON.
+
+Event KeyCodeToFTXUI(int code) {
+
+  // Normal characters
+  if (Event::Character((char)code)) {
+
+    return Event::Character((char)code);
+  }
+}
+
+// Converts a FTXUI keycode to one that can be easily used by SDL3. This
+// function is called whenever settings are being serialized to JSON.
+
+int KeyCodeToSDL3(const ftxui::Event &key_event) {
+
+  // Normal characters
+  if (key_event.is_character()) {
+
+    string input = key_event.character();
+    char c = input[0];
+
+    return (int)(c);
+  }
+
+  // Special characters (unfortunately key_event needs to be an int to use a
+  // switch)
+
+  // Special
+  if (key_event == Event::Escape) {
+    return SDLK_ESCAPE;
+  }
+  if (key_event == Event::Return) {
+    return SDLK_RETURN;
+  }
+  if (key_event == Event::Tab) {
+    return SDLK_TAB;
+  }
+  if (key_event == Event::Backspace) {
+    return SDLK_BACKSPACE;
+  }
+  if (key_event == Event::Delete) {
+    return SDLK_DELETE;
+  }
+
+  // Arrow keys
+  if (key_event == Event::ArrowUp) {
+    return SDLK_UP;
+  }
+  if (key_event == Event::ArrowDown) {
+    return SDLK_DOWN;
+  }
+  if (key_event == Event::ArrowLeft) {
+    return SDLK_LEFT;
+  }
+  if (key_event == Event::ArrowRight) {
+    return SDLK_RIGHT;
+  }
+
+  // Nav keys
+  if (key_event == Event::Home) {
+    return SDLK_HOME;
+  }
+  if (key_event == Event::End) {
+    return SDLK_END;
+  }
+  if (key_event == Event::PageUp) {
+    return SDLK_PAGEUP;
+  }
+  if (key_event == Event::PageDown) {
+    return SDLK_PAGEDOWN;
+  }
+
+  // Function keys
+  if (key_event == Event::F1) {
+    return SDLK_F1;
+  }
+  if (key_event == Event::F2) {
+    return SDLK_F2;
+  }
+  if (key_event == Event::F3) {
+    return SDLK_F3;
+  }
+  if (key_event == Event::F4) {
+    return SDLK_F4;
+  }
+  if (key_event == Event::F5) {
+    return SDLK_F5;
+  }
+  if (key_event == Event::F6) {
+    return SDLK_F6;
+  }
+  if (key_event == Event::F7) {
+    return SDLK_F7;
+  }
+  if (key_event == Event::F8) {
+    return SDLK_F8;
+  }
+  if (key_event == Event::F9) {
+    return SDLK_F9;
+  }
+  if (key_event == Event::F10) {
+    return SDLK_F10;
+  }
+  if (key_event == Event::F11) {
+    return SDLK_F11;
+  }
+  if (key_event == Event::F12) {
+    return SDLK_F12;
+  }
+
+  // Default
+  return SDLK_UNKNOWN;
 }
 
 } // namespace ControlsComponent

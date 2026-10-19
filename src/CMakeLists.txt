@@ -20,6 +20,7 @@ include(FetchContent)
 set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 set(FETCHCONTENT_QUIET OFF)
 
+# Get FTXUI
 
 FetchContent_Declare(ftxui
   GIT_REPOSITORY  https://github.com/arthursonzogni/ftxui.git
@@ -31,7 +32,7 @@ FetchContent_Declare(ftxui
 FetchContent_MakeAvailable(ftxui)
 
 
-# Get FTXUI
+# Get i18ncpp
 
 FetchContent_Declare(i18ncpp
   GIT_REPOSITORY  https://github.com/GeTechG/i18ncpp
@@ -39,7 +40,19 @@ FetchContent_Declare(i18ncpp
   GIT_SHALLOW     TRUE
   EXCLUDE_FROM_ALL
 )
+
 FetchContent_MakeAvailable(i18ncpp)
+
+# Get SDL3
+
+FetchContent_Declare(SDL3
+  GIT_REPOSITORY  https://github.com/libsdl-org/SDL.git
+  GIT_TAG    main
+  GIT_SHALLOW     TRUE
+  EXCLUDE_FROM_ALL
+)
+FetchContent_MakeAvailable(SDL3)
+
 
 
 file(GLOB_RECURSE SRC CONFIGURE_DEPENDS
@@ -56,6 +69,7 @@ target_link_libraries(sakura-v2
   PRIVATE ftxui::screen
   PRIVATE ftxui::dom
   PRIVATE ftxui::component
+  PRIVATE SDL3::SDL3
   PRIVATE i18ncpp
 )
 

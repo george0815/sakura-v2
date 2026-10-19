@@ -3,6 +3,7 @@
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
+#include <ftxui/component/event.hpp>
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
@@ -19,9 +20,9 @@ Component ControlsComponent();
 inline Component ControlsSubmenuComponent = ControlsComponent();
 
 // Convert ftxui key code -> SDL2
-int KeyCodeToSDL2(int code);
+int KeyCodeToSDL3(const Event &key_event);
 
-// Convert SDL2 key code -> ftxui
-int KeyCodeToFTXUI(int code);
+// Convert SDL3 key code -> ftxui
+Event KeyCodeToFTXUI(int code);
 
 } // namespace ControlsComponent
