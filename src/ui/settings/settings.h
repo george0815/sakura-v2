@@ -32,7 +32,7 @@ inline int language = 0;
 // Controls (will be ints for now but will probably be some SDL keycode or
 // something later)
 inline int start_rom_control = 0;
-inline int load_rom_control = 0;
+inline int stop_rom_control = 0;
 inline int open_rom_folder_control = 0;
 inline int open_sram_folder_control = 0;
 inline int save_state_control = 0;

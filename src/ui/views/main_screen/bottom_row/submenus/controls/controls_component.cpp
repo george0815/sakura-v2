@@ -1,4 +1,5 @@
 #include "controls_component.h"
+#include "../../../../../settings/settings.h"
 #include "../../../../general/general_views.h"
 #include <iostream>
 
@@ -27,33 +28,44 @@ Component ControlsComponent() {
   // Main container
   return Container::Vertical({
 
-             GeneralViews::ControlOptionComponent("Start rom :", 0),
+             GeneralViews::ControlOptionComponent("Start rom :",
+                                                  Settings::start_rom_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Load rom :", 0),
+             GeneralViews::ControlOptionComponent("Stop rom :",
+                                                  Settings::stop_rom_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Open rom folder :", 0),
+             GeneralViews::ControlOptionComponent(
+                 "Open rom folder :", Settings::open_rom_folder_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Open SRAM folder :", 0),
+             GeneralViews::ControlOptionComponent(
+                 "Open SRAM folder :", Settings::open_sram_folder_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Save state :", 0),
+             GeneralViews::ControlOptionComponent("Save state :",
+                                                  Settings::save_state_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Load state :", 0),
+             GeneralViews::ControlOptionComponent("Load state :",
+                                                  Settings::load_state_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("START :", 0),
+             GeneralViews::ControlOptionComponent("START :",
+                                                  Settings::start_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("SELECT :", 0),
+             GeneralViews::ControlOptionComponent("SELECT :",
+                                                  Settings::select_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("A :", 0),
+             GeneralViews::ControlOptionComponent("A :", Settings::a_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("B :", 0),
+             GeneralViews::ControlOptionComponent("B :", Settings::b_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("UP :", 0),
+             GeneralViews::ControlOptionComponent("UP :", Settings::up_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("DOWN :", 0),
+             GeneralViews::ControlOptionComponent("DOWN :",
+                                                  Settings::down_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("LEFT :", 0),
+             GeneralViews::ControlOptionComponent("LEFT :",
+                                                  Settings::left_control),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("RIGHT :", 0),
+             GeneralViews::ControlOptionComponent("RIGHT :",
+                                                  Settings::right_control),
              Renderer([&] { return text(""); }),
              Renderer([&] { return separator(); }),
 

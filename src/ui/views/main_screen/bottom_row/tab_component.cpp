@@ -59,6 +59,7 @@ Component BottomRow::TabContainerComponent() {
                             return false;
                           }),*/
                  wrapped_roms,
+
                  SavesComponent::SavesSubmenuComponent,
                  SettingsComponent::SettingsSubmenuComponent |
                      vscroll_indicator | frame,
