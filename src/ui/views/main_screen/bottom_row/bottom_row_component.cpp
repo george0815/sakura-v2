@@ -12,6 +12,8 @@
 
 using namespace ftxui;
 
+// TODO:: Add i18n
+
 Component BottomRow::BottomRowComponent() {
   return Container::Horizontal({
              TabMenuComponent() | border,
