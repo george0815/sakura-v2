@@ -1,4 +1,5 @@
 #include "general_views.h"
+#include "../../state.h"
 #include <iostream>
 
 // ftxui
@@ -59,6 +60,8 @@ vector<string> color_entries = {
 // element and a button
 Component ControlOptionComponent(string str, int &control_setting) {
 
+  string button_label = str;
+
   return Container::Horizontal({
 
       // Used as a label
@@ -67,8 +70,10 @@ Component ControlOptionComponent(string str, int &control_setting) {
       // User clicks button -> wait for input -> next input is the value of the
       // NES control being configured TODO:: Replace logic once settings are
       // implemented
+
       Button(
-          "ESC", [&] { cout << "test"; }, ButtonOption::Ascii()),
+          &UIState::test_button_label,
+          [&] { UIState::test_button_label = "..."; }, ButtonOption::Ascii()),
 
   });
 }

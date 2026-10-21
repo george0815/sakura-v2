@@ -1,4 +1,7 @@
+#include <stdlib.h>
+#include <string>
 
+using namespace std;
 
 namespace UIState {
 
@@ -23,5 +26,7 @@ inline int SelectedSRAMTableIndex = 0;
 
 // Hold the index of the current focus tab in the roms table
 inline int SelectedSaveStateTableIndex = 0;
+
+inline string test_button_label = "TEST";
 
 } // namespace UIState
