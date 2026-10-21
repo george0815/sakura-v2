@@ -10,6 +10,7 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;
+using namespace std;
 
 namespace ControlsComponent {
 
@@ -23,6 +24,6 @@ inline Component ControlsSubmenuComponent = ControlsComponent();
 int KeyCodeToSDL3(const Event &key_event);
 
 // Convert SDL3 key code -> ftxui
-Event KeyCodeToFTXUI(int code);
+string KeyCodeToFTXUI(int code);
 
 } // namespace ControlsComponent

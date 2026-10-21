@@ -1,6 +1,7 @@
 #include "controls_component.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../general/general_views.h"
+#include "SDL3/SDL_keyboard.h"
 #include <SDL3/SDL_keycode.h>
 #include <ftxui/component/event.hpp>
 #include <iostream>
@@ -80,15 +81,17 @@ Component ControlsComponent() {
 }
 
 // Converts a SDL3 keycode to one that can be easily used by FTXUI. This
-// function is called whenever settings are being deserialized from JSON.
+// function is called whenever settings are being deserialized from JSON. It's
+// only really used to set the button label, so returning a string is fine.
 
-Event KeyCodeToFTXUI(int code) {
+// TODO:: Test against edge cases
 
-  // Normal characters
-  if (Event::Character((char)code)) {
+string KeyCodeToFTXUI(int code) {
 
-    return Event::Character((char)code);
-  }
+  // convert from 32 bit int
+  SDL_Keycode tmp_code = (SDL_Keycode)code;
+
+  return SDL_GetKeyName(tmp_code);
 }
 
 // Converts a FTXUI keycode to one that can be easily used by SDL3. This
