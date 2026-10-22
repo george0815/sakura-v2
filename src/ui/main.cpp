@@ -33,41 +33,52 @@ void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
 
 int main() {
 
+  // TODO: 1. Backup settigns, since this is done before the json is parse it
+  // should be all safe default values. 2. Try laoding config file, 3. If it
+  // fails, load backup
+
   if (Settings::load_settings() != 0) {
-    cout << "Error";
+
+    // TODO: Finish this function
+
+    // 1. Save default settings
+    Settings::save_settings(); // TODO: Create save default settings function
+
+    Settings::load_settings();
   }
 
+  // Delare hardware components
   CPU *cpu = new CPU();
 
+  // Declare screen, ScreenInteractive::Fullscreen uses the entire terminal
+  // window
   ScreenInteractive screen = ScreenInteractive::Fullscreen();
-  screen.TrackMouse(true);
+  screen.TrackMouse(true); // Track mouse input
+  screen.CaptureMouse();   // TODO: Check if this is redundant
 
-  screen.CaptureMouse();
-  screen.Fullscreen();
+  // Set Fullscreen
+  screen.Fullscreen(); // TODO: Check if this is redundant
 
+  // Declare main loop, originally I did screen.Loop but decalring the loop
+  // separately allows for greater control and for me to react to changes in
+  // global variables that I set
   Loop loop(&screen,
             MainScreen::MainScreenComponent() | border | color(Color::White));
 
-  GeneralViews::AddRow(RomsComponent::RomSubmenuComponent, "Mario",
-                       "/home/Hunter/roms/", "home/apps/sakura-v2");
-
-  LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, "test");
-
+  // Main loop
   while (!loop.HasQuitted()) {
 
+    // If exit flag is set
     if (UIState::Exit == true) {
 
       // Save settings
       if (Settings::save_settings() == 0) {
 
-        std::cout << "TEST$WRTES" << endl;
         ExitScreen(screen);
       }
     }
     loop.RunOnce();
   }
-
-  int row = 0;
 
   return EXIT_SUCCESS;
 }
