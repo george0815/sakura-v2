@@ -18,16 +18,18 @@
 // Rom Component, as of now just returns a table but as settings are implemented
 // and the emulator is built out more behavior will be added
 //
-// Current memebers: RomTableComponent
+// Current memebers: RomTableComponent, StartRom
 //
 //==========================
+
+// TODO: Implement start rom, i18n
 
 using namespace ftxui;
 using namespace std;
 
 namespace RomsComponent {
 
-void start_rom(Component &comp, int index) {
+void StartRom(Component &comp, int index) {
 
   // Get focused child of internal Container::Vertical in the table
   cout << UIState::SelectedRomTableIndex;

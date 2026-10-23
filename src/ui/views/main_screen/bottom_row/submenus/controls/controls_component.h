@@ -20,10 +20,10 @@ Component ControlsComponent();
 // Variable that holds controls component
 inline Component ControlsSubmenuComponent = ControlsComponent();
 
-// Convert ftxui key code -> SDL2
+// Convert ftxui key code -> SDL3
 int KeyCodeToSDL3(const Event &key_event);
 
-// Convert SDL3 key code -> ftxui
+// Convert SDL3 key code -> string
 string KeyCodeToFTXUI(int code);
 
 } // namespace ControlsComponent

@@ -16,8 +16,8 @@ ftxui::Component RomTableComponent();
 // Variable that holds rom component
 inline Component RomSubmenuComponent = RomTableComponent();
 
-inline array<string, 1> test_array = {"test"};
-
-void start_rom(int index);
+// Starts rom (yes I know my comments are redundant but I just like commenting a
+// lot)
+void StartRom(int index);
 
 } // namespace RomsComponent

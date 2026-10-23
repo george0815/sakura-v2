@@ -1,6 +1,5 @@
 #include "general_views.h"
 #include "../../state.h"
-#include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -12,11 +11,14 @@
 
 using namespace std;
 
+// TODO:: i18n
+
 //==========================
 //
 // This namespace is for general compenents that will be resused.
 //
-// Current memebers: FocusableTextComponent, TableHeader, AddRow, TableComponent
+// Current memebers: FocusableTextComponent, TableHeader, AddRow,
+// TableComponent, ControlOptionComponent, ColorComponent, TextInputComponent
 //
 //==========================
 
@@ -97,7 +99,7 @@ Component TextInputComponent(string label, string &var) {
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component
-Component ColorComponent(string str, int index, int &selection) {
+Component ColorComponent(string str, int &selection) {
 
   return Container::Horizontal({
 

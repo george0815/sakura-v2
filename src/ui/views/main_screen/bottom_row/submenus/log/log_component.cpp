@@ -13,7 +13,7 @@
 // This namespace is for the log submenu and any logic that is associated
 // with it.
 //
-// Current memebers:
+// Current memebers: AddLogEntry, LogComponent
 //
 //==========================
 

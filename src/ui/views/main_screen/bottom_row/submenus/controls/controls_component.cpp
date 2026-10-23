@@ -19,9 +19,11 @@ using namespace std;
 // This namespace is for the controls submenu and any logic that is associated
 // with it.
 //
-// Current memebers: ControlsComponent
+// Current memebers: ControlsComponent, KeyCodeToSDL3, KeyCodeToFTXUI
 //
 //==========================
+
+// TODO: i18n, implement save function
 
 namespace ControlsComponent {
 
@@ -31,24 +33,31 @@ Component ControlsComponent() {
   // Main container
   return Container::Vertical({
 
+             // START AND STOP
              GeneralViews::ControlOptionComponent("Start rom :",
                                                   Settings::start_rom_control),
              Renderer([&] { return text(""); }),
              GeneralViews::ControlOptionComponent("Stop rom :",
                                                   Settings::stop_rom_control),
              Renderer([&] { return text(""); }),
+
+             // FOLDERS
              GeneralViews::ControlOptionComponent(
                  "Open rom folder :", Settings::open_rom_folder_control),
              Renderer([&] { return text(""); }),
              GeneralViews::ControlOptionComponent(
                  "Open SRAM folder :", Settings::open_sram_folder_control),
              Renderer([&] { return text(""); }),
+
+             // SAVING
              GeneralViews::ControlOptionComponent("Save state :",
                                                   Settings::save_state_control),
              Renderer([&] { return text(""); }),
              GeneralViews::ControlOptionComponent("Load state :",
                                                   Settings::load_state_control),
              Renderer([&] { return text(""); }),
+
+             // CONTROLLER BUTTONS
              GeneralViews::ControlOptionComponent("START :",
                                                   Settings::start_control),
              Renderer([&] { return text(""); }),
@@ -72,7 +81,7 @@ Component ControlsComponent() {
              Renderer([&] { return text(""); }),
              Renderer([&] { return separator(); }),
 
-             // Save button
+             // SAVE BUTTON
              Button(
                  "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
 
@@ -88,7 +97,7 @@ Component ControlsComponent() {
 
 string KeyCodeToFTXUI(int code) {
 
-  // convert from 32 bit int
+  // Convert from 32 bit int
   SDL_Keycode tmp_code = (SDL_Keycode)code;
 
   return SDL_GetKeyName(tmp_code);
