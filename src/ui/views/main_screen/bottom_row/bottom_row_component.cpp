@@ -12,38 +12,39 @@
 
 using namespace ftxui;
 
-// TODO:: Add i18n
+//==========================
+//
+// This namespace is for the bottom row and any logic that is associated
+// with it.
+//
+// Current memebers: BottomRowComponent
+//
+//==========================
 
+// TODO: Add i18n, replace log section placeholder data with the most recent log
+// entry
+
+// Component composing of the entire bottom row,
 Component BottomRow::BottomRowComponent() {
+
   return Container::Horizontal({
+
+             // Tab component showing options
              TabMenuComponent() | border,
 
+             // Container::Vertical, section showning the most recent log on
+             // top, right now just has placeholder data
              Container::Vertical({Renderer([&] {
+                                    // Most recent log
                                     return text(
                                         " ROM LOADED -  Super Mario Bros. 3 - "
                                         "CHR_ROM: 8KB - MAPPER: 4");
                                   }) | border,
+
+                                  // Main tab contents
                                   TabContainerComponent() | flex | border}) |
                  flex,
 
          }) |
          flex;
-}
-
-std::string BottomRow::MenuTitle(int menu_index) {
-
-  switch (menu_index) {
-
-  case (0):
-    return " Roms ";
-  case (1):
-    return " Saves ";
-  case (2):
-    return " Settings ";
-  case (3):
-    return " Controls ";
-  case (4):
-    return " Log ";
-  }
-  return " Roms ";
 }

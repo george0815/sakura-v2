@@ -8,10 +8,11 @@ using namespace ftxui;
 
 namespace BottomRow {
 
+// Returns bottoms row component
 Component BottomRowComponent();
-Component TabMenuComponent();
 
+// Returns tab components, implementations in tab_component.cpp
+Component TabMenuComponent();
 Component TabContainerComponent();
 
-std::string MenuTitle(int menu_index);
 } // namespace BottomRow
