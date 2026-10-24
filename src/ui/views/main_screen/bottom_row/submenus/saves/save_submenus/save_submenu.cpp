@@ -15,23 +15,30 @@
 
 //==========================
 //
-// Rom Component, as of now just returns a table but as settings are implemented
-// and the emulator is built out more behavior will be added
+// Save submenu compenents, contains two table compenents, one for
+// save states and one for SRAM
 //
-// Current memebers: RomTableComponent
+// Current memebers: SaveSubmenuComponent, SaveSRAMTableComponent
 //
 //==========================
+
+// TODO: i18n
 
 using namespace ftxui;
 using namespace std;
 
-// Simple roms table
-Component SaveSubmenuComponent::SaveStateTableComponent() {
+namespace SaveSubmenuComponent {
+
+// Table for save states
+Component SaveStateTableComponent() {
   return GeneralViews::TableComponent("Name", "Created", "Size", 10,
                                       UIState::SelectedSaveStateTableIndex);
 }
 
-Component SaveSubmenuComponent::SaveSRAMTableComponent() {
+// Table for SRAM
+Component SaveSRAMTableComponent() {
   return GeneralViews::TableComponent("Name", "Created", "Size", 10,
                                       UIState::SelectedSRAMTableIndex);
 }
+
+} // namespace SaveSubmenuComponent

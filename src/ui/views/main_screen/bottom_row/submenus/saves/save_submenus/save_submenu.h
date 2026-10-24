@@ -11,11 +11,11 @@ using namespace std;
 
 namespace SaveSubmenuComponent {
 
-// Returns rom submenu component
+// Returns table components for save state and SRAM
 ftxui::Component SaveSRAMTableComponent();
 ftxui::Component SaveStateTableComponent();
 
-// Variable that holds rom component
+// Variable that holds table components
 inline Component SRAMTable = SaveSRAMTableComponent();
 inline Component SaveStatesTable = SaveStateTableComponent();
 

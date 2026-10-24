@@ -12,12 +12,12 @@ using namespace ftxui;
 
 namespace SavesComponent {
 
-// Returns controls menu component
+// Returns saves menu components
 Component SavesComponent();
 Component SavesTabContainerComponent();
 Component SavesTabMenuComponent();
 
-// Variable that holds controls component
+// Variable that holds saves menu component
 inline Component SavesSubmenuComponent = SavesComponent();
 
 } // namespace SavesComponent

@@ -23,6 +23,10 @@ using namespace std;
 //
 //==========================
 
+// TODO: i18n, add save button logic, and input verfication, error handling,
+// etc, also add a language drop down box, also add a general component that
+// just returns Renderer([&] {return text ("")}) for padding
+
 namespace SettingsComponent {
 
 // Returns controls menu component
@@ -51,23 +55,22 @@ Component SettingsComponent() {
 
              // Color options
 
-             GeneralViews::ColorComponent("Background color :", 0,
+             GeneralViews::ColorComponent("Background color :",
                                           Settings::background_color),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::ColorComponent("Text color :", 0,
-                                          Settings::text_color),
+             GeneralViews::ColorComponent("Text color :", Settings::text_color),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::ColorComponent("Focus background color :", 0,
+             GeneralViews::ColorComponent("Focus background color :",
                                           Settings::focus_background_color),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::ColorComponent("Focus text color :", 0,
+             GeneralViews::ColorComponent("Focus text color :",
                                           Settings::focus_text_color),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::ColorComponent("ASCII color :", 0,
+             GeneralViews::ColorComponent("ASCII color :",
                                           Settings::ascii_color),
              Renderer([&] { return text(""); }),
 

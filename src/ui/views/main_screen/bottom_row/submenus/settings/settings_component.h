@@ -12,10 +12,10 @@ using namespace ftxui;
 
 namespace SettingsComponent {
 
-// Returns controls menu component
+// Returns settigns menu component
 Component SettingsComponent();
 
-// Variable that holds controls component
+// Variable that holds settings component
 inline Component SettingsSubmenuComponent = SettingsComponent();
 
 } // namespace SettingsComponent
