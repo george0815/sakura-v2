@@ -10,10 +10,11 @@
 /* TODO: PADDING
  * SET COLOR
  * COMMENTS
- * GET VALUES FROM SETTINGS CONFIG / VARIABLES*/
+ * GET VALUES FROM SETTINGS CONFIG / VARIABLES, i18n */
 
 using namespace ftxui;
 
+// Shows the current controls for UI, (NES controls are in the controls submenu)
 Component TopRow::ControlsContainer() {
 
   return Container::Vertical({

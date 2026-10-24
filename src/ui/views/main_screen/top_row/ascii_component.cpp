@@ -15,6 +15,9 @@
 
 using namespace ftxui;
 
+// ASCII art TODO: Find a way to 1. Dynamically load the ascii from json, and 2.
+// Switch ascii depending on the menu
+
 Component TopRow::AsciiBox() {
 
   return Renderer([&] {

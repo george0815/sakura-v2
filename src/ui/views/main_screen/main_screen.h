@@ -10,8 +10,7 @@ using namespace ftxui;
 
 namespace MainScreen {
 
+// Returns component that composes the entire main screen
 Component MainScreenComponent();
-inline int selected_menu = 0;
-inline bool exit = false;
 
 }; // namespace MainScreen

@@ -7,6 +7,7 @@ using namespace ftxui;
 
 namespace TopRow {
 
+// Return components that make up the top row
 Component AsciiBox();
 Component InfoContainer();
 Component ControlsContainer();

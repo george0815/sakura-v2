@@ -12,6 +12,7 @@
 
 using namespace ftxui;
 
+// Just contains info text, name of the program
 Component TopRow::InfoContainer() {
 
   return Container::Vertical({

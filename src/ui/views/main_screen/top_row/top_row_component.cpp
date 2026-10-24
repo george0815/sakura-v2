@@ -10,14 +10,29 @@
 
 using namespace ftxui;
 
-Component TopRow::TopRowComponent() {
+//==========================
+//
+// This namespace is for the top row component and any logic that is
+// associated with them.
+//
+// Current memebers: TopRowComponent
+//
+//==========================
+
+namespace TopRow {
+
+Component TopRowComponent() {
   return Container::Horizontal({
 
-             AsciiBox(), Renderer([] { return text("     "); }),
+             AsciiBox(), Renderer([] {
+               return text("     ");
+             }), // Padding, TODO: Replace with general padding component
              InfoContainer(),
 
              Renderer([] { return text("            "); }),
 
              ControlsContainer()}) |
-         size(ftxui::HEIGHT, ftxui::LESS_THAN, 100);
+         size(ftxui::HEIGHT, ftxui::LESS_THAN, 100); // Sets max size of top row
 }
+
+} // namespace TopRow
