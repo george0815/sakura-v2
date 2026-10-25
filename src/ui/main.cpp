@@ -33,19 +33,20 @@ void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
 
 int main() {
 
-  // TODO: 1. Backup settigns, since this is done before the json is parse it
-  // should be all safe default values. 2. Try laoding config file, 3. If it
-  // fails, load backup
+  // Save backup of settings TODO: Low priority: use some sort of hash or
+  // something to detect if the backup has been change to limit unnecessaru
+  // writes
+  Settings::save_settings(true);
 
-  if (Settings::load_settings() != 0) {
-
-    // TODO: Finish this function
-
-    // 1. Save default settings
-    Settings::save_settings(); // TODO: Create save default settings function
-
-    Settings::load_settings();
+  // If loading main fails, load backup we just created
+  if (Settings::load_settings(false) != 0) {
+    Settings::load_settings(true);
   }
+
+  // Set up i18n
+  UIState::i18_object.loadLocaleFromFile("en.json");
+  UIState::i18_object.loadLocaleFromFile("jp.json");
+  UIState::i18_object.setLocale(UIState::locale_entries[Settings::language]);
 
   // Delare hardware components
   CPU *cpu = new CPU();
@@ -72,7 +73,7 @@ int main() {
     if (UIState::Exit == true) {
 
       // Save settings
-      if (Settings::save_settings() == 0) {
+      if (Settings::save_settings(false) == 0) {
 
         ExitScreen(screen);
       }

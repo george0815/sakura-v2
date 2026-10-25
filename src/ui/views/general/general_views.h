@@ -34,6 +34,10 @@ Component TextInputComponent(string label, string &var);
 // element and an dropdown component
 Component ColorComponent(string str, int &selection);
 
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an dropdown component
+Component LanguageComponent(string str, int &selection);
+
 //==========================
 // TABLE COMPONENTS
 //==========================

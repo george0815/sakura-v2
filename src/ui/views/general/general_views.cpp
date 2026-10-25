@@ -58,6 +58,9 @@ vector<string> color_entries = {
     "DarkGray",  "BrightBlue",    "BrightGreen",  "BrightCyan",
     "BrightRed", "BrightMagenta", "BrightYellow", "White"};
 
+// Language entries
+vector<string> lang_entries = {"English", "Japanese"};
+
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
 Component ControlOptionComponent(string str, int &control_setting) {
@@ -107,6 +110,20 @@ Component ColorComponent(string str, int &selection) {
       Renderer([str] { return text(" " + format("{:<{}}", str, 30)); }) |
           center,
       Dropdown(&color_entries, &selection)
+
+  });
+}
+
+// Used in the settings submenu, consists of a Container::Horizontal with a text
+// element and an dropdown component
+Component LanguageComponent(string str, int &selection) {
+
+  return Container::Horizontal({
+
+      // Used as a label
+      Renderer([str] { return text(" " + format("{:<{}}", str, 30)); }) |
+          center,
+      Dropdown(&lang_entries, &selection)
 
   });
 }

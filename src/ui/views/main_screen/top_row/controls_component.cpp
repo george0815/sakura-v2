@@ -23,15 +23,13 @@ Component TopRow::ControlsContainer() {
         return text("Start rom: F3") | color(Color::Green) | borderEmpty;
       }),
       Renderer([&] {
-        return text("Stop rom: F4") | color(Color::Green) | borderEmpty;
+        return text("Stop rom: F4") | color(Color::LightSkyBlue1) | borderEmpty;
       }),
       Renderer([&] {
-        return text("Open rom folder: F5") | color(Color::LightSkyBlue1) |
-               borderEmpty;
+        return text("Open rom folder: F5") | color(Color::Purple) | borderEmpty;
       }),
       Renderer([&] {
-        return text("Open SRAM folder: F6") | color(Color::Purple) |
-               borderEmpty;
+        return text("Open SRAM folder: F6") | color(Color::Pink1) | borderEmpty;
       }),
       Renderer([&] {
         return text("Save state: F7") | color(Color::Red) | borderEmpty;

@@ -1,9 +1,13 @@
+#include <i18ncpp.h>
 #include <stdlib.h>
 #include <string>
 
 using namespace std;
 
 namespace UIState {
+
+// i18n object
+inline i18n::I18N i18_object;
 
 // Checked every loop, closes if set
 inline bool Exit = false;
@@ -28,5 +32,8 @@ inline int SelectedSRAMTableIndex = 0;
 inline int SelectedSaveStateTableIndex = 0;
 
 inline string test_button_label = "TEST";
+
+// Holds language local options
+inline string locale_entries[2] = {"en", "jp"};
 
 } // namespace UIState

@@ -24,7 +24,7 @@ using namespace std;
 namespace Settings {
 
 // Serializes settings namespace to JSON
-int save_settings() {
+int save_settings(bool backup) {
 
   // Declare json object
   json settings_json;
@@ -32,21 +32,23 @@ int save_settings() {
   // Set values in json object
   settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
 
-  // Create and write to file
-  ofstream config_stream("config.ini");
+  // Create and write to file, either main or create a backup
+  string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
+  ofstream config_stream(tmp_config_filename);
   config_stream << settings_json;
 
   return 0;
 }
 
 // Serializes settings namespace to JSON
-int load_settings() {
+int load_settings(bool backup) {
 
   // Create json object as object, has to be set to json::object or else it will
   // be treated as a string
   json settings_json = json::object();
 
-  ifstream config_stream("config.ini");
+  string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
+  ifstream config_stream(tmp_config_filename);
 
   // Read to buffer
   stringstream buffer;
@@ -63,7 +65,7 @@ int load_settings() {
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
-    save_settings();
+    save_settings(false);
 
     // Reopen file after it has been saved
     ifstream config_stream("config.ini");
