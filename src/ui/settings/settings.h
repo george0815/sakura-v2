@@ -27,7 +27,7 @@ inline int text_color = 0;
 inline int focus_background_color = 0;
 inline int focus_text_color = 0;
 inline int ascii_color = 0;
-inline int language = 0;
+inline int language = 1;
 
 // Controls (will be ints for now but will probably be some SDL keycode or
 // something later)

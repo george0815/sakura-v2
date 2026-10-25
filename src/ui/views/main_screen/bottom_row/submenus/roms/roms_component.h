@@ -14,7 +14,7 @@ namespace RomsComponent {
 ftxui::Component RomTableComponent();
 
 // Variable that holds rom component
-inline Component RomSubmenuComponent = RomTableComponent();
+inline Component RomSubmenuComponent;
 
 // Starts rom (yes I know my comments are redundant but I just like commenting a
 // lot)

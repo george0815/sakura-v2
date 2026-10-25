@@ -17,6 +17,6 @@ void AddLogEntry(Component &comp, string str);
 Component LogComponent();
 
 // Holds actual component returned from LogComponent()
-inline Component LogSubmenuComponent = LogComponent();
+inline Component LogSubmenuComponent;
 
 } // namespace LogComponent

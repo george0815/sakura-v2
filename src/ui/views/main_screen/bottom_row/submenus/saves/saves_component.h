@@ -18,6 +18,6 @@ Component SavesTabContainerComponent();
 Component SavesTabMenuComponent();
 
 // Variable that holds saves menu component
-inline Component SavesSubmenuComponent = SavesComponent();
+inline Component SavesSubmenuComponent;
 
 } // namespace SavesComponent

@@ -121,7 +121,9 @@
   "Unknown error" : "Unknown error",
   "Errors" : "Errors",
   "HELP" : "HELP",
-  "folder/file_path" : "folder/file path"
+  "folder/file_path" : "folder/file path",
+  "English" : "English", 
+  "Japanese" : "Japanese"
 
 
 

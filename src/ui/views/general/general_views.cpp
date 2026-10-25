@@ -18,9 +18,16 @@ using namespace std;
 // This namespace is for general compenents that will be resused.
 //
 // Current memebers: FocusableTextComponent, TableHeader, AddRow,
-// TableComponent, ControlOptionComponent, ColorComponent, TextInputComponent
+// TableComponent, ControlOptionComponent, ColorComponent, TextInputComponent,
+// LanguageComponent
 //
 //==========================
+
+// Color entries
+std::vector<std::string> color_entries;
+
+// Language entries
+std::vector<std::string> lang_entries;
 
 namespace GeneralViews {
 
@@ -50,16 +57,6 @@ Component FocusableTextComponent(string str, int padding) {
 //==========================
 // SETTINGS COMPONENTS
 //==========================
-
-// Color entries
-vector<string> color_entries = {
-    "Black ",    "Blue",          "Red",          "Green",
-    "Cyan",      "Magenta",       "Brown",        "Gray",
-    "DarkGray",  "BrightBlue",    "BrightGreen",  "BrightCyan",
-    "BrightRed", "BrightMagenta", "BrightYellow", "White"};
-
-// Language entries
-vector<string> lang_entries = {"English", "Japanese"};
 
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
@@ -104,6 +101,22 @@ Component TextInputComponent(string label, string &var) {
 // element and an dropdown component
 Component ColorComponent(string str, int &selection) {
 
+  color_entries = {UIState::i18_object.tr("Black"),
+                   UIState::i18_object.tr("Blue"),
+                   UIState::i18_object.tr("Red"),
+                   UIState::i18_object.tr("Green"),
+                   UIState::i18_object.tr("Cyan"),
+                   UIState::i18_object.tr("Magenta"),
+                   UIState::i18_object.tr("Brown"),
+                   UIState::i18_object.tr("Gray"),
+                   UIState::i18_object.tr("BrightBlue"),
+                   UIState::i18_object.tr("BrightGreen"),
+                   UIState::i18_object.tr("BrightCyan"),
+                   UIState::i18_object.tr("BrightRed"),
+                   UIState::i18_object.tr("BrightMagenta"),
+                   UIState::i18_object.tr("BrightYellow"),
+                   UIState::i18_object.tr("White")};
+
   return Container::Horizontal({
 
       // Used as a label
@@ -117,6 +130,10 @@ Component ColorComponent(string str, int &selection) {
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an dropdown component
 Component LanguageComponent(string str, int &selection) {
+
+  // Sets up language options
+  lang_entries = {UIState::i18_object.tr("English"),
+                  UIState::i18_object.tr("Japanese")};
 
   return Container::Horizontal({
 

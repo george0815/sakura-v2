@@ -36,13 +36,23 @@
 using namespace ftxui;
 
 // Menu tab options
-std::vector<std::string> submenus = {"Roms", "Saves", "Settings", "Controls",
-                                     "log"};
+std::vector<std::string> submenus;
 
 namespace BottomRow {
 
 // Main menu contents that displays on the right side of the screen
 Component TabContainerComponent() {
+
+  // Set components in function rather in at the namespace scope so that text
+  // can be properly translated (if I don't do this then the submenu component
+  // varibles will be set before the local is properly set)
+  RomsComponent::RomSubmenuComponent = RomsComponent::RomTableComponent();
+  SettingsComponent::SettingsSubmenuComponent =
+      SettingsComponent::SettingsComponent();
+  LogComponent::LogSubmenuComponent = LogComponent::LogComponent();
+  SavesComponent::SavesSubmenuComponent = SavesComponent::SavesComponent();
+  ControlsComponent::ControlsSubmenuComponent =
+      ControlsComponent::ControlsComponent();
 
   // Wraps roms component in CatchEvent so that it can respond to key presses
   // (for launching the rom from the table, opening folders, etc)
@@ -81,6 +91,9 @@ Component TabContainerComponent() {
 
 // Menu that displays on the left side of the screen
 Component TabMenuComponent() {
+
+  submenus = {UIState::i18_object.tr("Roms"), UIState::i18_object.tr("Saves"),
+              "Settings", "Controls", "log"};
 
   return Container::Vertical({
 

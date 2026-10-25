@@ -127,9 +127,11 @@
   "Unknown error" : "不明なエラー",
   "Errors" : "エラー",
   "HELP" : "ヘルプ",
-  "folder/file_path" : "ファイル/フォルダー"
+  "folder/file_path" : "ファイル/フォルダー",
 
 
+  "English" : "英語", 
+  "Japanese" : "日本語"
 
 
 

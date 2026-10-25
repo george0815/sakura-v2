@@ -16,6 +16,6 @@ namespace SettingsComponent {
 Component SettingsComponent();
 
 // Variable that holds settings component
-inline Component SettingsSubmenuComponent = SettingsComponent();
+inline Component SettingsSubmenuComponent;
 
 } // namespace SettingsComponent

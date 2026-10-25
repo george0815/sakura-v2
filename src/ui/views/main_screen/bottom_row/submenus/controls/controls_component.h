@@ -18,7 +18,7 @@ namespace ControlsComponent {
 Component ControlsComponent();
 
 // Variable that holds controls component
-inline Component ControlsSubmenuComponent = ControlsComponent();
+inline Component ControlsSubmenuComponent;
 
 // Convert ftxui key code -> SDL3
 int KeyCodeToSDL3(const Event &key_event);

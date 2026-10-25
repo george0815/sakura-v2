@@ -53,6 +53,9 @@ Component SettingsComponent() {
              Checkbox("Disable ASCII", &Settings::disable_ascii),
              Renderer([&] { return text(""); }),
 
+             GeneralViews::LanguageComponent("Language :", Settings::language),
+             Renderer([&] { return text(""); }),
+
              // Color options
 
              GeneralViews::ColorComponent("Background color :",
