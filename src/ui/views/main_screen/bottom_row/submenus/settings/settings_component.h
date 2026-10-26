@@ -1,5 +1,4 @@
 
-
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -8,6 +7,7 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
+using namespace std;
 using namespace ftxui;
 
 namespace SettingsComponent {

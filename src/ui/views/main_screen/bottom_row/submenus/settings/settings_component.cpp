@@ -3,16 +3,17 @@
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
-#include <ftxui/component/captured_mouse.hpp>
 #include <iostream>
 
 // ftxui
+#include <ftxui/component/captured_mouse.hpp>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 
 using namespace std;
+using namespace filesystem;
 
 //==========================
 //

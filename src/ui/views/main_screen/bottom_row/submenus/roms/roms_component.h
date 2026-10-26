@@ -4,6 +4,7 @@
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
+#include <vector>
 
 using namespace ftxui;
 using namespace std;
@@ -19,5 +20,26 @@ inline Component RomSubmenuComponent;
 // Starts rom (yes I know my comments are redundant but I just like commenting a
 // lot)
 void StartRom(int index);
+
+// Calls LoadRomFolder on multiple directories to update roms list
+void LoadRoms();
+
+// Loads roms from single directory
+void LoadRomFolder(string directory);
+
+// Rom struct, containing various information about a given rom. Different from
+// the Cart struct in the core
+struct Rom {
+
+  string name;
+  string path;
+  string sram_path;
+  string save_state_path;
+  int size;
+  int id;
+};
+
+// List of rom structs
+inline vector<Rom> RomList;
 
 } // namespace RomsComponent
