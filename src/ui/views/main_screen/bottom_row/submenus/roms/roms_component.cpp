@@ -62,21 +62,23 @@ void LoadRomFolder(string directory) {
 
   // Call verify function on default rom directory
   string error_message;
-  if (Settings::VerfyFolder(directory, error_message) == 0) {
+  if (Settings::VerifyFolder(directory, error_message) == 0) {
 
+    cout << directory;
     // Loop through files in directory (note: non-recursive)
     Rom tmp_rom;
     for (directory_entry tmp_entry : directory_iterator((path)directory)) {
 
       // If file is valid, create entry and add to list
-      if (Settings::VerfyFile(tmp_entry.path()) == 0) {
+      if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0) {
         tmp_rom = {tmp_entry.path().filename(), tmp_entry.path(),
                    tmp_entry.file_size()};
         RomList.push_back(tmp_rom);
-        LogComponent::AddLogEntry(
-            LogComponent::LogSubmenuComponent,
-            "Rom added: " +
-                tmp_rom.name); // TODO: Replace string literal with i18n
+        LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                  "Rom added: " +
+                                      tmp_rom.name); // TODO: add i18n string
+        GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
+                             to_string(tmp_rom.size));
       }
     }
 

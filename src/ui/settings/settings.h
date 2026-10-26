@@ -14,7 +14,7 @@ inline bool enable_detailed_logging = false;
 inline bool disable_ascii = false;
 
 // Inputs
-inline string default_rom_path = "";
+inline string default_rom_path = "~/Downloads/roms/";
 inline string roms_paths;
 inline string log_path = "";
 inline string sram_path = "";
@@ -61,10 +61,10 @@ int load_settings(bool backup);
 //=======================
 
 // Verify's if the path to a given file is valid
-int VerfyFile(string path);
+int VerifyFile(string path, string &error_message);
 
 // Verfies if a folder 1. exists, 2. Can be read from/written to: returns 0 if
 // OK
-int VerfyFolder(string directory, string &error_message);
+int VerifyFolder(string directory, string &error_message);
 
 }; // namespace Settings

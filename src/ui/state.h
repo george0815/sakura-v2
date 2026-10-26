@@ -12,6 +12,9 @@ inline i18n::I18N i18_object;
 // Checked every loop, closes if set
 inline bool Exit = false;
 
+// Heading text, shows most recent log
+inline string most_recent_log;
+
 // Value for the selected menu on the main tab, saves tab is a different
 // variable
 inline int SelectedMenu = 0;

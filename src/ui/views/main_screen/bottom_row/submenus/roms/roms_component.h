@@ -23,7 +23,7 @@ inline Component RomSubmenuComponent;
 void StartRom(int index);
 
 // Calls LoadRomFolder on multiple directories to update roms list
-void LoadRoms();
+void LoadAllRoms();
 
 // Loads roms from single directory
 void LoadRomFolder(string directory);

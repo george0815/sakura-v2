@@ -1,5 +1,6 @@
 
 #include "log_component.h"
+#include "../../../../../state.h"
 #include "../../../../general/general_views.h"
 
 // ftxui
@@ -22,6 +23,8 @@ namespace LogComponent {
 // Uses GeneralViews::AddFocusableText to add a log Entry
 void AddLogEntry(Component &comp, string str) {
   comp->Add(GeneralViews::FocusableTextComponent(str));
+  // Update header
+  UIState::most_recent_log = str;
 }
 
 // Returns log component, basically just a Container::Vertical

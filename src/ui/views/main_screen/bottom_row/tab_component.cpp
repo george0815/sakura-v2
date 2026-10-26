@@ -54,6 +54,9 @@ Component TabContainerComponent() {
   ControlsComponent::ControlsSubmenuComponent =
       ControlsComponent::ControlsComponent();
 
+  // Load roms
+  RomsComponent::LoadAllRoms();
+
   // Wraps roms component in CatchEvent so that it can respond to key presses
   // (for launching the rom from the table, opening folders, etc)
   auto wrapped_roms =
