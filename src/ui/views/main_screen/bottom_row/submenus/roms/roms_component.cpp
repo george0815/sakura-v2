@@ -65,18 +65,19 @@ void LoadRomFolder(string directory) {
   if (Settings::VerfyFolder(directory, error_message) == 0) {
 
     // Loop through files in directory (note: non-recursive)
+    Rom tmp_rom;
     for (directory_entry tmp_entry : directory_iterator((path)directory)) {
 
-      // For each file, run verify NES rom function
-      // TODO: Create get NES in core (since it will be reused
-      // again while initializing the cart)
-      //
-      // TODO: Create verify file function
-      // If pass, create rom struct and add it to roms list
-
-      Rom tmp_rom = {
-
-      };
+      // If file is valid, create entry and add to list
+      if (Settings::VerfyFile(tmp_entry.path()) == 0) {
+        tmp_rom = {tmp_entry.path().filename(), tmp_entry.path(),
+                   tmp_entry.file_size()};
+        RomList.push_back(tmp_rom);
+        LogComponent::AddLogEntry(
+            LogComponent::LogSubmenuComponent,
+            "Rom added: " +
+                tmp_rom.name); // TODO: Replace string literal with i18n
+      }
     }
 
   } else {
@@ -93,10 +94,9 @@ void StartRom(Component &comp, int index) {
 
 // Simple roms table
 Component RomTableComponent() {
-  return GeneralViews::TableComponent(UIState::i18_object.tr("Name"),
-                                      UIState::i18_object.tr("Path"),
-                                      UIState::i18_object.tr("SRAM data path"),
-                                      3, UIState::SelectedRomTableIndex);
+  return GeneralViews::TableComponent(
+      UIState::i18_object.tr("Name"), UIState::i18_object.tr("Path"),
+      UIState::i18_object.tr("Size"), 3, UIState::SelectedRomTableIndex);
 }
 
 } // namespace RomsComponent

@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -33,10 +34,7 @@ struct Rom {
 
   string name;
   string path;
-  string sram_path;
-  string save_state_path;
-  int size;
-  int id;
+  uintmax_t size;
 };
 
 // List of rom structs
