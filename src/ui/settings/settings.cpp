@@ -1,4 +1,6 @@
 #include "settings.h"
+#include "../views/main_screen/bottom_row/submenus/log/log_component.h"
+#include <filesystem>
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <sstream>
@@ -21,7 +23,7 @@ using namespace filesystem;
 //         2. Add verification, handle edge cases on load (verification on save
 //         will be handled in the save function)
 //
-//         TODO: Move verfiy fucntions here
+//         TODO: Change error message to i18n strings
 
 namespace Settings {
 
@@ -38,6 +40,7 @@ int save_settings(bool backup) {
   string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
   ofstream config_stream(tmp_config_filename);
   config_stream << settings_json;
+  config_stream.close();
 
   return 0;
 }
@@ -67,60 +70,75 @@ int load_settings(bool backup) {
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
-    save_settings(false);
-
-    // Reopen file after it has been saved
-    ifstream config_stream("config.ini");
-
-    stringstream buffer;
-    buffer << config_stream.rdbuf();
-    settings_json = json::parse(buffer.str());
-
-    // Retry setting global values TODO:: Make one function that takes in a json
-    // object and sets the global settings values
-    Settings::enable_detailed_logging =
-        settings_json["enable_detailed_logging"].get<bool>();
+    LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                              "Error loading settings.");
+    config_stream.close();
+    return -1;
   }
-
-  // Return 0 if sucessful
+  config_stream.close();
   return 0;
 }
 
 // Verifies if a given string is 1. A proper directory, 2. Exists, and 3. Can be
 // written to/read from
+// TODO: Set error message
 int VerifyFolder(string directory, string &error_message) {
 
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = directory;
-  if (tmp_dir.empty() || !is_directory(tmp_dir)) {
+  if (!exists(tmp_dir) || !is_directory(tmp_dir)) {
     return -1;
   }
 
-  // Check folder perms
-  perms tmp_dir_permissions = status(tmp_dir).permissions();
-  bool can_read = true, can_write = true;
+  // Can read from?
+  bool can_read = true;
+  try {
+    directory_iterator it(tmp_dir);
+    can_read = true;
+  } catch (const filesystem_error) {
+    can_read = false;
+  }
+
+  // Can write to?
+  bool can_write = true;
+  try {
+
+    // Create tmp file in directory and attempt to write to it
+    path tmp_file = tmp_dir / "permissions_check.tmp";
+    ofstream tmp_stream(tmp_file);
+    tmp_stream << "test";
+  } catch (filesystem_error) {
+    can_write = false;
+  }
 
   if (!can_read || !can_write) {
+    return -1;
+  }
 
-    // Can read from?
-    try {
-      directory_iterator it(tmp_dir);
-      can_read = true;
-    } catch (const filesystem_error) {
-      can_read = false;
-    }
+  return 0;
+}
 
-    // Can write to?
-    try {
+// Verifies if a given string is 1. A proper file, 2. Exists, and 3. Can be
+// read from
+// TODO: Set error message
+int VerifyFile(string file, string &error_message) {
 
-      // Create tmp file in directory and attempt to write to it
-      path tmp_file = tmp_dir / "permissions_check.tmp";
-      ofstream tmp_stream(tmp_file);
-      tmp_stream << "test";
-    } catch (filesystem_error) {
-      can_write = false;
-    }
+  // Either not a folder or doesn't exist in the first place
+  path tmp_dir = file;
+  if (!exists(tmp_dir) || !is_regular_file(tmp_dir)) {
+    return -1;
+  }
 
+  // Can read from?
+  bool can_read = true;
+  ifstream tmp_file(tmp_dir);
+  if (!tmp_file) {
+    can_read = false;
+  } else {
+    can_read = true;
+  }
+
+  if (!can_read) {
     return -1;
   }
 

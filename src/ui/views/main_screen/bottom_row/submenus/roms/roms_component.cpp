@@ -1,5 +1,6 @@
 
 #include "roms_component.h"
+#include "../../../../../../core/CART/CART.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
