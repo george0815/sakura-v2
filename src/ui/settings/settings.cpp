@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "../state.h"
 #include "../views/main_screen/bottom_row/submenus/log/log_component.h"
 #include <filesystem>
 #include <fstream>
@@ -36,6 +37,7 @@ int save_settings(bool backup) {
 
   // Set values in json object
   settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
+  settings_json["language"] = Settings::language;
 
   // Create and write to file, either main or create a backup
   string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
@@ -67,6 +69,7 @@ int load_settings(bool backup) {
     settings_json = json::parse(buffer.str());
     Settings::enable_detailed_logging =
         settings_json["enable_detailed_logging"].get<bool>();
+    // Settings::language = settings_json["language"].get<int>();
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
@@ -88,10 +91,8 @@ int VerifyFolder(string directory, string &error_message) {
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = directory;
   if (!exists(tmp_dir) || !is_directory(tmp_dir)) {
-    cout << exists(tmp_dir) << endl;
-    cout << is_directory(tmp_dir) << endl;
-    cout << tmp_dir;
-    cout << "DOESNT EXIST";
+    error_message = UIState::i18_object.tr("Error") + ": " + tmp_dir.string() +
+                    " " + UIState::i18_object.tr("does_not_exist_folder");
     return -1;
   }
 
@@ -102,18 +103,23 @@ int VerifyFolder(string directory, string &error_message) {
     can_read = true;
   } catch (const filesystem_error) {
     can_read = false;
+    error_message = UIState::i18_object.tr("Error") + ": " +
+                    UIState::i18_object.tr("cannot_read_from") +
+                    tmp_dir.string();
   }
 
   // Can write to?
   bool can_write = true;
   try {
-
     // Create tmp file in directory and attempt to write to it
     path tmp_file = tmp_dir / "permissions_check.tmp";
     ofstream tmp_stream(tmp_file);
     tmp_stream << "test";
   } catch (filesystem_error) {
     can_write = false;
+    error_message = UIState::i18_object.tr("Error") + ": " +
+                    UIState::i18_object.tr("cannot_write_to") +
+                    tmp_dir.string();
   }
 
   if (!can_read || !can_write) {
@@ -131,6 +137,8 @@ int VerifyFile(string file, string &error_message) {
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = file;
   if (!exists(tmp_dir) || !is_regular_file(tmp_dir)) {
+    error_message = UIState::i18_object.tr("Error") + ": " + tmp_dir.string() +
+                    UIState::i18_object.tr("does_not_exist_file");
     return -1;
   }
 
@@ -144,6 +152,8 @@ int VerifyFile(string file, string &error_message) {
   }
 
   if (!can_read) {
+    error_message = UIState::i18_object.tr("Error") + ": " +
+                    UIState::i18_object.tr("cannot_read") + tmp_dir.string();
     return -1;
   }
 

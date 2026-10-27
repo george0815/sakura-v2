@@ -39,7 +39,7 @@
   "Error_initializing_the_sakura_core: " : "Error initializing the sakura core: ",
   "Waiting_for_input..." : "Waiting for input...",
   "Input_Key" : "Input Key",
-  "Rom_added:_" : "Rom added: ",
+  "Rom_added:_" : "ROM ADDED: ",
   "Start_rom:_" : "Start rom: ",
   "Stop_rom:_" : "Stop rom: ",
   "Save_state:_" : "Save state: ",
@@ -92,6 +92,7 @@
   "Hotkey_text color:_" : "Hotkey text color: ",
   "ASCII color:_" : "ASCII color: ",
   "Disable_ASCII" : "Disable ASCII",
+  "sakura_init" : "sakura-v2: INIT",
   "Save" : "Save",
   "Select_log_file_path" : "Select log file path",
   "Select_filename_for_the_log_file." : "Select filename for the log file.",
@@ -123,9 +124,13 @@
   "HELP" : "HELP",
   "folder/file_path" : "folder/file path",
   "English" : "English", 
-  "Japanese" : "Japanese"
+  "Japanese" : "Japanese",
 
-
+  "does_not_exist_file" : " does not exist or is not a valid file.",
+  "does_not_exist_folder" : " does not exist or is not a valid folder.",
+  "cannot_write_to" : "Cannot write to ",
+  "cannot_read" : "Cannot read ",
+  "cannot_read_from" : "Cannot read from "
 
 
 

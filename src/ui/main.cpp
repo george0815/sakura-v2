@@ -49,6 +49,8 @@ int main() {
   UIState::i18_object.setLocale(UIState::locale_entries[Settings::language]);
 
   // Delare hardware components
+  // LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+  //                         UIState::i18_object.tr("sakura_init"));
   CPU *cpu = new CPU();
 
   // Declare screen, ScreenInteractive::Fullscreen uses the entire terminal

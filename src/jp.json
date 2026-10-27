@@ -98,6 +98,7 @@
   "Disable_ASCII" : "ASCIIを無効にする",
  
 
+  "sakura_init" : "sakura-v2: 初期化",
   "Save" : "保存",
   "Select_log_file_path" : "ログファイルのパスを選択",
   "Select_filename_for_the_log_file." : "ログファイルのファイル名を選択してください。",
@@ -131,9 +132,14 @@
 
 
   "English" : "英語", 
-  "Japanese" : "日本語"
+  "Japanese" : "日本語",
 
 
+  "does_not_exist_file" : " 存在していない、または有効なファイルではありません。",
+  "does_not_exist_folder" : " 存在していない、または有効なフォルダーではありません。",
+  "cannot_write_to" : "書き出せません： ",
+  "cannot_read" : "読み込めません”： ",
+  "cannot_read_from" : "このフォルダーから読み込めません： "
 
 }
 

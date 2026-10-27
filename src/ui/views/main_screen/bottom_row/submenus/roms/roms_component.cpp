@@ -75,10 +75,14 @@ void LoadRomFolder(string directory) {
                    tmp_entry.file_size()};
         RomList.push_back(tmp_rom);
         LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                  "Rom added: " +
+                                  UIState::i18_object.tr("Rom_added:_") +
                                       tmp_rom.name); // TODO: add i18n string
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
                              to_string(tmp_rom.size));
+      } else {
+        // Adds error message to log
+        LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                  error_message);
       }
     }
 
