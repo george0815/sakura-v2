@@ -2,6 +2,7 @@
 #include "../views/main_screen/bottom_row/submenus/log/log_component.h"
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <nlohmann/json.hpp>
 #include <sstream>
 
@@ -87,6 +88,10 @@ int VerifyFolder(string directory, string &error_message) {
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = directory;
   if (!exists(tmp_dir) || !is_directory(tmp_dir)) {
+    cout << exists(tmp_dir) << endl;
+    cout << is_directory(tmp_dir) << endl;
+    cout << tmp_dir;
+    cout << "DOESNT EXIST";
     return -1;
   }
 

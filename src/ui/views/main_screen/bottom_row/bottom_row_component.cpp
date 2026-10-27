@@ -36,9 +36,7 @@ Component BottomRow::BottomRowComponent() {
              // top, right now just has placeholder data
              Container::Vertical({Renderer([&] {
                                     // Most recent log
-                                    return text(
-                                        " ROM LOADED -  Super Mario Bros. 3 - "
-                                        "CHR_ROM: 8KB - MAPPER: 4");
+                                    return text(UIState::most_recent_log);
                                   }) | border,
 
                                   // Main tab contents

@@ -13,7 +13,7 @@ inline i18n::I18N i18_object;
 inline bool Exit = false;
 
 // Heading text, shows most recent log
-inline string most_recent_log;
+inline string most_recent_log = "";
 
 // Value for the selected menu on the main tab, saves tab is a different
 // variable
@@ -28,10 +28,10 @@ void load_ascii();
 // Hold the index of the current focus tab in the roms table
 inline int SelectedRomTableIndex = 0;
 
-// Hold the index of the current focus tab in the roms table
+// Hold the index of the current focus tab in the SRAM table
 inline int SelectedSRAMTableIndex = 0;
 
-// Hold the index of the current focus tab in the roms table
+// Hold the index of the current focus tab in the save states table
 inline int SelectedSaveStateTableIndex = 0;
 
 inline string test_button_label = "TEST";

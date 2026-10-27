@@ -14,7 +14,7 @@ inline bool enable_detailed_logging = false;
 inline bool disable_ascii = false;
 
 // Inputs
-inline string default_rom_path = "~/Downloads/roms/";
+inline string default_rom_path = "/home/Hunter/Downloads/roms/";
 inline string roms_paths;
 inline string log_path = "";
 inline string sram_path = "";
