@@ -18,16 +18,9 @@
 #include <ftxui/screen/screen.hpp>
 #include <ftxui/screen/string.hpp>
 #include <i18ncpp.h>
-#include <iostream>
 
 using namespace ftxui;
 using namespace std;
-
-// stub for parseRom function
-void parseRom(string &value) {
-  value = "CHANGED";
-  cout << "Parsing rom...";
-}
 
 void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
 

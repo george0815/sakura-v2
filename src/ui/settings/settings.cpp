@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "../state.h"
 #include "../views/main_screen/bottom_row/submenus/log/log_component.h"
+#include <cstdint>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -37,6 +38,7 @@ int save_settings(bool backup) {
 
   // Set values in json object
   settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
+  settings_json["default_rom_path"] = Settings::default_rom_path;
   settings_json["language"] = Settings::language;
 
   // Create and write to file, either main or create a backup
@@ -62,14 +64,15 @@ int load_settings(bool backup) {
   stringstream buffer;
   buffer << config_stream.rdbuf();
 
-  // Try saving
+  // Try loading
   try {
 
     // Set Settings namespace values
     settings_json = json::parse(buffer.str());
+    Settings::language = settings_json["language"];
+    Settings::default_rom_path = settings_json["default_rom_path"];
     Settings::enable_detailed_logging =
         settings_json["enable_detailed_logging"].get<bool>();
-    // Settings::language = settings_json["language"].get<int>();
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all

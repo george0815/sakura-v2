@@ -70,7 +70,9 @@ void LoadRomFolder(string directory) {
     for (directory_entry tmp_entry : directory_iterator((path)directory)) {
 
       // If file is valid, create entry and add to list
-      if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0) {
+      if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0 &&
+              (tmp_entry.path().extension() == ".nes") ||
+          tmp_entry.path().extension() == ".NES") {
         tmp_rom = {tmp_entry.path().filename(), tmp_entry.path(),
                    tmp_entry.file_size()};
         RomList.push_back(tmp_rom);
@@ -79,7 +81,9 @@ void LoadRomFolder(string directory) {
                                       tmp_rom.name); // TODO: add i18n string
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
                              to_string(tmp_rom.size));
-      } else {
+      } else if (Settings::VerifyFile(tmp_entry.path(), error_message) != 0 &&
+                 (tmp_entry.path().extension() == ".nes" ||
+                  tmp_entry.path().extension() == ".NES")) {
         // Adds error message to log
         LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
                                   error_message);

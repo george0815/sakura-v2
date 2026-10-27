@@ -24,7 +24,7 @@ namespace LogComponent {
 void AddLogEntry(Component &comp, string str) {
   comp->Add(GeneralViews::FocusableTextComponent(str));
   // Update header
-  UIState::most_recent_log = str;
+  UIState::most_recent_log = " " + str;
 }
 
 // Returns log component, basically just a Container::Vertical
@@ -33,7 +33,8 @@ Component LogComponent() {
 
       // It was seg faulting unless I had at least one component here, so the
       // log will always start with this entry
-      GeneralViews::FocusableTextComponent("sakura-v2 INIT"),
+      GeneralViews::FocusableTextComponent(
+          UIState::i18_object.tr("sakura_init")),
 
   }});
 }
