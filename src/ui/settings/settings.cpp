@@ -116,6 +116,8 @@ int VerifyFolder(string directory, string &error_message) {
     path tmp_file = tmp_dir / "permissions_check.tmp";
     ofstream tmp_stream(tmp_file);
     tmp_stream << "test";
+    tmp_stream.close();
+    remove("test");
   } catch (filesystem_error) {
     can_write = false;
     error_message = UIState::i18_object.tr("Error") + ": " +
