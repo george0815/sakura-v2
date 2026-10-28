@@ -1,3 +1,5 @@
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/screen/color.hpp>
 #include <i18ncpp.h>
 #include <stdlib.h>
 #include <string>
@@ -35,6 +37,19 @@ inline int SelectedSRAMTableIndex = 0;
 inline int SelectedSaveStateTableIndex = 0;
 
 inline string test_button_label = "TEST";
+
+// Holds color options
+inline int colors[] = {
+    ftxui::Color::Black,        ftxui::Color::Blue,
+    ftxui::Color::Red,          ftxui::Color::Green,
+    ftxui::Color::Cyan,         ftxui::Color::Magenta,
+    ftxui::Color::Orange1,      ftxui::Color::GrayLight,
+    ftxui::Color::BlueLight,    ftxui::Color::GreenLight,
+    ftxui::Color::CyanLight,    ftxui::Color::RedLight,
+    ftxui::Color::MagentaLight, ftxui::Color::YellowLight,
+    ftxui::Color::White,
+
+};
 
 // Holds language local options
 inline string locale_entries[2] = {"en", "jp"};

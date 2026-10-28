@@ -7,6 +7,7 @@
 #include "views/main_screen/bottom_row/submenus/roms/roms_component.h"
 #include "views/main_screen/main_screen.h"
 #include <cstdlib>
+#include <filesystem>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_options.hpp>
 #include <ftxui/component/loop.hpp>
@@ -30,6 +31,12 @@ int main() {
   // something to detect if the backup has been change to limit unnecessaru
   // writes
   Settings::save_settings(true);
+
+  // If no config file exists, create one
+  filesystem::path tmp_config_path = "config.ini";
+  if (!filesystem::exists(tmp_config_path)) {
+    Settings::save_settings(false);
+  }
 
   // If loading main fails, load backup we just created
   if (Settings::load_settings(false) != 0) {

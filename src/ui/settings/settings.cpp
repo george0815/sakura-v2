@@ -35,12 +35,24 @@ int save_settings(bool backup) {
   json settings_json;
 
   // Set values in json object
+
+  // Bool values
   settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
+
+  // Inputs
   settings_json["default_rom_path"] = Settings::default_rom_path;
-  settings_json["language"] = Settings::language;
+
+  // Color and language
+  settings_json["background_color"] = Settings::background_color;
+  settings_json["text_color"] = Settings::text_color;
+  settings_json["focus_background_color"] = Settings::focus_background_color;
+  settings_json["focus_text_color"] = Settings::focus_text_color;
+  settings_json["ascii_color"] = Settings::ascii_color;
+
+  // Controls
 
   // Create and write to file, either main or create a backup
-  string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
+  string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
   ofstream config_stream(tmp_config_filename);
   config_stream << settings_json;
   config_stream.close();
@@ -55,7 +67,7 @@ int load_settings(bool backup) {
   // be treated as a string
   json settings_json = json::object();
 
-  string tmp_config_filename = backup ? "config.ini" : "config_backup.ini";
+  string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
   ifstream config_stream(tmp_config_filename);
 
   // Read to buffer
@@ -67,10 +79,22 @@ int load_settings(bool backup) {
 
     // Set Settings namespace values
     settings_json = json::parse(buffer.str());
-    Settings::language = settings_json["language"];
-    Settings::default_rom_path = settings_json["default_rom_path"];
+
+    // Bool values
     Settings::enable_detailed_logging =
         settings_json["enable_detailed_logging"].get<bool>();
+
+    // Inputs
+    Settings::default_rom_path = settings_json["default_rom_path"];
+
+    // Color and language
+    Settings::background_color = settings_json["background_color"];
+    Settings::text_color = settings_json["text_color"];
+    Settings::focus_background_color = settings_json["focus_background_color"];
+    Settings::focus_text_color = settings_json["focus_text_color"];
+    Settings::ascii_color = settings_json["ascii_color"];
+
+    // Controls
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all

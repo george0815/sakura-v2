@@ -107,7 +107,7 @@ Component ColorComponent(string str, int &selection) {
                    UIState::i18_object.tr("Green"),
                    UIState::i18_object.tr("Cyan"),
                    UIState::i18_object.tr("Magenta"),
-                   UIState::i18_object.tr("Brown"),
+                   UIState::i18_object.tr("Orange"),
                    UIState::i18_object.tr("Gray"),
                    UIState::i18_object.tr("BrightBlue"),
                    UIState::i18_object.tr("BrightGreen"),
