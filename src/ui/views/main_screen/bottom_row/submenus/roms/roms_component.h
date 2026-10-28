@@ -20,7 +20,7 @@ inline Component RomSubmenuComponent;
 
 // Starts rom (yes I know my comments are redundant but I just like commenting a
 // lot)
-void StartRom(int index);
+void StartRom();
 
 // Calls LoadRomFolder on multiple directories to update roms list
 void LoadAllRoms();

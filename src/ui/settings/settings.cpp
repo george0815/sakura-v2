@@ -23,10 +23,8 @@ using namespace filesystem;
 //==========================
 
 // TODO::  1. Add other settings
-//         2. Add verification, handle edge cases on load (verification on save
-//         will be handled in the save function)
+// 2. Add open folder function
 //
-//         TODO: Change error message to i18n strings
 
 namespace Settings {
 

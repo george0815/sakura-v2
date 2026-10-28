@@ -64,8 +64,7 @@ Component TabContainerComponent() {
         // This was me testing  // TODO: read actual controls and implement
         // proper logic
         if (event == Event::F3 || event == Event::Return) {
-          cout << UIState::SelectedRomTableIndex; // place holder
-          UIState::Exit = true;
+          RomsComponent::StartRom();
         }
         return false;
       });

@@ -20,7 +20,7 @@
   "SRAM" : "SRAM",
   "Path" : "Path",
   "SRAM_data_path" : "SRAM data path",
-  "Roms_started:_" : "Rom started: ",
+  "Roms_started:_" : "LOADING ROM: ",
   "Roms_paths:_" : "Rom paths: ",
   "Default_rom_path:_" : "Default rom path: ",
   "SRAM_path:_" : "SRAM path: ",

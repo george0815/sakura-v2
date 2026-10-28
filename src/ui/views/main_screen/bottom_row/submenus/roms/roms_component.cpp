@@ -73,7 +73,7 @@ void LoadRomFolder(string directory) {
       if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0 &&
               (tmp_entry.path().extension() == ".nes") ||
           tmp_entry.path().extension() == ".NES") {
-        tmp_rom = {tmp_entry.path().filename(), tmp_entry.path(),
+        tmp_rom = {tmp_entry.path().stem(), tmp_entry.path(),
                    tmp_entry.file_size()};
         RomList.push_back(tmp_rom);
         LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
@@ -96,10 +96,20 @@ void LoadRomFolder(string directory) {
   }
 }
 
-void StartRom(Component &comp, int index) {
+// Launches rom for now using the old sakura core until the new one is done
+void StartRom() {
 
-  // Get focused child of internal Container::Vertical in the table
-  cout << UIState::SelectedRomTableIndex;
+  // Get path of rom to start by getting selected index of the rom table, then
+  string tmp =
+      "/home/Hunter/Documents/Github/sakura/sakura " +
+      RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).path;
+
+  LogComponent::AddLogEntry(
+      LogComponent::LogSubmenuComponent,
+      UIState::i18_object.tr("Roms_started:_") +
+          RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).name);
+
+  int result = system(tmp.c_str());
 }
 
 // Simple roms table

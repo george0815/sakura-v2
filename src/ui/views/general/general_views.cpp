@@ -203,7 +203,7 @@ Component TableComponent(string column1, string column2, string column3,
 
       // Column 3 (for some reason whenever I tried to use flex on column3 it
       // would make all its children disappear, so I have an empty
-      // Container::Vertical as a hack for now)
+      // Container::Vertical as a hack for now) TODO: Fix this
       GeneralViews::TableHeader(column3, padding, selected_tab),
       Container::Vertical(
           {Renderer([&] { return vbox({text(""), separator()}); })}) |
