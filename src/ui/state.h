@@ -39,14 +39,10 @@ inline int SelectedSaveStateTableIndex = 0;
 inline string test_button_label = "TEST";
 
 // Holds color options
-inline int colors[] = {
-    ftxui::Color::Black,     ftxui::Color::Blue,
-    ftxui::Color::Red,       ftxui::Color::Green,
-    ftxui::Color::Cyan,      ftxui::Color::Pink1,
-    ftxui::Color::Orange1,   ftxui::Color::GrayLight,
-    ftxui::Color::BlueLight, ftxui::Color::GreenLight,
-    ftxui::Color::CyanLight, ftxui::Color::RedLight,
-    ftxui::Color::HotPink,   ftxui::Color::YellowLight,
+inline ftxui::Color colors[] = {
+    ftxui::Color::Black,   ftxui::Color::Blue,     ftxui::Color::Red,
+    ftxui::Color::Green,   ftxui::Color::Cyan,     ftxui::Color::Pink1,
+    ftxui::Color::Orange1, ftxui::Color::GrayDark, ftxui::Color::HotPink,
     ftxui::Color::White,
 
 };

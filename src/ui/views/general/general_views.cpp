@@ -101,21 +101,12 @@ Component TextInputComponent(string label, string &var) {
 // element and an dropdown component
 Component ColorComponent(string str, int &selection) {
 
-  color_entries = {UIState::i18_object.tr("Black"),
-                   UIState::i18_object.tr("Blue"),
-                   UIState::i18_object.tr("Red"),
-                   UIState::i18_object.tr("Green"),
-                   UIState::i18_object.tr("Cyan"),
-                   UIState::i18_object.tr("Pink"),
-                   UIState::i18_object.tr("Orange"),
-                   UIState::i18_object.tr("Gray"),
-                   UIState::i18_object.tr("BrightBlue"),
-                   UIState::i18_object.tr("BrightGreen"),
-                   UIState::i18_object.tr("BrightCyan"),
-                   UIState::i18_object.tr("BrightRed"),
-                   UIState::i18_object.tr("HotPink"),
-                   UIState::i18_object.tr("BrightYellow"),
-                   UIState::i18_object.tr("White")};
+  color_entries = {
+      UIState::i18_object.tr("Black"),   UIState::i18_object.tr("Blue"),
+      UIState::i18_object.tr("Red"),     UIState::i18_object.tr("Green"),
+      UIState::i18_object.tr("Cyan"),    UIState::i18_object.tr("Pink"),
+      UIState::i18_object.tr("Orange"),  UIState::i18_object.tr("Gray"),
+      UIState::i18_object.tr("HotPink"), UIState::i18_object.tr("White")};
 
   return Container::Horizontal({
 
