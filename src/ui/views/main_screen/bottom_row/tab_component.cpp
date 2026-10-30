@@ -63,9 +63,14 @@ Component TabContainerComponent() {
       CatchEvent(RomsComponent::RomSubmenuComponent, [](Event event) {
         // This was me testing  // TODO: read actual controls and implement
         // proper logic
-        if (event == Event::F3 || event == Event::Return) {
+        if (event == Event::F3) {
           RomsComponent::StartRom();
+        } else if (event == Event::Return) {
+          RomsComponent::OpenRomFolder();
+        } else if (event == Event::ArrowDown) {
+          RomsComponent::OpenSRAMFolder();
         }
+
         return false;
       });
 

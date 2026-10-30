@@ -57,6 +57,24 @@ void LoadAllRoms() {
   }
 }
 
+// Opens folder to directory that the rom currently resides in
+void OpenRomFolder() {
+
+  // Get path of rom to start by getting selected index of the rom table, then
+  path tmp_path =
+      RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).path;
+  string tmp = tmp_path.parent_path();
+
+  // Sends error_message to log on failure
+  string error_message = "";
+  if (Settings::OpenFolder(tmp, error_message) != 0) {
+    LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, error_message);
+  }
+}
+
+// Opens folder to directory that the rom's SRAM file currently resides in
+void OpenSRAMFolder() {}
+
 // Verifies directory, searches through and verifies any roms in that directory
 void LoadRomFolder(string directory) {
 
@@ -64,7 +82,6 @@ void LoadRomFolder(string directory) {
   string error_message;
   if (Settings::VerifyFolder(directory, error_message) == 0) {
 
-    cout << directory;
     // Loop through files in directory (note: non-recursive)
     Rom tmp_rom;
     for (directory_entry tmp_entry : directory_iterator((path)directory)) {
@@ -73,21 +90,29 @@ void LoadRomFolder(string directory) {
       if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0 &&
               (tmp_entry.path().extension() == ".nes") ||
           tmp_entry.path().extension() == ".NES") {
+
+        // Create tmp rom entry, pass in values
         tmp_rom = {tmp_entry.path().stem(), tmp_entry.path(),
                    tmp_entry.file_size()};
+
+        // Push to list and log
         RomList.push_back(tmp_rom);
         LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
                                   UIState::i18_object.tr("Rom_added:_") +
-                                      tmp_rom.name); // TODO: add i18n string
+                                      tmp_rom.name);
+
+        // Add row in UI;
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
                              to_string(tmp_rom.size));
+
+        // If nes rom fails to verify
       } else if (Settings::VerifyFile(tmp_entry.path(), error_message) != 0 &&
                  (tmp_entry.path().extension() == ".nes" ||
                   tmp_entry.path().extension() == ".NES")) {
         // Adds error message to log
         LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
                                   error_message);
-      }
+      } // non .nes files are ignored
     }
 
   } else {

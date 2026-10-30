@@ -18,7 +18,8 @@ using namespace filesystem;
 // with it.
 //
 // Current memebers: all the variables that hold the actual settings values (in
-// header file), save_settings, load_settings)
+// header file), save_settings, load_settings, VerifyFolder, VerifyFile,
+// OpenFolder
 //
 //==========================
 
@@ -26,7 +27,24 @@ using namespace filesystem;
 // 2. Add open folder function
 //
 
+using namespace std;
+
 namespace Settings {
+
+// Opens a given folder
+int OpenFolder(string folder, string &error_message) {
+
+  // For windows (TODO: add windows support)
+
+  // For linux,
+  string tmp = "xdg-open " + folder + " >nul 2>nul";
+  if (system(tmp.c_str()) != 0) {
+    error_message = "Failed to open folder."; // TODO: add this string to the
+                                              // i18n resource files
+  }
+
+  return 0;
+}
 
 // Serializes settings namespace to JSON
 int save_settings(bool backup) {
@@ -139,9 +157,8 @@ int VerifyFolder(string directory, string &error_message) {
     // Create tmp file in directory and attempt to write to it
     path tmp_file = tmp_dir / "permissions_check.tmp";
     ofstream tmp_stream(tmp_file);
-    tmp_stream << "test";
     tmp_stream.close();
-    remove("test");
+    remove("permissions_check.tmp");
   } catch (filesystem_error) {
     can_write = false;
     error_message = UIState::i18_object.tr("Error") + ": " +

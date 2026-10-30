@@ -67,4 +67,10 @@ int VerifyFile(string path, string &error_message);
 // OK
 int VerifyFolder(string directory, string &error_message);
 
+//=======================
+// FUNCTIONALITY
+//=======================
+
+int OpenFolder(string folder, string &error_message);
+
 }; // namespace Settings
