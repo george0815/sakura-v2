@@ -1,14 +1,15 @@
 #include "controls_component.h"
 #include "../../../../../settings/settings.h"
+#include "../../../../../state.h"
 #include "../../../../general/general_views.h"
 #include "SDL3/SDL_keyboard.h"
 #include <SDL3/SDL_keycode.h>
-#include <ftxui/component/event.hpp>
 #include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
+#include <ftxui/component/event.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 
@@ -34,56 +35,66 @@ Component ControlsComponent() {
   return Container::Vertical({
 
              // START AND STOP
-             GeneralViews::ControlOptionComponent("Start rom :",
-                                                  Settings::start_rom_control),
+             GeneralViews::ControlOptionComponent(
+                 "Start rom :", Settings::start_rom_control,
+                 UIState::start_rom_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Stop rom :",
-                                                  Settings::stop_rom_control),
+             GeneralViews::ControlOptionComponent(
+                 "Stop rom :", Settings::stop_rom_control,
+                 UIState::stop_rom_label),
              Renderer([&] { return text(""); }),
 
              // FOLDERS
              GeneralViews::ControlOptionComponent(
-                 "Open rom folder :", Settings::open_rom_folder_control),
+                 "Open rom folder :", Settings::open_rom_folder_control,
+                 UIState::open_rom_folder_label),
              Renderer([&] { return text(""); }),
              GeneralViews::ControlOptionComponent(
-                 "Open SRAM folder :", Settings::open_sram_folder_control),
+                 "Open SRAM folder :", Settings::open_sram_folder_control,
+                 UIState::open_SRAM_folder_label),
              Renderer([&] { return text(""); }),
 
              // SAVING
-             GeneralViews::ControlOptionComponent("Save state :",
-                                                  Settings::save_state_control),
+             GeneralViews::ControlOptionComponent(
+                 "Save state :", Settings::save_state_control,
+                 UIState::save_state_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("Load state :",
-                                                  Settings::load_state_control),
+             GeneralViews::ControlOptionComponent(
+                 "Load state :", Settings::load_state_control,
+                 UIState::load_state_label),
              Renderer([&] { return text(""); }),
 
              // CONTROLLER BUTTONS
-             GeneralViews::ControlOptionComponent("START :",
-                                                  Settings::start_control),
+             GeneralViews::ControlOptionComponent(
+                 "START :", Settings::start_control, UIState::start_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("SELECT :",
-                                                  Settings::select_control),
+             GeneralViews::ControlOptionComponent(
+                 "SELECT :", Settings::select_control, UIState::select_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("A :", Settings::a_control),
+             GeneralViews::ControlOptionComponent("A :", Settings::a_control,
+                                                  UIState::a_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("B :", Settings::b_control),
+             GeneralViews::ControlOptionComponent("B :", Settings::b_control,
+                                                  UIState::b_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("UP :", Settings::up_control),
+             GeneralViews::ControlOptionComponent("UP :", Settings::up_control,
+                                                  UIState::up_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("DOWN :",
-                                                  Settings::down_control),
+             GeneralViews::ControlOptionComponent(
+                 "DOWN :", Settings::down_control, UIState::down_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("LEFT :",
-                                                  Settings::left_control),
+             GeneralViews::ControlOptionComponent(
+                 "LEFT :", Settings::left_control, UIState::left_label),
              Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("RIGHT :",
-                                                  Settings::right_control),
+             GeneralViews::ControlOptionComponent(
+                 "RIGHT :", Settings::right_control, UIState::right_label),
              Renderer([&] { return text(""); }),
              Renderer([&] { return separator(); }),
 
              // SAVE BUTTON
              Button(
-                 "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
+                 "Save", [&] { Settings::save_settings(false); },
+                 ButtonOption::Ascii()),
 
          }) |
          borderEmpty;

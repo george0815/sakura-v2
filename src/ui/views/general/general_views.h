@@ -24,7 +24,8 @@ Component FocusableTextComponent(string str, int padding = 3);
 
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
-Component ControlOptionComponent(string str, int &control_setting);
+Component ControlOptionComponent(string str, int &control_setting,
+                                 string &label);
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component

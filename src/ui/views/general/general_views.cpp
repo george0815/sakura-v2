@@ -1,5 +1,13 @@
 #include "general_views.h"
 #include "../../state.h"
+#include "../main_screen/bottom_row/submenus/log/log_component.h"
+#include "SDL3/SDL_init.h"
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_main.h>
+#include <iostream>
+#include <string>
+#include <vector>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -7,7 +15,6 @@
 #include <ftxui/component/component_options.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
-#include <vector>
 
 using namespace std;
 
@@ -60,9 +67,8 @@ Component FocusableTextComponent(string str, int padding) {
 
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
-Component ControlOptionComponent(string str, int &control_setting) {
-
-  string button_label = str;
+Component ControlOptionComponent(string str, int &control_setting,
+                                 string &label) {
 
   return Container::Horizontal({
 
@@ -74,8 +80,41 @@ Component ControlOptionComponent(string str, int &control_setting) {
       // implemented
 
       Button(
-          &UIState::test_button_label,
-          [&] { UIState::test_button_label = "..."; }, ButtonOption::Ascii()),
+          &label,
+          [&] {
+            if (SDL_Init(SDL_INIT_EVENTS) < 0) {
+              LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                        "Could not init events");
+            }
+
+            // Set label
+            label = "test";
+
+            // Listen for input
+            bool is_running = true;
+
+            SDL_Event button_press_event;
+            while (is_running) {
+
+              LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                        "loop running");
+
+              while (SDL_PollEvent(&button_press_event)) {
+
+                LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                          "event loop running");
+
+                if (button_press_event.type == SDL_EVENT_KEY_DOWN) {
+                  LogComponent::AddLogEntry(
+                      LogComponent::LogSubmenuComponent,
+                      to_string(button_press_event.key.scancode));
+                  is_running = false;
+                }
+              }
+            }
+            // Set controls, convert to ftxui name and set label
+          },
+          ButtonOption::Ascii()),
 
   });
 }

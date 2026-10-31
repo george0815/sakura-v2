@@ -36,7 +36,21 @@ inline int SelectedSRAMTableIndex = 0;
 // Hold the index of the current focus tab in the save states table
 inline int SelectedSaveStateTableIndex = 0;
 
-inline string test_button_label = "TEST";
+// Label strings for control ui buttons
+inline string start_rom_label = "...";
+inline string stop_rom_label = "...";
+inline string open_rom_folder_label = "...";
+inline string open_SRAM_folder_label = "...";
+inline string save_state_label = "...";
+inline string load_state_label = "...";
+inline string start_label = "...";
+inline string select_label = "...";
+inline string a_label = "...";
+inline string b_label = "...";
+inline string up_label = "...";
+inline string down_label = "...";
+inline string left_label = "...";
+inline string right_label = "...";
 
 // Holds color options
 inline ftxui::Color colors[] = {
