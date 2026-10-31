@@ -126,7 +126,7 @@ void StartRom() {
 
   // Get path of rom to start by getting selected index of the rom table, then
   string tmp =
-      "/home/Hunter/Documents/Github/sakura/sakura " +
+      "/run/media/Hunter/Programming/Github/sakura/sakura " +
       RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).path;
 
   LogComponent::AddLogEntry(

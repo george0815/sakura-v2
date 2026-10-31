@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_main.h>
+#include <ftxui/component/event.hpp>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -70,53 +71,49 @@ Component FocusableTextComponent(string str, int padding) {
 Component ControlOptionComponent(string str, int &control_setting,
                                  string &label) {
 
+  bool waiting_for_input = true;
+
   return Container::Horizontal({
 
-      // Used as a label
-      Renderer([str] { return text(" " + format("{:<{}}", str, 25)); }),
+             // Used as a label
+             Renderer([str] { return text(" " + format("{:<{}}", str, 25)); }),
 
-      // User clicks button -> wait for input -> next input is the value of the
-      // NES control being configured TODO:: Replace logic once settings are
-      // implemented
+             // User clicks button -> wait for input -> next input is the value
+             // of the
+             // NES control being configured TODO:: Replace logic once settings
+             // are
+             // implemented
 
-      Button(
-          &label,
-          [&] {
-            if (SDL_Init(SDL_INIT_EVENTS) < 0) {
-              LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                        "Could not init events");
-            }
+             Button(
+                 &label,
+                 [&label, &waiting_for_input] {
+                   // Set label
+                   label = "...";
 
-            // Set label
-            label = "test";
+                   waiting_for_input = true;
+                 },
+                 ButtonOption::Ascii()),
 
-            // Listen for input
-            bool is_running = true;
+         }) |
+         CatchEvent([&label, &waiting_for_input](Event event) {
+           if (event.is_mouse()) {
+             return false;
+           }
 
-            SDL_Event button_press_event;
-            while (is_running) {
+           LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                     to_string(waiting_for_input));
 
-              LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                        "loop running");
+           if (waiting_for_input == true) {
+             label = "rewrwerweqtgwer";
+             label = event.character();
+             LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
+                                       event.character());
+             //    waiting_for_input = false;
+             return true;
+           }
 
-              while (SDL_PollEvent(&button_press_event)) {
-
-                LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                          "event loop running");
-
-                if (button_press_event.type == SDL_EVENT_KEY_DOWN) {
-                  LogComponent::AddLogEntry(
-                      LogComponent::LogSubmenuComponent,
-                      to_string(button_press_event.key.scancode));
-                  is_running = false;
-                }
-              }
-            }
-            // Set controls, convert to ftxui name and set label
-          },
-          ButtonOption::Ascii()),
-
-  });
+           return false;
+         });
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
