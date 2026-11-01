@@ -90,7 +90,7 @@ Component ControlOptionComponent(string str, int &control_setting,
                    // Set label
                    label = "...";
 
-                   waiting_for_input = true;
+                   UIState::TEST_BOOL = true;
                  },
                  ButtonOption::Ascii()),
 
@@ -101,14 +101,14 @@ Component ControlOptionComponent(string str, int &control_setting,
            }
 
            LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                     to_string(waiting_for_input));
+                                     to_string(UIState::TEST_BOOL));
 
-           if (waiting_for_input == true) {
+           if (UIState::TEST_BOOL == true) {
              label = "rewrwerweqtgwer";
              label = event.character();
              LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
                                        event.character());
-             //    waiting_for_input = false;
+             UIState::TEST_BOOL = false;
              return true;
            }
 

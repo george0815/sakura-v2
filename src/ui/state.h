@@ -64,4 +64,6 @@ inline ftxui::Color colors[] = {
 // Holds language local options
 inline string locale_entries[2] = {"en", "jp"};
 
+inline bool TEST_BOOL = false;
+
 } // namespace UIState
