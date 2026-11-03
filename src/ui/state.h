@@ -24,9 +24,6 @@ inline int SelectedMenu = 0;
 // Value for the selected menu on the saves tab
 inline int SelectedSaveMenu = 0;
 
-// Loads the ASCII art for the given menu (TODO: implement later)
-void load_ascii();
-
 // Hold the index of the current focus tab in the roms table
 inline int SelectedRomTableIndex = 0;
 

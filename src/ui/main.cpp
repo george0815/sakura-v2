@@ -1,3 +1,4 @@
+// this project
 #include "../core/CPU/CPU.h"
 #include "./settings/settings.h"
 #include "state.h"
@@ -6,8 +7,13 @@
 #include "views/main_screen/bottom_row/submenus/log/log_component.h"
 #include "views/main_screen/bottom_row/submenus/roms/roms_component.h"
 #include "views/main_screen/main_screen.h"
+
+// std and misc
 #include <cstdlib>
 #include <filesystem>
+#include <i18ncpp.h>
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_options.hpp>
 #include <ftxui/component/loop.hpp>
@@ -18,9 +24,10 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <ftxui/screen/string.hpp>
-#include <i18ncpp.h>
 
-using namespace ftxui;
+using namespace ftxui;    // Compoennts and elements
+using namespace Settings; // load_settings, save_settings
+using namespace UIState;  // i18n_object
 using namespace std;
 
 void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
@@ -30,27 +37,27 @@ int main() {
   // Save backup of settings TODO: Low priority: use some sort of hash or
   // something to detect if the backup has been change to limit unnecessaru
   // writes
-  Settings::save_settings(true);
+  save_settings(true);
 
   // If no config file exists, create one
   filesystem::path tmp_config_path = "config.ini";
   if (!filesystem::exists(tmp_config_path)) {
-    Settings::save_settings(false);
+    save_settings(false);
   }
 
   // If loading main fails, load backup we just created
-  if (Settings::load_settings(false) != 0) {
-    Settings::load_settings(true);
+  if (load_settings(false) != 0) {
+    load_settings(true);
   }
 
   // Set up i18n
-  UIState::i18n_object.loadLocaleFromFile("en.json");
-  UIState::i18n_object.loadLocaleFromFile("jp.json");
-  UIState::i18n_object.setLocale(UIState::locale_entries[Settings::language]);
+  i18n_object.loadLocaleFromFile("en.json");
+  i18n_object.loadLocaleFromFile("jp.json");
+  i18n_object.setLocale(locale_entries[language]);
 
   // Delare hardware components
   // LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-  //                         UIState::i18n_object.tr("sakura_init"));
+  //                         i18n_object.tr("sakura_init"));
   CPU *cpu = new CPU();
 
   // Declare screen, ScreenInteractive::Fullscreen uses the entire terminal
@@ -65,20 +72,18 @@ int main() {
   // Declare main loop, originally I did screen.Loop but decalring the loop
   // separately allows for greater control and for me to react to changes in
   // global variables that I set
-  Loop loop(&screen,
-            MainScreen::MainScreenComponent() | border |
-                color(UIState::colors[Settings::text_and_border_color]) |
-                bgcolor(UIState::colors[Settings::background_color]));
+  Loop loop(&screen, MainScreen::MainScreenComponent() | border |
+                         color(colors[text_and_border_color]) |
+                         bgcolor(colors[background_color]));
 
   // Main loop
   while (!loop.HasQuitted()) {
 
     // If exit flag is set
-    if (UIState::Exit == true) {
+    if (Exit == true) {
 
       // Save settings
-      if (Settings::save_settings(false) == 0) {
-
+      if (save_settings(false) == 0) {
         ExitScreen(screen);
       }
     }
