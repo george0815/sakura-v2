@@ -10,13 +10,13 @@ using namespace std;
 
 namespace LogComponent {
 
-// Uses GeneralViews::AddFocusableText to add a log Entry
-void AddLogEntry(Component &comp, string str);
-
 // Returns log component, basically just a Container::Vertical
 Component LogComponent();
 
 // Holds actual component returned from LogComponent()
 inline Component LogSubmenuComponent;
+
+// Uses GeneralViews::AddFocusableText to add a log Entry
+void AddLogEntry(string str = "");
 
 } // namespace LogComponent

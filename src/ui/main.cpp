@@ -44,13 +44,13 @@ int main() {
   }
 
   // Set up i18n
-  UIState::i18_object.loadLocaleFromFile("en.json");
-  UIState::i18_object.loadLocaleFromFile("jp.json");
-  UIState::i18_object.setLocale(UIState::locale_entries[Settings::language]);
+  UIState::i18n_object.loadLocaleFromFile("en.json");
+  UIState::i18n_object.loadLocaleFromFile("jp.json");
+  UIState::i18n_object.setLocale(UIState::locale_entries[Settings::language]);
 
   // Delare hardware components
   // LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-  //                         UIState::i18_object.tr("sakura_init"));
+  //                         UIState::i18n_object.tr("sakura_init"));
   CPU *cpu = new CPU();
 
   // Declare screen, ScreenInteractive::Fullscreen uses the entire terminal

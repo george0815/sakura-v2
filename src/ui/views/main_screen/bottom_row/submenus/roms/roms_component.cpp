@@ -1,12 +1,14 @@
 
+// this project
 #include "roms_component.h"
 #include "../../../../../../core/CART/CART.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
 #include "../log/log_component.h"
+
+// std
 #include <filesystem>
-#include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -30,9 +32,13 @@
 
 // TODO: Implement start rom, LoadRomFolder
 
-using namespace ftxui;
+using namespace ftxui; // ftxui componets and elements
 using namespace std;
-using namespace filesystem;
+using namespace filesystem;   // path
+using namespace UIState;      // SelectedRomTableIndex, i18n_object
+using namespace Settings;     // roms_paths, OpenFolder VerifyFolder, VerifyFile
+using namespace LogComponent; // AddLogEntry
+using namespace GeneralViews; // TableComponent
 
 namespace RomsComponent {
 
@@ -49,7 +55,7 @@ void LoadAllRoms() {
   // container vertical with a vector<string> backing it, with add/remove paths
   // buttons
   vector<string> folders =
-      views::split(Settings::roms_paths, "\n") | ranges::to<vector<string>>();
+      views::split(roms_paths, "\n") | ranges::to<vector<string>>();
   if (!folders.empty()) {
     for (string dir : folders) {
       LoadRomFolder(dir);
@@ -61,18 +67,18 @@ void LoadAllRoms() {
 void OpenRomFolder() {
 
   // Get path of rom to start by getting selected index of the rom table, then
-  path tmp_path =
-      RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).path;
+  path tmp_path = RomList.at(SelectedRomTableIndex - 1).path;
   string tmp = tmp_path.parent_path();
 
   // Sends error_message to log on failure
   string error_message = "";
-  if (Settings::OpenFolder(tmp, error_message) != 0) {
-    LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, error_message);
+  if (OpenFolder(tmp, error_message) != 0) {
+    AddLogEntry(error_message);
   }
 }
 
-// Opens folder to directory that the rom's SRAM file currently resides in
+// Opens folder to directory that the rom's SRAM file currently resides in //
+// TODO: Implement this once SRAM is impelmented
 void OpenSRAMFolder() {}
 
 // Verifies directory, searches through and verifies any roms in that directory
@@ -80,14 +86,14 @@ void LoadRomFolder(string directory) {
 
   // Call verify function on default rom directory
   string error_message;
-  if (Settings::VerifyFolder(directory, error_message) == 0) {
+  if (VerifyFolder(directory, error_message) == 0) {
 
     // Loop through files in directory (note: non-recursive)
     Rom tmp_rom;
     for (directory_entry tmp_entry : directory_iterator((path)directory)) {
 
       // If file is valid, create entry and add to list
-      if (Settings::VerifyFile(tmp_entry.path(), error_message) == 0 &&
+      if (VerifyFile(tmp_entry.path(), error_message) == 0 &&
               (tmp_entry.path().extension() == ".nes") ||
           tmp_entry.path().extension() == ".NES") {
 
@@ -97,51 +103,47 @@ void LoadRomFolder(string directory) {
 
         // Push to list and log
         RomList.push_back(tmp_rom);
-        LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                  UIState::i18_object.tr("Rom_added:_") +
-                                      tmp_rom.name);
+        AddLogEntry(i18n_object.tr("Rom_added:_") + tmp_rom.name);
 
         // Add row in UI;
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
                              to_string(tmp_rom.size));
 
         // If nes rom fails to verify
-      } else if (Settings::VerifyFile(tmp_entry.path(), error_message) != 0 &&
+      } else if (VerifyFile(tmp_entry.path(), error_message) != 0 &&
                  (tmp_entry.path().extension() == ".nes" ||
                   tmp_entry.path().extension() == ".NES")) {
+
         // Adds error message to log
-        LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                  error_message);
+        AddLogEntry(error_message);
       } // non .nes files are ignored
     }
 
   } else {
     // Adds error message to log
-    LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, error_message);
+    AddLogEntry(error_message);
   }
 }
 
 // Launches rom for now using the old sakura core until the new one is done
 void StartRom() {
 
-  // Get path of rom to start by getting selected index of the rom table, then
-  string tmp =
-      "/run/media/Hunter/Programming/Github/sakura/sakura " +
-      RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).path;
+  // TODO: Replace this when starting the core
 
-  LogComponent::AddLogEntry(
-      LogComponent::LogSubmenuComponent,
-      UIState::i18_object.tr("Roms_started:_") +
-          RomsComponent::RomList.at(UIState::SelectedRomTableIndex - 1).name);
+  // Get path of rom to start by getting selected index of the rom table, then
+  string tmp = "/run/media/Hunter/Programming/Github/sakura/sakura " +
+               RomList.at(SelectedRomTableIndex - 1).path;
+
+  AddLogEntry(i18n_object.tr("Roms_started:_") +
+              RomList.at(SelectedRomTableIndex - 1).name);
 
   int result = system(tmp.c_str());
 }
 
 // Simple roms table
 Component RomTableComponent() {
-  return GeneralViews::TableComponent(
-      UIState::i18_object.tr("Name"), UIState::i18_object.tr("Path"),
-      UIState::i18_object.tr("Size"), 3, UIState::SelectedRomTableIndex);
+  return TableComponent(i18n_object.tr("Name"), i18n_object.tr("Path"),
+                        i18n_object.tr("Size"), 3, SelectedRomTableIndex);
 }
 
 } // namespace RomsComponent

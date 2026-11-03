@@ -27,7 +27,7 @@ using namespace std;
 //==========================
 
 using namespace GeneralViews; // Components
-using namespace UIState;      // labels
+using namespace UIState;      // labels, i18n_object
 using namespace Settings;     // Controls
 
 namespace ControlsComponent {
@@ -39,62 +39,62 @@ Component ControlsComponent() {
   return Container::Vertical({
 
              // START AND STOP
-             ControlOptionComponent(i18_object.tr("Start_rom:_"),
+             ControlOptionComponent(i18n_object.tr("Start_rom:_"),
                                     start_rom_control, start_rom_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("Stop_rom:_"),
+             ControlOptionComponent(i18n_object.tr("Stop_rom:_"),
                                     stop_rom_control, stop_rom_label),
              Padding(),
 
              // FOLDERS
-             ControlOptionComponent(i18_object.tr("Open_rom_folder:_"),
+             ControlOptionComponent(i18n_object.tr("Open_rom_folder:_"),
                                     open_rom_folder_control,
                                     open_rom_folder_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("Open_SRAM_folder:_"),
+             ControlOptionComponent(i18n_object.tr("Open_SRAM_folder:_"),
                                     open_sram_folder_control,
                                     open_SRAM_folder_label),
              Padding(),
 
              // SAVING
-             ControlOptionComponent(i18_object.tr("Save_state:_"),
+             ControlOptionComponent(i18n_object.tr("Save_state:_"),
                                     save_state_control, save_state_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("Load_state:_"),
+             ControlOptionComponent(i18n_object.tr("Load_state:_"),
                                     load_state_control, load_state_label),
              Padding(),
 
              // CONTROLLER BUTTONS
-             ControlOptionComponent(i18_object.tr("START:_"), start_control,
+             ControlOptionComponent(i18n_object.tr("START:_"), start_control,
                                     start_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("SELECT:_"), select_control,
+             ControlOptionComponent(i18n_object.tr("SELECT:_"), select_control,
                                     select_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("A:_"), a_control, a_label),
+             ControlOptionComponent(i18n_object.tr("A:_"), a_control, a_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("B:_"), b_control, b_label),
+             ControlOptionComponent(i18n_object.tr("B:_"), b_control, b_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("UP:_"), up_control,
+             ControlOptionComponent(i18n_object.tr("UP:_"), up_control,
                                     up_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("DOWN:_"), down_control,
+             ControlOptionComponent(i18n_object.tr("DOWN:_"), down_control,
                                     down_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("LEFT:_"), left_control,
+             ControlOptionComponent(i18n_object.tr("LEFT:_"), left_control,
                                     left_label),
              Padding(),
 
-             ControlOptionComponent(i18_object.tr("RIGHT:_"), right_control,
+             ControlOptionComponent(i18n_object.tr("RIGHT:_"), right_control,
                                     right_label),
              Padding(),
 
@@ -102,7 +102,7 @@ Component ControlsComponent() {
 
              // SAVE BUTTON
              Button(
-                 i18_object.tr("Save"), [&] { save_settings(false); },
+                 i18n_object.tr("Save"), [&] { save_settings(false); },
                  ButtonOption::Ascii()),
 
          }) |

@@ -18,13 +18,16 @@
 //
 //==========================
 
+using namespace GeneralViews; // FocusableTextComponent
+using namespace UIState;      // most_recent_log, i18_object
+
 namespace LogComponent {
 
 // Uses GeneralViews::AddFocusableText to add a log Entry
-void AddLogEntry(Component &comp, string str) {
-  comp->Add(GeneralViews::FocusableTextComponent(str));
+void AddLogEntry(string str) {
+  LogSubmenuComponent->Add(FocusableTextComponent(str));
   // Update header
-  UIState::most_recent_log = " " + str;
+  most_recent_log = " " + str;
 }
 
 // Returns log component, basically just a Container::Vertical
@@ -33,8 +36,7 @@ Component LogComponent() {
 
       // It was seg faulting unless I had at least one component here, so the
       // log will always start with this entry
-      GeneralViews::FocusableTextComponent(
-          UIState::i18_object.tr("sakura_init")),
+      FocusableTextComponent(i18n_object.tr("sakura_init")),
 
   }});
 }

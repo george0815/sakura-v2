@@ -1,26 +1,20 @@
+// this project
 #include "../../../settings/settings.h"
 #include "../../../state.h"
 #include "top_row_component.h"
+
+// ftxui
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
-/**
- * TODO: SET DIMENSIONS
- * TEXT COLOR
- * SET ASCII
- * COMMENTS
- *
- */
-
-using namespace ftxui;
+using namespace ftxui; // ftxui components and elements
 using namespace std;
+using namespace UIState; // SelectedMenu, colors
 
-// ASCII art TODO: Find a way to 1. Dynamically load the ascii from json, and 2.
-// Switch ascii depending on the menu
-
+// Returns canvas displaying one of the ascii art entries
 Component TopRow::AsciiBox() {
 
   string ascii_entries[] = {
@@ -111,19 +105,23 @@ Component TopRow::AsciiBox() {
 
   };
 
+  // Reads one of the ascii entries line by line and draws each line to the
+  // canvas one at a time
   return Renderer([ascii_entries] {
-    istringstream ascii_stream(ascii_entries[UIState::SelectedMenu]);
+    istringstream ascii_stream(ascii_entries[SelectedMenu]);
 
     string line;
-    int height = 0;
+    int height = 0; // 0 is the top, increments each line
 
     auto c = Canvas(130, 100);
 
+    // Draw each line
     while (getline(ascii_stream, line)) {
-      c.DrawText(0, height, line, UIState::colors[Settings::ascii_color]);
+      c.DrawText(0, height, line, colors[Settings::ascii_color]);
       height += 4;
     }
 
+    // Set border and dimensions and return
     return canvas(std::move(c)) | border |
            size(ftxui::HEIGHT, ftxui::LESS_THAN, 18) |
            size(ftxui::WIDTH, ftxui::GREATER_THAN, 50);

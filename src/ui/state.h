@@ -9,13 +9,13 @@ using namespace std;
 namespace UIState {
 
 // i18n object
-inline i18n::I18N i18_object;
+inline i18n::I18N i18n_object;
 
 // Checked every loop, closes if set
 inline bool Exit = false;
 
 // Heading text, shows most recent log
-inline string most_recent_log = UIState::i18_object.tr("sakura_init");
+inline string most_recent_log = UIState::i18n_object.tr("sakura_init");
 
 // Value for the selected menu on the main tab, saves tab is a different
 // variable

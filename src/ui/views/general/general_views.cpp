@@ -22,8 +22,7 @@
 #include <ftxui/screen/color.hpp>
 
 using namespace std;
-
-// TODO:: i18n
+using namespace UIState; // i18n_object
 
 //==========================
 //
@@ -84,8 +83,6 @@ Component FocusableTextComponent(string str, int padding) {
 Component ControlOptionComponent(string str, int &control_setting,
                                  string &label) {
 
-  bool waiting_for_input = true;
-
   return Container::Horizontal({
 
              // Used as a label
@@ -100,7 +97,7 @@ Component ControlOptionComponent(string str, int &control_setting,
                  [&label] {
                    // Set label while waiting for input
                    label = "...";
-                   UIState::waiting_for_input = true;
+                   waiting_for_input = true;
                  },
                  ButtonOption::Ascii()),
 
@@ -113,9 +110,9 @@ Component ControlOptionComponent(string str, int &control_setting,
 
            // Only while waiting for input get the key, without this it will
            // catch any key the user types while the button is focused
-           if (UIState::waiting_for_input == true) {
+           if (waiting_for_input == true) {
              label = event.character();
-             UIState::waiting_for_input = false;
+             waiting_for_input = false;
 
              // Translate to SDL3 key code
              control_setting = ControlsComponent::KeyCodeToSDL3(event);
@@ -148,12 +145,11 @@ Component TextInputComponent(string label, string &var) {
 // element and an dropdown component
 Component ColorComponent(string str, int &selection) {
 
-  color_entries = {
-      UIState::i18_object.tr("Black"),   UIState::i18_object.tr("Blue"),
-      UIState::i18_object.tr("Red"),     UIState::i18_object.tr("Green"),
-      UIState::i18_object.tr("Cyan"),    UIState::i18_object.tr("Pink"),
-      UIState::i18_object.tr("Orange"),  UIState::i18_object.tr("Gray"),
-      UIState::i18_object.tr("HotPink"), UIState::i18_object.tr("White")};
+  color_entries = {i18n_object.tr("Black"),   i18n_object.tr("Blue"),
+                   i18n_object.tr("Red"),     i18n_object.tr("Green"),
+                   i18n_object.tr("Cyan"),    i18n_object.tr("Pink"),
+                   i18n_object.tr("Orange"),  i18n_object.tr("Gray"),
+                   i18n_object.tr("HotPink"), i18n_object.tr("White")};
 
   return Container::Horizontal({
 
@@ -170,8 +166,7 @@ Component ColorComponent(string str, int &selection) {
 Component LanguageComponent(string str, int &selection) {
 
   // Sets up language options
-  lang_entries = {UIState::i18_object.tr("English"),
-                  UIState::i18_object.tr("Japanese")};
+  lang_entries = {i18n_object.tr("English"), i18n_object.tr("Japanese")};
 
   return Container::Horizontal({
 

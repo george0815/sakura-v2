@@ -1,7 +1,7 @@
+// this project
 #include "../../../state.h"
 #include "../main_screen.h"
 #include "bottom_row_component.h"
-#include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -13,7 +13,7 @@
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
 
-// Submenus
+// submenus
 #include "submenus/controls/controls_component.h"
 #include "submenus/log/log_component.h"
 #include "submenus/roms/roms_component.h"
@@ -101,7 +101,7 @@ Component TabContainerComponent() {
 // Menu that displays on the left side of the screen
 Component TabMenuComponent() {
 
-  submenus = {UIState::i18_object.tr("Roms"), UIState::i18_object.tr("Saves"),
+  submenus = {UIState::i18n_object.tr("Roms"), UIState::i18n_object.tr("Saves"),
               "Settings", "Controls", "log"};
 
   return Container::Vertical({

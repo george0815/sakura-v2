@@ -46,9 +46,10 @@
   "Stop_rom:_" : "ロム停止：　",
   "Save_state:_" : "ステート保存：　",
   "Load_state:_" : "ステート読み込み：　",
-  "Open_rom folder:_" : "ロムフォルダーを開く：　",
+  "Open_rom_folder:_" : "ロムフォルダーを開く：　",
   "Open_SRAM_folder:_" : "SRAMフォルダーを開く：　",
   "Roms" : "ロム",
+  "Roms:_" : "ロム：　",
   
 
 
