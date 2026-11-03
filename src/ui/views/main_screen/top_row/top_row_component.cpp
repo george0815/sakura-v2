@@ -1,6 +1,8 @@
 
+// this project
 #include "top_row_component.h"
 #include "../../../settings/settings.h"
+#include "../../../views/general/general_views.h"
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -9,8 +11,6 @@
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
-
-using namespace ftxui;
 
 //==========================
 //
@@ -21,24 +21,30 @@ using namespace ftxui;
 //
 //==========================
 
+using namespace Settings;     // disable_ascii, disable_colored_hotkey_info
+using namespace ftxui;        // Components and elements
+using namespace GeneralViews; // Padding
+
 namespace TopRow {
 
+// returns component combining the top row
 Component TopRowComponent() {
   return Container::Horizontal({
 
-             (!Settings::disable_ascii ? AsciiBox()
-                                       : Renderer([] { return text(""); })),
+             // AsciiBox, renders if enabled
+             (!disable_ascii ? AsciiBox() : Padding()),
 
-             Renderer([] {
-               return (!Settings::disable_ascii ? text("     ") : text(""));
-             }), // Padding, TODO: Replace with general padding component
-             InfoContainer(),
+             // If theres no ascii box, no padding since the InfoContainer will
+             // be all the way to the left
+             (!disable_ascii ? Padding(3) : Padding()), InfoContainer(),
 
-             Renderer([] { return text("            "); }),
+             // Always renders
+             Padding(7),
 
-             (!Settings::disable_colored_hotkey_info
-                  ? ControlsContainer()
-                  : Renderer([] { return text(""); }))}) |
+             // Control section, renders if enabled
+             (!disable_colored_hotkey_info ? ControlsContainer() : Padding())
+
+         }) |
          size(ftxui::HEIGHT, ftxui::LESS_THAN, 100); // Sets max size of top row
 }
 

@@ -209,13 +209,13 @@ Component TableHeader(string str, int padding, int &selected_tab) {
 void AddRow(Component &comp, string column1, string column2, string column3) {
 
   // Add first column text
-  comp->ChildAt(0)->Add(GeneralViews::FocusableTextComponent(column1));
+  comp->ChildAt(0)->Add(FocusableTextComponent(column1));
 
   // Add second column text
-  comp->ChildAt(2)->Add(GeneralViews::FocusableTextComponent(column2));
+  comp->ChildAt(2)->Add(FocusableTextComponent(column2));
 
   // Add third column text
-  comp->ChildAt(4)->Add(GeneralViews::FocusableTextComponent(column3));
+  comp->ChildAt(4)->Add(FocusableTextComponent(column3));
 }
 
 // Returns a table component consisting of 3 columns, separated by a vertical
@@ -227,17 +227,17 @@ Component TableComponent(string column1, string column2, string column3,
   return Container::Horizontal({
 
       // Column 1
-      GeneralViews::TableHeader(column1, padding, selected_tab),
+      TableHeader(column1, padding, selected_tab),
       Renderer([&] { return separator(); }),
 
       // Column 2
-      GeneralViews::TableHeader(column2, padding, selected_tab),
+      TableHeader(column2, padding, selected_tab),
       Renderer([&] { return separator(); }),
 
       // Column 3 (for some reason whenever I tried to use flex on column3 it
       // would make all its children disappear, so I have an empty
       // Container::Vertical as a hack for now) TODO: Fix this
-      GeneralViews::TableHeader(column3, padding, selected_tab),
+      TableHeader(column3, padding, selected_tab),
       Container::Vertical(
           {Renderer([&] { return vbox({text(""), separator()}); })}) |
           flex,
