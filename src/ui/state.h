@@ -64,6 +64,8 @@ inline ftxui::Color colors[] = {
 // Holds language local options
 inline string locale_entries[2] = {"en", "jp"};
 
-inline bool TEST_BOOL = false;
+// Used by the general control button component to know whether the button is
+// waiting for input
+inline bool waiting_for_input = false;
 
 } // namespace UIState

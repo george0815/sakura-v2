@@ -34,6 +34,7 @@
  * GET VALUES FROM SETTINGS CONFIG / VARIABLES, i18n, start rom logic */
 
 using namespace ftxui;
+using namespace std;
 
 // Menu tab options
 std::vector<std::string> submenus;
@@ -63,8 +64,10 @@ Component TabContainerComponent() {
       CatchEvent(RomsComponent::RomSubmenuComponent, [](Event event) {
         // This was me testing  // TODO: read actual controls and implement
         // proper logic
-        if (event == Event::F3) {
+        if (ControlsComponent::ToUpper(event.character()) ==
+            ControlsComponent::ToUpper(UIState::start_rom_label)) {
           RomsComponent::StartRom();
+          LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, "GOOD");
         } else if (event == Event::Return) {
           RomsComponent::OpenRomFolder();
         } else if (event == Event::ArrowDown) {

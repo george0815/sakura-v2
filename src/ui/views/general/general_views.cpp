@@ -1,5 +1,6 @@
 #include "general_views.h"
 #include "../../state.h"
+#include "../main_screen/bottom_row/submenus/controls/controls_component.h"
 #include "../main_screen/bottom_row/submenus/log/log_component.h"
 #include "SDL3/SDL_init.h"
 #include <SDL3/SDL.h>
@@ -86,29 +87,27 @@ Component ControlOptionComponent(string str, int &control_setting,
 
              Button(
                  &label,
-                 [&label, &waiting_for_input] {
+                 [&label] {
                    // Set label
                    label = "...";
 
-                   UIState::TEST_BOOL = true;
+                   UIState::waiting_for_input = true;
                  },
                  ButtonOption::Ascii()),
 
          }) |
-         CatchEvent([&label, &waiting_for_input](Event event) {
+         CatchEvent([&label, &control_setting](Event event) {
            if (event.is_mouse()) {
              return false;
            }
 
-           LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                     to_string(UIState::TEST_BOOL));
-
-           if (UIState::TEST_BOOL == true) {
-             label = "rewrwerweqtgwer";
+           if (UIState::waiting_for_input == true) {
              label = event.character();
-             LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                                       event.character());
-             UIState::TEST_BOOL = false;
+             UIState::waiting_for_input = false;
+
+             // Translate to SDL3
+             control_setting = ControlsComponent::KeyCodeToSDL3(event);
+
              return true;
            }
 

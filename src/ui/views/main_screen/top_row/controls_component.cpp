@@ -1,4 +1,4 @@
-
+#include "../../../state.h"
 #include "top_row_component.h"
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -20,7 +20,8 @@ Component TopRow::ControlsContainer() {
   return Container::Vertical({
 
       Renderer([&] {
-        return text("Start rom: F3") | color(Color::Green) | borderEmpty;
+        return text("Start rom: " + UIState::start_rom_label) |
+               color(Color::Green) | borderEmpty;
       }),
       Renderer([&] {
         return text("Stop rom: F4") | color(Color::LightSkyBlue1) | borderEmpty;

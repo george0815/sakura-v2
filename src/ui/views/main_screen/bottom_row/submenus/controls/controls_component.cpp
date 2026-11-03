@@ -218,4 +218,17 @@ int KeyCodeToSDL3(const ftxui::Event &key_event) {
   return SDLK_UNKNOWN;
 }
 
+// Used for normalizing the control strings
+string ToUpper(string lower) {
+
+  string upper = "";
+
+  for (char c : lower) {
+
+    upper += toupper(c);
+  }
+
+  return upper;
+}
+
 } // namespace ControlsComponent

@@ -26,4 +26,7 @@ int KeyCodeToSDL3(const Event &key_event);
 // Convert SDL3 key code -> string
 string KeyCodeToFTXUI(int code);
 
+// Used for normalizing the control strings
+string ToUpper(string lower);
+
 } // namespace ControlsComponent

@@ -1,5 +1,6 @@
 #include "settings.h"
 #include "../state.h"
+#include "../views/main_screen/bottom_row/submenus/controls/controls_component.h"
 #include "../views/main_screen/bottom_row/submenus/log/log_component.h"
 #include <cstdint>
 #include <filesystem>
@@ -74,6 +75,7 @@ int save_settings(bool backup) {
   settings_json["language"] = Settings::language;
 
   // Controls
+  settings_json["start_rom_control"] = Settings::start_rom_control;
 
   // Create and write to file, either main or create a backup
   string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
@@ -125,6 +127,11 @@ int load_settings(bool backup) {
     Settings::language = settings_json["language"];
 
     // Controls
+    Settings::start_rom_control = settings_json["start_rom_control"];
+
+    // Set control labels
+    UIState::start_rom_label =
+        ControlsComponent::KeyCodeToFTXUI(Settings::start_rom_control);
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
