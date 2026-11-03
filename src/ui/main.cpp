@@ -66,7 +66,9 @@ int main() {
   // separately allows for greater control and for me to react to changes in
   // global variables that I set
   Loop loop(&screen,
-            MainScreen::MainScreenComponent() | border | color(Color::White));
+            MainScreen::MainScreenComponent() | border |
+                color(UIState::colors[Settings::text_and_border_color]) |
+                bgcolor(UIState::colors[Settings::background_color]));
 
   // Main loop
   while (!loop.HasQuitted()) {

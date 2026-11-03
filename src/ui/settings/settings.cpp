@@ -56,16 +56,22 @@ int save_settings(bool backup) {
 
   // Bool values
   settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
+  settings_json["disable_colored_hotkey_info"] =
+      Settings::disable_colored_hotkey_info;
+  settings_json["disable_ascii"] = Settings::disable_ascii;
 
   // Inputs
   settings_json["default_rom_path"] = Settings::default_rom_path;
+  settings_json["roms_paths"] = Settings::roms_paths;
+  settings_json["log_path"] = Settings::log_path;
+  settings_json["sram_path"] = Settings::sram_path;
+  settings_json["save_state_path"] = Settings::save_state_path;
 
   // Color and language
   settings_json["background_color"] = Settings::background_color;
-  settings_json["text_color"] = Settings::text_color;
-  settings_json["focus_background_color"] = Settings::focus_background_color;
-  settings_json["focus_text_color"] = Settings::focus_text_color;
+  settings_json["text_and_border_color"] = Settings::text_and_border_color;
   settings_json["ascii_color"] = Settings::ascii_color;
+  settings_json["language"] = Settings::language;
 
   // Controls
 
@@ -101,24 +107,31 @@ int load_settings(bool backup) {
     // Bool values
     Settings::enable_detailed_logging =
         settings_json["enable_detailed_logging"].get<bool>();
+    Settings::disable_colored_hotkey_info =
+        settings_json["disable_colored_hotkey_info"].get<bool>();
+    Settings::disable_ascii = settings_json["disable_ascii"].get<bool>();
 
     // Inputs
     Settings::default_rom_path = settings_json["default_rom_path"];
+    Settings::roms_paths = settings_json["roms_paths"];
+    Settings::log_path = settings_json["log_path"];
+    Settings::sram_path = settings_json["sram_path"];
+    Settings::save_state_path = settings_json["save_state_path"];
 
     // Color and language
     Settings::background_color = settings_json["background_color"];
-    Settings::text_color = settings_json["text_color"];
-    Settings::focus_background_color = settings_json["focus_background_color"];
-    Settings::focus_text_color = settings_json["focus_text_color"];
+    Settings::text_and_border_color = settings_json["text_and_border_color"];
     Settings::ascii_color = settings_json["ascii_color"];
+    Settings::language = settings_json["language"];
 
     // Controls
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
-    LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-                              "Error loading settings.");
+    LogComponent::AddLogEntry(
+        LogComponent::LogSubmenuComponent,
+        "Error loading settings."); // TODO:: change to i18n string
     config_stream.close();
     return -1;
   }

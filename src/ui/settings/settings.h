@@ -23,11 +23,9 @@ inline string save_state_path = "";
 // Color options (will have find out what actual type ftxui::color is) and
 // language
 inline int background_color = 0;
-inline int text_color = 0;
-inline int focus_background_color = 0;
-inline int focus_text_color = 0;
-inline int ascii_color = 0;
-inline int language = 0;
+inline int text_and_border_color = 9;
+inline int ascii_color = 5;
+inline int language = 1;
 
 // Controls (will be ints for now but will probably be some SDL keycode or
 // something later)

@@ -63,15 +63,8 @@ Component SettingsComponent() {
                                           Settings::background_color),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::ColorComponent("Text color :", Settings::text_color),
-             Renderer([&] { return text(""); }),
-
-             GeneralViews::ColorComponent("Focus background color :",
-                                          Settings::focus_background_color),
-             Renderer([&] { return text(""); }),
-
-             GeneralViews::ColorComponent("Focus text color :",
-                                          Settings::focus_text_color),
+             GeneralViews::ColorComponent("Text and border color :",
+                                          Settings::text_and_border_color),
              Renderer([&] { return text(""); }),
 
              GeneralViews::ColorComponent("ASCII color :",

@@ -1,4 +1,7 @@
+#include "../../../settings/settings.h"
 #include "top_row_component.h"
+
+// ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/canvas.hpp>
@@ -14,6 +17,15 @@ using namespace ftxui;
 
 // Just contains info text, name of the program
 Component TopRow::InfoContainer() {
+
+  if (Settings::disable_ascii && Settings::disable_colored_hotkey_info) {
+
+    return Container::Horizontal({
+
+        Renderer([&] { return text("sakura-v2") | borderEmpty; }),
+        Renderer([&] { return text("Roms: 0") | borderEmpty; }),
+    });
+  }
 
   return Container::Vertical({
 
