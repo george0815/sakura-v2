@@ -1,20 +1,23 @@
+// this project
 #include "general_views.h"
 #include "../../state.h"
 #include "../main_screen/bottom_row/submenus/controls/controls_component.h"
 #include "../main_screen/bottom_row/submenus/log/log_component.h"
-#include "SDL3/SDL_init.h"
+
+// std
+#include <string>
+#include <vector>
+
+// SDL3
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_main.h>
-#include <ftxui/component/event.hpp>
-#include <iostream>
-#include <string>
-#include <vector>
 
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/component/component_options.hpp>
+#include <ftxui/component/event.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 
@@ -28,7 +31,7 @@ using namespace std;
 //
 // Current memebers: FocusableTextComponent, TableHeader, AddRow,
 // TableComponent, ControlOptionComponent, ColorComponent, TextInputComponent,
-// LanguageComponent
+// LanguageComponent, Padding
 //
 //==========================
 
@@ -39,6 +42,15 @@ std::vector<std::string> color_entries;
 std::vector<std::string> lang_entries;
 
 namespace GeneralViews {
+
+//==========================
+// TEXT COMPONENTS
+//==========================
+
+// Just a component used for padding
+Component Padding(int padding) {
+  return Renderer([padding] { return text(format("{:^{}}", "", padding)); });
+}
 
 // Returns a text comopoent that the use can focus on, this is needed for
 // navigating the tables.
@@ -81,31 +93,31 @@ Component ControlOptionComponent(string str, int &control_setting,
 
              // User clicks button -> wait for input -> next input is the value
              // of the
-             // NES control being configured TODO:: Replace logic once settings
-             // are
-             // implemented
+             // NES control being configured
 
              Button(
                  &label,
                  [&label] {
-                   // Set label
+                   // Set label while waiting for input
                    label = "...";
-
                    UIState::waiting_for_input = true;
                  },
                  ButtonOption::Ascii()),
 
          }) |
          CatchEvent([&label, &control_setting](Event event) {
+           // Ignore mouse events
            if (event.is_mouse()) {
              return false;
            }
 
+           // Only while waiting for input get the key, without this it will
+           // catch any key the user types while the button is focused
            if (UIState::waiting_for_input == true) {
              label = event.character();
              UIState::waiting_for_input = false;
 
-             // Translate to SDL3
+             // Translate to SDL3 key code
              control_setting = ControlsComponent::KeyCodeToSDL3(event);
 
              return true;

@@ -1,6 +1,7 @@
 
-
+// std
 #include <string>
+
 // ftxui
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
@@ -13,6 +14,13 @@ using namespace ftxui;
 using namespace std;
 
 namespace GeneralViews {
+
+//==========================
+// TEXT COMPONENTS
+//==========================
+
+// Just a component used for padding
+Component Padding(int padding = 0);
 
 // Returns focusble text as component, used for tables (see more detiled comment
 // in definition)

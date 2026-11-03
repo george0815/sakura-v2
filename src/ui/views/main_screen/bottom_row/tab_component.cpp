@@ -67,7 +67,6 @@ Component TabContainerComponent() {
         if (ControlsComponent::ToUpper(event.character()) ==
             ControlsComponent::ToUpper(UIState::start_rom_label)) {
           RomsComponent::StartRom();
-          LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent, "GOOD");
         } else if (event == Event::Return) {
           RomsComponent::OpenRomFolder();
         } else if (event == Event::ArrowDown) {

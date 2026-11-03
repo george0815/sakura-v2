@@ -1,10 +1,12 @@
+// this project
 #include "controls_component.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
+
+// SDL3
 #include "SDL3/SDL_keyboard.h"
 #include <SDL3/SDL_keycode.h>
-#include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -24,7 +26,9 @@ using namespace std;
 //
 //==========================
 
-// TODO: i18n, implement save function
+using namespace GeneralViews; // Components
+using namespace UIState;      // labels
+using namespace Settings;     // Controls
 
 namespace ControlsComponent {
 
@@ -35,65 +39,70 @@ Component ControlsComponent() {
   return Container::Vertical({
 
              // START AND STOP
-             GeneralViews::ControlOptionComponent(
-                 "Start rom :", Settings::start_rom_control,
-                 UIState::start_rom_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "Stop rom :", Settings::stop_rom_control,
-                 UIState::stop_rom_label),
-             Renderer([&] { return text(""); }),
+             ControlOptionComponent(i18_object.tr("Start_rom:_"),
+                                    start_rom_control, start_rom_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("Stop_rom:_"),
+                                    stop_rom_control, stop_rom_label),
+             Padding(),
 
              // FOLDERS
-             GeneralViews::ControlOptionComponent(
-                 "Open rom folder :", Settings::open_rom_folder_control,
-                 UIState::open_rom_folder_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "Open SRAM folder :", Settings::open_sram_folder_control,
-                 UIState::open_SRAM_folder_label),
-             Renderer([&] { return text(""); }),
+             ControlOptionComponent(i18_object.tr("Open_rom_folder:_"),
+                                    open_rom_folder_control,
+                                    open_rom_folder_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("Open_SRAM_folder:_"),
+                                    open_sram_folder_control,
+                                    open_SRAM_folder_label),
+             Padding(),
 
              // SAVING
-             GeneralViews::ControlOptionComponent(
-                 "Save state :", Settings::save_state_control,
-                 UIState::save_state_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "Load state :", Settings::load_state_control,
-                 UIState::load_state_label),
-             Renderer([&] { return text(""); }),
+             ControlOptionComponent(i18_object.tr("Save_state:_"),
+                                    save_state_control, save_state_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("Load_state:_"),
+                                    load_state_control, load_state_label),
+             Padding(),
 
              // CONTROLLER BUTTONS
-             GeneralViews::ControlOptionComponent(
-                 "START :", Settings::start_control, UIState::start_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "SELECT :", Settings::select_control, UIState::select_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("A :", Settings::a_control,
-                                                  UIState::a_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("B :", Settings::b_control,
-                                                  UIState::b_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent("UP :", Settings::up_control,
-                                                  UIState::up_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "DOWN :", Settings::down_control, UIState::down_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "LEFT :", Settings::left_control, UIState::left_label),
-             Renderer([&] { return text(""); }),
-             GeneralViews::ControlOptionComponent(
-                 "RIGHT :", Settings::right_control, UIState::right_label),
-             Renderer([&] { return text(""); }),
+             ControlOptionComponent(i18_object.tr("START:_"), start_control,
+                                    start_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("SELECT:_"), select_control,
+                                    select_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("A:_"), a_control, a_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("B:_"), b_control, b_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("UP:_"), up_control,
+                                    up_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("DOWN:_"), down_control,
+                                    down_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("LEFT:_"), left_control,
+                                    left_label),
+             Padding(),
+
+             ControlOptionComponent(i18_object.tr("RIGHT:_"), right_control,
+                                    right_label),
+             Padding(),
+
              Renderer([&] { return separator(); }),
 
              // SAVE BUTTON
              Button(
-                 "Save", [&] { Settings::save_settings(false); },
+                 i18_object.tr("Save"), [&] { save_settings(false); },
                  ButtonOption::Ascii()),
 
          }) |
@@ -224,7 +233,6 @@ string ToUpper(string lower) {
   string upper = "";
 
   for (char c : lower) {
-
     upper += toupper(c);
   }
 
