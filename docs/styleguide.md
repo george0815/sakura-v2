@@ -3,7 +3,7 @@
 - Component folders are all caps
 
 
-- Local variables/variables declared in functions are snake case
+- Local variables/variables declared in functions/args/params are snake case
 - All other folders are snake case
 - All other filenames are all snake case 
 
