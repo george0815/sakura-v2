@@ -9,50 +9,50 @@ namespace Settings {
 //=======================
 
 // Bool values
-inline bool disable_colored_hotkey_info = false;
-inline bool enable_detailed_logging = false;
-inline bool disable_ascii = false;
+inline bool DisableColoredHotkeyInfo = false;
+inline bool EnableDetailedLogging = false;
+inline bool DisableASCII = false;
 
 // Inputs
-inline string default_rom_path = "/home/Hunter/Downloads/roms/";
-inline string roms_paths;
-inline string log_path = "";
-inline string sram_path = "";
-inline string save_state_path = "";
+inline string DefaultRomPath = "/home/Hunter/Downloads/roms/";
+inline string RomsPaths;
+inline string LogPath = "";
+inline string SRAMPath = "";
+inline string SaveStatePath = "";
 
 // Color options (will have find out what actual type ftxui::color is) and
 // language
-inline int background_color = 0;
-inline int text_and_border_color = 9;
-inline int ascii_color = 5;
-inline int language = 1;
+inline int BackgroundColor = 0;
+inline int TextAndBorderColor = 9;
+inline int ASCIIColor = 5;
+inline int Language = 1;
 
 // Controls (will be ints for now but will probably be some SDL keycode or
 // something later)
-inline int start_rom_control = 0;
-inline int stop_rom_control = 0;
-inline int open_rom_folder_control = 0;
-inline int open_sram_folder_control = 0;
-inline int save_state_control = 0;
-inline int load_state_control = 0;
-inline int start_control = 0;
-inline int select_control = 0;
-inline int a_control = 0;
-inline int b_control = 0;
-inline int up_control = 0;
-inline int down_control = 0;
-inline int left_control = 0;
-inline int right_control = 0;
+inline int StartRomControl = 0;
+inline int StopRomControl = 0;
+inline int OpenRomFolderControl = 0;
+inline int OpenSRAMFolderControl = 0;
+inline int SaveStateControl = 0;
+inline int LoadStateControl = 0;
+inline int StartControl = 0;
+inline int SelectControl = 0;
+inline int AControl = 0;
+inline int BControl = 0;
+inline int UpControl = 0;
+inline int DownControl = 0;
+inline int LeftControl = 0;
+inline int RightControl = 0;
 
 //=======================
 // SAVING AND LOADING
 //=======================
 
 // Serializes the namepsace to JSON
-int save_settings(bool backup);
+int SaveSettings(bool backup);
 
 // Deerializes, maps values from JSON to the namepsace
-int load_settings(bool backup);
+int LoadSettings(bool backup);
 
 //=======================
 // VERIFICATION

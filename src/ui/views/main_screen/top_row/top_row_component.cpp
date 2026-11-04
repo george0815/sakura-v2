@@ -17,11 +17,11 @@
 // This namespace is for the top row component and any logic that is
 // associated with them.
 //
-// Current memebers: TopRowComponent
+// Current members: TopRowComponent
 //
 //==========================
 
-using namespace Settings;     // disable_ascii, disable_colored_hotkey_info
+using namespace Settings;     // DisableASCII, DisableColoredHotkeyInfo
 using namespace ftxui;        // Components and elements
 using namespace GeneralViews; // Padding
 
@@ -32,17 +32,17 @@ Component TopRowComponent() {
   return Container::Horizontal({
 
              // AsciiBox, renders if enabled
-             (!disable_ascii ? AsciiBox() : Padding()),
+             (!DisableASCII ? AsciiBox() : Padding()),
 
              // If theres no ascii box, no padding since the InfoContainer will
              // be all the way to the left
-             (!disable_ascii ? Padding(3) : Padding()), InfoContainer(),
+             (!DisableASCII ? Padding(3) : Padding()), InfoContainer(),
 
              // Always renders
              Padding(7),
 
              // Control section, renders if enabled
-             (!disable_colored_hotkey_info ? ControlsContainer() : Padding())
+             (!DisableColoredHotkeyInfo ? ControlsContainer() : Padding())
 
          }) |
          size(ftxui::HEIGHT, ftxui::LESS_THAN, 100); // Sets max size of top row

@@ -12,20 +12,20 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;
-using namespace RomsComponent; // roms list
-using namespace UIState;       // i18n_object
+using namespace RomsComponent; // RomList
+using namespace UIState;       // I18nObject
 
 // Just contains info text, name of the program
 Component TopRow::InfoContainer() {
 
   // If both elements are the header, collapse and display Horizontally
-  if (Settings::disable_ascii && Settings::disable_colored_hotkey_info) {
+  if (Settings::DisableASCII && Settings::DisableColoredHotkeyInfo) {
 
     return Container::Horizontal({
 
         Renderer([&] { return text("sakura-v2") | borderEmpty; }),
         Renderer([&] {
-          return text(i18n_object.tr("Roms:_") + to_string(RomList.size())) |
+          return text(I18nObject.tr("Roms:_") + to_string(RomList.size())) |
                  borderEmpty;
         }),
     });
@@ -36,7 +36,7 @@ Component TopRow::InfoContainer() {
 
       Renderer([&] { return text("sakura-v2") | borderEmpty; }),
       Renderer([&] {
-        return text(i18n_object.tr("Roms:_") + to_string(RomList.size())) |
+        return text(I18nObject.tr("Roms:_") + to_string(RomList.size())) |
                borderEmpty;
       }),
 

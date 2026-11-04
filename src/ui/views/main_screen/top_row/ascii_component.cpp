@@ -12,7 +12,7 @@
 
 using namespace ftxui; // ftxui components and elements
 using namespace std;
-using namespace UIState; // SelectedMenu, colors
+using namespace UIState; // SelectedMenu, ColorEntries
 
 // Returns canvas displaying one of the ascii art entries
 Component TopRow::AsciiBox() {
@@ -117,7 +117,7 @@ Component TopRow::AsciiBox() {
 
     // Draw each line
     while (getline(ascii_stream, line)) {
-      c.DrawText(0, height, line, colors[Settings::ascii_color]);
+      c.DrawText(0, height, line, ColorEntries[Settings::ASCIIColor]);
       height += 4;
     }
 

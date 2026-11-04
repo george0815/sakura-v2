@@ -11,7 +11,7 @@
 #include <ftxui/screen/screen.hpp>
 
 using namespace ftxui;   // ftxui components and elements
-using namespace UIState; // labels, i18n_object
+using namespace UIState; // labels, I18nObject
 
 // Shows the current controls for UI, (NES controls are in the controls
 // submenu), each text is a combo of the translation string and the label for
@@ -22,29 +22,27 @@ Component TopRow::ControlsContainer() {
   return Container::Vertical({
 
       Renderer([&] {
-        return text(i18n_object.tr("Start_rom:_") + start_rom_label) |
+        return text(I18nObject.tr("Start_rom:_") + StartRomLabel) |
                color(Color::Green) | borderEmpty;
       }),
       Renderer([&] {
-        return text(i18n_object.tr("Stop_rom:_") + stop_rom_label) |
+        return text(I18nObject.tr("Stop_rom:_") + StopRomLabel) |
                color(Color::LightSkyBlue1) | borderEmpty;
       }),
       Renderer([&] {
-        return text(i18n_object.tr("Open_rom_folder:_") +
-                    open_rom_folder_label) |
+        return text(I18nObject.tr("Open_rom_folder:_") + OpenRomFolderLabel) |
                color(Color::Purple) | borderEmpty;
       }),
       Renderer([&] {
-        return text(i18n_object.tr("Open_SRAM_folder:_") +
-                    open_SRAM_folder_label) |
+        return text(I18nObject.tr("Open_SRAM_folder:_") + OpenSRAMFolderLabel) |
                color(Color::Pink1) | borderEmpty;
       }),
       Renderer([&] {
-        return text(i18n_object.tr("Load_state:_") + save_state_label) |
+        return text(I18nObject.tr("Load_state:_") + SaveStateLabel) |
                color(Color::Red) | borderEmpty;
       }),
       Renderer([&] {
-        return text(i18n_object.tr("Load_state:_") + load_state_label) |
+        return text(I18nObject.tr("Load_state:_") + LoadStateLabel) |
                color(Color::Orange1) | borderEmpty;
       }),
   });

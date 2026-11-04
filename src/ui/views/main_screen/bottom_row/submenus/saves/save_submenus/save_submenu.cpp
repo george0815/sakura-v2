@@ -18,7 +18,7 @@
 // Save submenu compenents, contains two table compenents, one for
 // save states and one for SRAM
 //
-// Current memebers: SaveSubmenuComponent, SaveSRAMTableComponent
+// Current members: SaveSubmenuComponent, SaveSRAMTableComponent
 //
 //==========================
 

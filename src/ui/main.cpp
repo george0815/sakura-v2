@@ -26,8 +26,8 @@
 #include <ftxui/screen/string.hpp>
 
 using namespace ftxui;    // Compoennts and elements
-using namespace Settings; // load_settings, save_settings
-using namespace UIState;  // i18n_object
+using namespace Settings; // LoadSettings, SaveSettings
+using namespace UIState;  // I18nObject, LocaleEntries, ColorEntries
 using namespace std;
 
 void ExitScreen(ScreenInteractive &screen) { screen.Exit(); }
@@ -37,23 +37,23 @@ int main() {
   // Save backup of settings TODO: Low priority: use some sort of hash or
   // something to detect if the backup has been change to limit unnecessaru
   // writes
-  save_settings(true);
+  SaveSettings(true);
 
   // If no config file exists, create one
   filesystem::path tmp_config_path = "config.ini";
   if (!filesystem::exists(tmp_config_path)) {
-    save_settings(false);
+    SaveSettings(false);
   }
 
   // If loading main fails, load backup we just created
-  if (load_settings(false) != 0) {
-    load_settings(true);
+  if (LoadSettings(false) != 0) {
+    LoadSettings(true);
   }
 
   // Set up i18n
-  i18n_object.loadLocaleFromFile("en.json");
-  i18n_object.loadLocaleFromFile("jp.json");
-  i18n_object.setLocale(locale_entries[language]);
+  I18nObject.loadLocaleFromFile("en.json");
+  I18nObject.loadLocaleFromFile("jp.json");
+  I18nObject.setLocale(LocaleEntries[Language]);
 
   // Delare hardware components
   // LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
@@ -73,8 +73,8 @@ int main() {
   // separately allows for greater control and for me to react to changes in
   // global variables that I set
   Loop loop(&screen, MainScreen::MainScreenComponent() | border |
-                         color(colors[text_and_border_color]) |
-                         bgcolor(colors[background_color]));
+                         color(ColorEntries[TextAndBorderColor]) |
+                         bgcolor(ColorEntries[BackgroundColor]));
 
   // Main loop
   while (!loop.HasQuitted()) {
@@ -83,7 +83,7 @@ int main() {
     if (Exit == true) {
 
       // Save settings
-      if (save_settings(false) == 0) {
+      if (SaveSettings(false) == 0) {
         ExitScreen(screen);
       }
     }

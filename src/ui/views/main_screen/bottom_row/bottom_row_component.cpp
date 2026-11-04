@@ -17,7 +17,7 @@ using namespace ftxui;
 // This namespace is for the bottom row and any logic that is associated
 // with it.
 //
-// Current memebers: BottomRowComponent
+// Current members: BottomRowComponent
 //
 //==========================
 
@@ -36,7 +36,7 @@ Component BottomRow::BottomRowComponent() {
              // top, right now just has placeholder data
              Container::Vertical({Renderer([&] {
                                     // Most recent log
-                                    return text(UIState::most_recent_log);
+                                    return text(UIState::MostRecentLog);
                                   }) | border,
 
                                   // Main tab contents

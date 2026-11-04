@@ -14,12 +14,12 @@
 // This namespace is for the log submenu and any logic that is associated
 // with it.
 //
-// Current memebers: AddLogEntry, LogComponent
+// Current members: AddLogEntry, LogComponent
 //
 //==========================
 
 using namespace GeneralViews; // FocusableTextComponent
-using namespace UIState;      // most_recent_log, i18_object
+using namespace UIState;      // MostRecentLog, I18nObject
 
 namespace LogComponent {
 
@@ -27,7 +27,7 @@ namespace LogComponent {
 void AddLogEntry(string str) {
   LogSubmenuComponent->Add(FocusableTextComponent(str));
   // Update header
-  most_recent_log = " " + str;
+  MostRecentLog = " " + str;
 }
 
 // Returns log component, basically just a Container::Vertical
@@ -36,7 +36,7 @@ Component LogComponent() {
 
       // It was seg faulting unless I had at least one component here, so the
       // log will always start with this entry
-      FocusableTextComponent(i18n_object.tr("sakura_init")),
+      FocusableTextComponent(I18nObject.tr("sakura_init")),
 
   }});
 }

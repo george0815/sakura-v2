@@ -22,13 +22,13 @@ using namespace std;
 // This namespace is for the controls submenu and any logic that is associated
 // with it.
 //
-// Current memebers: ControlsComponent, KeyCodeToSDL3, KeyCodeToFTXUI
+// Current members: ControlsComponent, KeyCodeToSDL3, KeyCodeToFTXUI
 //
 //==========================
 
 using namespace GeneralViews; // Components
-using namespace UIState;      // labels, i18n_object
-using namespace Settings;     // Controls
+using namespace UIState;      // labels, I18nObject
+using namespace Settings;     // Controls, SaveSettings
 
 namespace ControlsComponent {
 
@@ -39,70 +39,67 @@ Component ControlsComponent() {
   return Container::Vertical({
 
              // START AND STOP
-             ControlOptionComponent(i18n_object.tr("Start_rom:_"),
-                                    start_rom_control, start_rom_label),
+             ControlOptionComponent(I18nObject.tr("Start_rom:_"),
+                                    StartRomControl, StartRomLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("Stop_rom:_"),
-                                    stop_rom_control, stop_rom_label),
+             ControlOptionComponent(I18nObject.tr("Stop_rom:_"), StopRomControl,
+                                    StopRomLabel),
              Padding(),
 
              // FOLDERS
-             ControlOptionComponent(i18n_object.tr("Open_rom_folder:_"),
-                                    open_rom_folder_control,
-                                    open_rom_folder_label),
+             ControlOptionComponent(I18nObject.tr("Open_rom_folder:_"),
+                                    OpenRomFolderControl, OpenRomFolderLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("Open_SRAM_folder:_"),
-                                    open_sram_folder_control,
-                                    open_SRAM_folder_label),
+             ControlOptionComponent(I18nObject.tr("Open_SRAM_folder:_"),
+                                    OpenSRAMFolderControl, OpenSRAMFolderLabel),
              Padding(),
 
              // SAVING
-             ControlOptionComponent(i18n_object.tr("Save_state:_"),
-                                    save_state_control, save_state_label),
+             ControlOptionComponent(I18nObject.tr("Save_state:_"),
+                                    SaveStateControl, SaveStateLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("Load_state:_"),
-                                    load_state_control, load_state_label),
+             ControlOptionComponent(I18nObject.tr("Load_state:_"),
+                                    LoadStateControl, LoadStateLabel),
              Padding(),
 
              // CONTROLLER BUTTONS
-             ControlOptionComponent(i18n_object.tr("START:_"), start_control,
-                                    start_label),
+             ControlOptionComponent(I18nObject.tr("START:_"), StartControl,
+                                    StartLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("SELECT:_"), select_control,
-                                    select_label),
+             ControlOptionComponent(I18nObject.tr("SELECT:_"), SelectControl,
+                                    SelectLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("A:_"), a_control, a_label),
+             ControlOptionComponent(I18nObject.tr("A:_"), AControl, ALabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("B:_"), b_control, b_label),
+             ControlOptionComponent(I18nObject.tr("B:_"), BControl, BLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("UP:_"), up_control,
-                                    up_label),
+             ControlOptionComponent(I18nObject.tr("UP:_"), UpControl, UpLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("DOWN:_"), down_control,
-                                    down_label),
+             ControlOptionComponent(I18nObject.tr("DOWN:_"), DownControl,
+                                    DownLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("LEFT:_"), left_control,
-                                    left_label),
+             ControlOptionComponent(I18nObject.tr("LEFT:_"), LeftControl,
+                                    LeftLabel),
              Padding(),
 
-             ControlOptionComponent(i18n_object.tr("RIGHT:_"), right_control,
-                                    right_label),
+             ControlOptionComponent(I18nObject.tr("RIGHT:_"), RightControl,
+                                    RightLabel),
              Padding(),
 
              Renderer([&] { return separator(); }),
 
              // SAVE BUTTON
              Button(
-                 i18n_object.tr("Save"), [&] { save_settings(false); },
+                 I18nObject.tr("Save"), [&] { SaveSettings(false); },
                  ButtonOption::Ascii()),
 
          }) |

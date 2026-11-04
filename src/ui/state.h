@@ -9,13 +9,13 @@ using namespace std;
 namespace UIState {
 
 // i18n object
-inline i18n::I18N i18n_object;
+inline i18n::I18N I18nObject;
 
 // Checked every loop, closes if set
 inline bool Exit = false;
 
 // Heading text, shows most recent log
-inline string most_recent_log = UIState::i18n_object.tr("sakura_init");
+inline string MostRecentLog = I18nObject.tr("sakura_init");
 
 // Value for the selected menu on the main tab, saves tab is a different
 // variable
@@ -34,23 +34,23 @@ inline int SelectedSRAMTableIndex = 0;
 inline int SelectedSaveStateTableIndex = 0;
 
 // Label strings for control ui buttons
-inline string start_rom_label = "...";
-inline string stop_rom_label = "...";
-inline string open_rom_folder_label = "...";
-inline string open_SRAM_folder_label = "...";
-inline string save_state_label = "...";
-inline string load_state_label = "...";
-inline string start_label = "...";
-inline string select_label = "...";
-inline string a_label = "...";
-inline string b_label = "...";
-inline string up_label = "...";
-inline string down_label = "...";
-inline string left_label = "...";
-inline string right_label = "...";
+inline string StartRomLabel = "...";
+inline string StopRomLabel = "...";
+inline string OpenRomFolderLabel = "...";
+inline string OpenSRAMFolderLabel = "...";
+inline string SaveStateLabel = "...";
+inline string LoadStateLabel = "...";
+inline string StartLabel = "...";
+inline string SelectLabel = "...";
+inline string ALabel = "...";
+inline string BLabel = "...";
+inline string UpLabel = "...";
+inline string DownLabel = "...";
+inline string LeftLabel = "...";
+inline string RightLabel = "...";
 
 // Holds color options
-inline ftxui::Color colors[] = {
+inline ftxui::Color ColorEntries[] = {
     ftxui::Color::Black,   ftxui::Color::Blue,     ftxui::Color::Red,
     ftxui::Color::Green,   ftxui::Color::Cyan,     ftxui::Color::Pink1,
     ftxui::Color::Orange1, ftxui::Color::GrayDark, ftxui::Color::HotPink,
@@ -59,10 +59,10 @@ inline ftxui::Color colors[] = {
 };
 
 // Holds language local options
-inline string locale_entries[2] = {"en", "jp"};
+inline string LocaleEntries[2] = {"en", "jp"};
 
 // Used by the general control button component to know whether the button is
 // waiting for input
-inline bool waiting_for_input = false;
+inline bool WaitingForInput = false;
 
 } // namespace UIState

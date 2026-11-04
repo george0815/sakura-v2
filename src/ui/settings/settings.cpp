@@ -17,8 +17,8 @@ using namespace filesystem;
 // This namespace is for the settings and any logic that is associated
 // with it.
 //
-// Current memebers: all the variables that hold the actual settings values (in
-// header file), save_settings, load_settings, VerifyFolder, VerifyFile,
+// Current members: all the variables that hold the actual settings values (in
+// header file), SaveSettings, LoadSettings, VerifyFolder, VerifyFile,
 // OpenFolder
 //
 //==========================
@@ -47,7 +47,7 @@ int OpenFolder(string folder, string &error_message) {
 }
 
 // Serializes settings namespace to JSON
-int save_settings(bool backup) {
+int SaveSettings(bool backup) {
 
   // Declare json object
   json settings_json;
@@ -55,26 +55,26 @@ int save_settings(bool backup) {
   // Set values in json object
 
   // Bool values
-  settings_json["enable_detailed_logging"] = Settings::enable_detailed_logging;
+  settings_json["enable_detailed_logging"] = Settings::EnableDetailedLogging;
   settings_json["disable_colored_hotkey_info"] =
-      Settings::disable_colored_hotkey_info;
-  settings_json["disable_ascii"] = Settings::disable_ascii;
+      Settings::DisableColoredHotkeyInfo;
+  settings_json["disable_ascii"] = Settings::DisableASCII;
 
   // Inputs
-  settings_json["default_rom_path"] = Settings::default_rom_path;
-  settings_json["roms_paths"] = Settings::roms_paths;
-  settings_json["log_path"] = Settings::log_path;
-  settings_json["sram_path"] = Settings::sram_path;
-  settings_json["save_state_path"] = Settings::save_state_path;
+  settings_json["default_rom_path"] = Settings::DefaultRomPath;
+  settings_json["roms_paths"] = Settings::RomsPaths;
+  settings_json["log_path"] = Settings::LogPath;
+  settings_json["sram_path"] = Settings::SRAMPath;
+  settings_json["save_state_path"] = Settings::SaveStatePath;
 
   // Color and language
-  settings_json["background_color"] = Settings::background_color;
-  settings_json["text_and_border_color"] = Settings::text_and_border_color;
-  settings_json["ascii_color"] = Settings::ascii_color;
-  settings_json["language"] = Settings::language;
+  settings_json["background_color"] = Settings::BackgroundColor;
+  settings_json["text_and_border_color"] = Settings::TextAndBorderColor;
+  settings_json["ascii_color"] = Settings::ASCIIColor;
+  settings_json["language"] = Settings::Language;
 
   // Controls
-  settings_json["start_rom_control"] = Settings::start_rom_control;
+  settings_json["start_rom_control"] = Settings::StartRomControl;
 
   // Create and write to file, either main or create a backup
   string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
@@ -86,7 +86,7 @@ int save_settings(bool backup) {
 }
 
 // Serializes settings namespace to JSON
-int load_settings(bool backup) {
+int LoadSettings(bool backup) {
 
   // Create json object as object, has to be set to json::object or else it will
   // be treated as a string
@@ -106,31 +106,31 @@ int load_settings(bool backup) {
     settings_json = json::parse(buffer.str());
 
     // Bool values
-    Settings::enable_detailed_logging =
+    Settings::EnableDetailedLogging =
         settings_json["enable_detailed_logging"].get<bool>();
-    Settings::disable_colored_hotkey_info =
+    Settings::DisableColoredHotkeyInfo =
         settings_json["disable_colored_hotkey_info"].get<bool>();
-    Settings::disable_ascii = settings_json["disable_ascii"].get<bool>();
+    Settings::DisableASCII = settings_json["disable_ascii"].get<bool>();
 
     // Inputs
-    Settings::default_rom_path = settings_json["default_rom_path"];
-    Settings::roms_paths = settings_json["roms_paths"];
-    Settings::log_path = settings_json["log_path"];
-    Settings::sram_path = settings_json["sram_path"];
-    Settings::save_state_path = settings_json["save_state_path"];
+    Settings::DefaultRomPath = settings_json["default_rom_path"];
+    Settings::RomsPaths = settings_json["roms_paths"];
+    Settings::LogPath = settings_json["log_path"];
+    Settings::SRAMPath = settings_json["sram_path"];
+    Settings::SaveStatePath = settings_json["save_state_path"];
 
     // Color and language
-    Settings::background_color = settings_json["background_color"];
-    Settings::text_and_border_color = settings_json["text_and_border_color"];
-    Settings::ascii_color = settings_json["ascii_color"];
-    Settings::language = settings_json["language"];
+    Settings::BackgroundColor = settings_json["background_color"];
+    Settings::TextAndBorderColor = settings_json["text_and_border_color"];
+    Settings::ASCIIColor = settings_json["ascii_color"];
+    Settings::Language = settings_json["language"];
 
     // Controls
-    Settings::start_rom_control = settings_json["start_rom_control"];
+    Settings::StartRomControl = settings_json["start_rom_control"];
 
     // Set control labels
-    UIState::start_rom_label =
-        ControlsComponent::KeyCodeToFTXUI(Settings::start_rom_control);
+    UIState::StartRomLabel =
+        ControlsComponent::KeyCodeToFTXUI(Settings::StartRomControl);
 
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
@@ -152,8 +152,8 @@ int VerifyFolder(string directory, string &error_message) {
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = directory;
   if (!exists(tmp_dir) || !is_directory(tmp_dir)) {
-    error_message = UIState::i18n_object.tr("Error") + ": " + tmp_dir.string() +
-                    " " + UIState::i18n_object.tr("does_not_exist_folder");
+    error_message = UIState::I18nObject.tr("Error") + ": " + tmp_dir.string() +
+                    " " + UIState::I18nObject.tr("does_not_exist_folder");
     return -1;
   }
 
@@ -164,8 +164,8 @@ int VerifyFolder(string directory, string &error_message) {
     can_read = true;
   } catch (const filesystem_error) {
     can_read = false;
-    error_message = UIState::i18n_object.tr("Error") + ": " +
-                    UIState::i18n_object.tr("cannot_read_from") +
+    error_message = UIState::I18nObject.tr("Error") + ": " +
+                    UIState::I18nObject.tr("cannot_read_from") +
                     tmp_dir.string();
   }
 
@@ -179,8 +179,8 @@ int VerifyFolder(string directory, string &error_message) {
     remove("permissions_check.tmp");
   } catch (filesystem_error) {
     can_write = false;
-    error_message = UIState::i18n_object.tr("Error") + ": " +
-                    UIState::i18n_object.tr("cannot_write_to") +
+    error_message = UIState::I18nObject.tr("Error") + ": " +
+                    UIState::I18nObject.tr("cannot_write_to") +
                     tmp_dir.string();
   }
 
@@ -199,8 +199,8 @@ int VerifyFile(string file, string &error_message) {
   // Either not a folder or doesn't exist in the first place
   path tmp_dir = file;
   if (!exists(tmp_dir) || !is_regular_file(tmp_dir)) {
-    error_message = UIState::i18n_object.tr("Error") + ": " + tmp_dir.string() +
-                    UIState::i18n_object.tr("does_not_exist_file");
+    error_message = UIState::I18nObject.tr("Error") + ": " + tmp_dir.string() +
+                    UIState::I18nObject.tr("does_not_exist_file");
     return -1;
   }
 
@@ -214,8 +214,8 @@ int VerifyFile(string file, string &error_message) {
   }
 
   if (!can_read) {
-    error_message = UIState::i18n_object.tr("Error") + ": " +
-                    UIState::i18n_object.tr("cannot_read") + tmp_dir.string();
+    error_message = UIState::I18nObject.tr("Error") + ": " +
+                    UIState::I18nObject.tr("cannot_read") + tmp_dir.string();
     return -1;
   }
 

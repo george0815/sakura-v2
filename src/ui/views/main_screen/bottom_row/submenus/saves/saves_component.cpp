@@ -18,7 +18,7 @@ using namespace std;
 // This namespace is for the saves submenu and any logic that is associated
 // with it.
 //
-// Current memebers: SavesComponent, SavesTabContainerComponent,
+// Current members: SavesComponent, SavesTabContainerComponent,
 // SavesTabMenuComponent
 //
 //==========================

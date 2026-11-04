@@ -26,7 +26,7 @@
 // Rom Component, as of now just returns a table but as settings are implemented
 // and the emulator is built out more behavior will be added
 //
-// Current memebers: RomTableComponent, StartRom, LoadAllRoms, LoadRomFolder
+// Current members: RomTableComponent, StartRom, LoadAllRoms, LoadRomFolder
 //
 //==========================
 
@@ -35,8 +35,8 @@
 using namespace ftxui; // ftxui componets and elements
 using namespace std;
 using namespace filesystem;   // path
-using namespace UIState;      // SelectedRomTableIndex, i18n_object
-using namespace Settings;     // roms_paths, OpenFolder VerifyFolder, VerifyFile
+using namespace UIState;      // SelectedRomTableIndex, I18nObject
+using namespace Settings;     // RomsPaths, OpenFolder VerifyFolder, VerifyFile
 using namespace LogComponent; // AddLogEntry
 using namespace GeneralViews; // TableComponent
 
@@ -46,7 +46,7 @@ namespace RomsComponent {
 void LoadAllRoms() {
 
   // Call LoadRomFolder on default
-  LoadRomFolder(Settings::default_rom_path);
+  LoadRomFolder(DefaultRomPath);
 
   // Loop through rom paths list and call LoadRomFolder on each one (note: rom
   // paths is not a list but a string separated by new line characters)
@@ -55,7 +55,7 @@ void LoadAllRoms() {
   // container vertical with a vector<string> backing it, with add/remove paths
   // buttons
   vector<string> folders =
-      views::split(roms_paths, "\n") | ranges::to<vector<string>>();
+      views::split(RomsPaths, "\n") | ranges::to<vector<string>>();
   if (!folders.empty()) {
     for (string dir : folders) {
       LoadRomFolder(dir);
@@ -103,7 +103,7 @@ void LoadRomFolder(string directory) {
 
         // Push to list and log
         RomList.push_back(tmp_rom);
-        AddLogEntry(i18n_object.tr("Rom_added:_") + tmp_rom.name);
+        AddLogEntry(I18nObject.tr("Rom_added:_") + tmp_rom.name);
 
         // Add row in UI;
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,
@@ -134,7 +134,7 @@ void StartRom() {
   string tmp = "/run/media/Hunter/Programming/Github/sakura/sakura " +
                RomList.at(SelectedRomTableIndex - 1).path;
 
-  AddLogEntry(i18n_object.tr("Roms_started:_") +
+  AddLogEntry(I18nObject.tr("Roms_started:_") +
               RomList.at(SelectedRomTableIndex - 1).name);
 
   int result = system(tmp.c_str());
@@ -142,8 +142,8 @@ void StartRom() {
 
 // Simple roms table
 Component RomTableComponent() {
-  return TableComponent(i18n_object.tr("Name"), i18n_object.tr("Path"),
-                        i18n_object.tr("Size"), 3, SelectedRomTableIndex);
+  return TableComponent(I18nObject.tr("Name"), I18nObject.tr("Path"),
+                        I18nObject.tr("Size"), 3, SelectedRomTableIndex);
 }
 
 } // namespace RomsComponent

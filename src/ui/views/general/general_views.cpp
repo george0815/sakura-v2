@@ -22,7 +22,7 @@
 #include <ftxui/screen/color.hpp>
 
 using namespace std;
-using namespace UIState; // i18n_object
+using namespace UIState; // I18nObject
 
 //==========================
 //
@@ -97,7 +97,7 @@ Component ControlOptionComponent(string str, int &control_setting,
                  [&label] {
                    // Set label while waiting for input
                    label = "...";
-                   waiting_for_input = true;
+                   WaitingForInput = true;
                  },
                  ButtonOption::Ascii()),
 
@@ -110,9 +110,9 @@ Component ControlOptionComponent(string str, int &control_setting,
 
            // Only while waiting for input get the key, without this it will
            // catch any key the user types while the button is focused
-           if (waiting_for_input == true) {
+           if (WaitingForInput == true) {
              label = event.character();
-             waiting_for_input = false;
+             WaitingForInput = false;
 
              // Translate to SDL3 key code
              control_setting = ControlsComponent::KeyCodeToSDL3(event);
@@ -145,11 +145,11 @@ Component TextInputComponent(string label, string &var) {
 // element and an dropdown component
 Component ColorComponent(string str, int &selection) {
 
-  color_entries = {i18n_object.tr("Black"),   i18n_object.tr("Blue"),
-                   i18n_object.tr("Red"),     i18n_object.tr("Green"),
-                   i18n_object.tr("Cyan"),    i18n_object.tr("Pink"),
-                   i18n_object.tr("Orange"),  i18n_object.tr("Gray"),
-                   i18n_object.tr("HotPink"), i18n_object.tr("White")};
+  color_entries = {I18nObject.tr("Black"),   I18nObject.tr("Blue"),
+                   I18nObject.tr("Red"),     I18nObject.tr("Green"),
+                   I18nObject.tr("Cyan"),    I18nObject.tr("Pink"),
+                   I18nObject.tr("Orange"),  I18nObject.tr("Gray"),
+                   I18nObject.tr("HotPink"), I18nObject.tr("White")};
 
   return Container::Horizontal({
 
@@ -166,7 +166,7 @@ Component ColorComponent(string str, int &selection) {
 Component LanguageComponent(string str, int &selection) {
 
   // Sets up language options
-  lang_entries = {i18n_object.tr("English"), i18n_object.tr("Japanese")};
+  lang_entries = {I18nObject.tr("English"), I18nObject.tr("Japanese")};
 
   return Container::Horizontal({
 

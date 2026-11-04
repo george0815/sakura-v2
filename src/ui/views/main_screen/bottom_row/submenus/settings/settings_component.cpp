@@ -20,7 +20,7 @@ using namespace filesystem;
 // This namespace is for the settings submenu and any logic that is associated
 // with it.
 //
-// Current memebers: SettingsComponent
+// Current members: SettingsComponent
 //
 //==========================
 
@@ -48,27 +48,27 @@ Component SettingsComponent() {
              Renderer([&] { return text(""); }),
 
              Checkbox("Disable colored hotekey info",
-                      &Settings::disable_colored_hotkey_info),
+                      &Settings::DisableColoredHotkeyInfo),
              Renderer([&] { return text(""); }),
 
-             Checkbox("Disable ASCII", &Settings::disable_ascii),
+             Checkbox("Disable ASCII", &Settings::DisableASCII),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::LanguageComponent("Language :", Settings::language),
+             GeneralViews::LanguageComponent("Language :", Settings::Language),
              Renderer([&] { return text(""); }),
 
              // Color options
 
              GeneralViews::ColorComponent("Background color :",
-                                          Settings::background_color),
+                                          Settings::BackgroundColor),
              Renderer([&] { return text(""); }),
 
              GeneralViews::ColorComponent("Text and border color :",
-                                          Settings::text_and_border_color),
+                                          Settings::TextAndBorderColor),
              Renderer([&] { return text(""); }),
 
              GeneralViews::ColorComponent("ASCII color :",
-                                          Settings::ascii_color),
+                                          Settings::ASCIIColor),
              Renderer([&] { return text(""); }),
 
              //************
@@ -83,26 +83,26 @@ Component SettingsComponent() {
 
              Renderer([&] { return text(""); }),
              GeneralViews::TextInputComponent("Roms paths :",
-                                              Settings::roms_paths),
+                                              Settings::RomsPaths),
              Renderer([&] { return text(""); }),
 
              GeneralViews::TextInputComponent("Default rom path :",
-                                              Settings::default_rom_path),
+                                              Settings::DefaultRomPath),
              Renderer([&] { return text(""); }),
 
-             GeneralViews::TextInputComponent("Log path :", Settings::log_path),
+             GeneralViews::TextInputComponent("Log path :", Settings::LogPath),
              Renderer([&] { return text(""); }),
 
              GeneralViews::TextInputComponent("SRAM path :",
-                                              Settings::sram_path),
+                                              Settings::SRAMPath),
              Renderer([&] { return text(""); }),
 
              GeneralViews::TextInputComponent("Save state path :",
-                                              Settings::save_state_path),
+                                              Settings::SaveStatePath),
              Renderer([&] { return text(""); }),
 
              Checkbox("Enable detailed logging",
-                      &Settings::enable_detailed_logging),
+                      &Settings::EnableDetailedLogging),
              Renderer([&] { return text(""); }),
 
              // Save button TODO: implement logic

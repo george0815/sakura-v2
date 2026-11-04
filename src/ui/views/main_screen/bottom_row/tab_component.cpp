@@ -25,7 +25,7 @@
 // This namespace is for the bottom row/tab components and any logic that is
 // associated with them.
 //
-// Current memebers: TabContainerComponent, TabMenuComponent
+// Current members: TabContainerComponent, TabMenuComponent
 //
 //==========================
 
@@ -65,7 +65,7 @@ Component TabContainerComponent() {
         // This was me testing  // TODO: read actual controls and implement
         // proper logic
         if (ControlsComponent::ToUpper(event.character()) ==
-            ControlsComponent::ToUpper(UIState::start_rom_label)) {
+            ControlsComponent::ToUpper(UIState::StartRomLabel)) {
           RomsComponent::StartRom();
         } else if (event == Event::Return) {
           RomsComponent::OpenRomFolder();
@@ -101,7 +101,7 @@ Component TabContainerComponent() {
 // Menu that displays on the left side of the screen
 Component TabMenuComponent() {
 
-  submenus = {UIState::i18n_object.tr("Roms"), UIState::i18n_object.tr("Saves"),
+  submenus = {UIState::I18nObject.tr("Roms"), UIState::I18nObject.tr("Saves"),
               "Settings", "Controls", "log"};
 
   return Container::Vertical({
