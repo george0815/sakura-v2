@@ -9,6 +9,6 @@ Used for emulating the NES APU. I'm not as interested in the APU as I am in the 
 
 Used to create a TUI similar to Terminal.GUI. 
 
-- SDL2 - https://github.com/libsdl-org/SDL
+- SDL3 - https://github.com/libsdl-org/SDL
 
 Used for input, rendering the framebuffer, audio, etc.
