@@ -14,21 +14,20 @@ inline bool EnableDetailedLogging = false;
 inline bool DisableASCII = false;
 
 // Inputs
-inline string DefaultRomPath = "/home/Hunter/Downloads/roms/";
-inline string RomsPaths;
-inline string LogPath = "";
-inline string SRAMPath = "";
-inline string SaveStatePath = "";
+inline string DefaultRomPath = "roms/";
+inline string RomsPaths = "";
+inline string LogPath = "log.txt";
+inline string SRAMPath = "saves/SRAM/";
+inline string SaveStatePath = "saves/save_states/";
 
-// Color options (will have find out what actual type ftxui::color is) and
+// Color options and
 // language
 inline int BackgroundColor = 0;
 inline int TextAndBorderColor = 9;
 inline int ASCIIColor = 5;
 inline int Language = 1;
 
-// Controls (will be ints for now but will probably be some SDL keycode or
-// something later)
+// Controls
 inline int StartRomControl = 0;
 inline int StopRomControl = 0;
 inline int OpenRomFolderControl = 0;

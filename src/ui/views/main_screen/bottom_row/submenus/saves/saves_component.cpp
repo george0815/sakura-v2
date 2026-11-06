@@ -39,7 +39,8 @@ Component SavesComponent() {
 };
 
 // Options for the tab menu
-std::vector<std::string> submenus = {"SRAM", "Save States"};
+std::vector<std::string> submenus = {UIState::I18nObject.tr("SRAM"),
+                                     UIState::I18nObject.tr("Save_States")};
 
 // Tab menu
 Component SavesTabMenuComponent() {
@@ -51,6 +52,12 @@ Component SavesTabMenuComponent() {
 // Main save menu area, UIState::SelectedSaveMenu holds whatever tab is
 // selected
 Component SavesTabContainerComponent() {
+
+  // Tables are set here so the 18n strings can be applied
+  SaveSubmenuComponent::SRAMTable =
+      SaveSubmenuComponent::SaveSRAMTableComponent();
+  SaveSubmenuComponent::SaveStatesTable =
+      SaveSubmenuComponent::SaveStateTableComponent();
 
   return Container::Tab(
 

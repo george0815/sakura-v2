@@ -1,5 +1,5 @@
 
-
+// this project
 #include "save_submenu.h"
 #include "../../../../../../state.h"
 #include "../../../../../general/general_views.h"
@@ -26,19 +26,22 @@
 
 using namespace ftxui;
 using namespace std;
+using namespace UIState; // I18nObject
 
 namespace SaveSubmenuComponent {
 
 // Table for save states
 Component SaveStateTableComponent() {
-  return GeneralViews::TableComponent("Name", "Created", "Size", 10,
-                                      UIState::SelectedSaveStateTableIndex);
+  return GeneralViews::TableComponent(
+      I18nObject.tr("Name"), I18nObject.tr("Created"), I18nObject.tr("Size"),
+      10, SelectedSaveStateTableIndex);
 }
 
 // Table for SRAM
 Component SaveSRAMTableComponent() {
-  return GeneralViews::TableComponent("Name", "Created", "Size", 10,
-                                      UIState::SelectedSRAMTableIndex);
+  return GeneralViews::TableComponent(
+      I18nObject.tr("Name"), I18nObject.tr("Created"), I18nObject.tr("Size"),
+      10, SelectedSRAMTableIndex);
 }
 
 } // namespace SaveSubmenuComponent

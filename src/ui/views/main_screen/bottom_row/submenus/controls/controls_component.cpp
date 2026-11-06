@@ -66,32 +66,32 @@ Component ControlsComponent() {
              Padding(),
 
              // CONTROLLER BUTTONS
-             ControlOptionComponent(I18nObject.tr("START:_"), StartControl,
+             ControlOptionComponent(I18nObject.tr("START"), StartControl,
                                     StartLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("SELECT:_"), SelectControl,
+             ControlOptionComponent(I18nObject.tr("SELECT"), SelectControl,
                                     SelectLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("A:_"), AControl, ALabel),
+             ControlOptionComponent(I18nObject.tr("A"), AControl, ALabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("B:_"), BControl, BLabel),
+             ControlOptionComponent(I18nObject.tr("B"), BControl, BLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("UP:_"), UpControl, UpLabel),
+             ControlOptionComponent(I18nObject.tr("UP"), UpControl, UpLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("DOWN:_"), DownControl,
+             ControlOptionComponent(I18nObject.tr("DOWN"), DownControl,
                                     DownLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("LEFT:_"), LeftControl,
+             ControlOptionComponent(I18nObject.tr("LEFT"), LeftControl,
                                     LeftLabel),
              Padding(),
 
-             ControlOptionComponent(I18nObject.tr("RIGHT:_"), RightControl,
+             ControlOptionComponent(I18nObject.tr("RIGHT"), RightControl,
                                     RightLabel),
              Padding(),
 

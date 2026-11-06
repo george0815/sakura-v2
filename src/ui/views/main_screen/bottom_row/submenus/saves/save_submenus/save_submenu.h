@@ -16,7 +16,7 @@ ftxui::Component SaveSRAMTableComponent();
 ftxui::Component SaveStateTableComponent();
 
 // Variable that holds table components
-inline Component SRAMTable = SaveSRAMTableComponent();
-inline Component SaveStatesTable = SaveStateTableComponent();
+inline Component SRAMTable;
+inline Component SaveStatesTable;
 
 } // namespace SaveSubmenuComponent
