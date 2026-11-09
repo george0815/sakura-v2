@@ -20,4 +20,7 @@ Component SavesTabMenuComponent();
 // Variable that holds saves menu component
 inline Component SavesSubmenuComponent;
 
+// Options for the tab menu
+inline std::vector<std::string> Submenus;
+
 } // namespace SavesComponent

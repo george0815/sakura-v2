@@ -110,7 +110,7 @@ Component ControlsComponent() {
 // function is called whenever settings are being deserialized from JSON. It's
 // only really used to set the button label, so returning a string is fine.
 
-// TODO:: Test against edge cases
+// TODO:: Test against edge cases, implement special key handling (F keys, etc)
 
 string KeyCodeToFTXUI(int code) {
 

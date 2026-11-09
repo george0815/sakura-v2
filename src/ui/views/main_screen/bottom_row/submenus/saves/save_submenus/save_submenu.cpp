@@ -22,8 +22,6 @@
 //
 //==========================
 
-// TODO: i18n
-
 using namespace ftxui;
 using namespace std;
 using namespace UIState; // I18nObject

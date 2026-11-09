@@ -23,8 +23,6 @@ using namespace std;
 //
 //==========================
 
-// TODO: i18n, implement open save state folder/open SRAM folder logic
-
 namespace SavesComponent {
 
 // Returns controls menu component
@@ -38,15 +36,15 @@ Component SavesComponent() {
          flex;
 };
 
-// Options for the tab menu
-std::vector<std::string> submenus = {UIState::I18nObject.tr("SRAM"),
-                                     UIState::I18nObject.tr("Save_States")};
-
 // Tab menu
 Component SavesTabMenuComponent() {
 
-  return Menu(&submenus, &UIState::SelectedSaveMenu) |
-         size(ftxui::WIDTH, ftxui::EQUAL, 15);
+  // Initialize here so that i18n is applied
+  Submenus = {UIState::I18nObject.tr("SRAM"),
+              UIState::I18nObject.tr("Save_States")};
+
+  return Menu(&Submenus, &UIState::SelectedSaveMenu) |
+         size(ftxui::WIDTH, ftxui::EQUAL, 20);
 }
 
 // Main save menu area, UIState::SelectedSaveMenu holds whatever tab is
