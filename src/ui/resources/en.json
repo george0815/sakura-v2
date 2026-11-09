@@ -91,7 +91,8 @@
   "Focus_background_color:_" : "Focus background color: ",
   "Focus_text color:_" : "Focus text color: ",
   "Hotkey_text color:_" : "Hotkey text color: ",
-  "ASCII color:_" : "ASCII color: ",
+  "ASCII_color:_" : "ASCII color: ",
+  "Text_and_border_color:_" : "Text and border color: ",
   "Disable_ASCII" : "Disable ASCII",
   "Save" : "Save",
   "Select_log_file_path" : "Select log file path",
@@ -123,6 +124,7 @@
   "Errors" : "Errors",
   "HELP" : "HELP",
   "folder/file_path" : "folder/file path",
+  "Language:_" : "Language: ",
   "Failed_to_open_folder" : "Failed to open folder."
 
 

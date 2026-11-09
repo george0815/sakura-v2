@@ -95,8 +95,10 @@
   "Focus_background_color:_" : "フォーカス背景色：　",
   "Focus_text color:_" : "フォーカステキスト色：　",
   "Hotkey_text color:_" : "ホットキーテキスト色：　",
-  "ASCII color:_" : "ASCII色：　",
+  "ASCII_color:_" : "ASCII色：　",
+  "Text_and_border_color:_" : "テキストとボーダー色：　",
   "Disable_ASCII" : "ASCIIを無効にする",
+  "Language:_" : "言語：　",
  
 
   "Save" : "保存",

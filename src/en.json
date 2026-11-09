@@ -20,7 +20,7 @@
   "SRAM" : "SRAM",
   "Path" : "Path",
   "SRAM_data_path" : "SRAM data path",
-  "Roms_started:_" : "Rom started: ",
+  "Roms_started:_" : "LOADING ROM: ",
   "Roms_paths:_" : "Rom paths: ",
   "Default_rom_path:_" : "Default rom path: ",
   "SRAM_path:_" : "SRAM path: ",
@@ -39,12 +39,12 @@
   "Error_initializing_the_sakura_core: " : "Error initializing the sakura core: ",
   "Waiting_for_input..." : "Waiting for input...",
   "Input_Key" : "Input Key",
-  "Rom_added:_" : "ROM ADDED: ",
+  "Rom_added:_" : "Rom added: ",
   "Start_rom:_" : "Start rom: ",
   "Stop_rom:_" : "Stop rom: ",
   "Save_state:_" : "Save state: ",
   "Load_state:_" : "Load state: ",
-  "Open_rom_folder:_" : "Open rom TESTfolder: ",
+  "Open_rom_folder:_" : "Open rom folder: ",
   "Open_SRAM_folder:_" : "Open SRAM folder: ",
   "Roms" : "Roms",
   "Roms:_" : "Roms: ",
@@ -91,9 +91,9 @@
   "Focus_background_color:_" : "Focus background color: ",
   "Focus_text color:_" : "Focus text color: ",
   "Hotkey_text color:_" : "Hotkey text color: ",
-  "ASCII color:_" : "ASCII color: ",
+  "ASCII_color:_" : "ASCII color: ",
+  "Text_and_border_color:_" : "Text and border color: ",
   "Disable_ASCII" : "Disable ASCII",
-  "sakura_init" : "sakura-v2: INIT",
   "Save" : "Save",
   "Select_log_file_path" : "Select log file path",
   "Select_filename_for_the_log_file." : "Select filename for the log file.",
@@ -124,14 +124,10 @@
   "Errors" : "Errors",
   "HELP" : "HELP",
   "folder/file_path" : "folder/file path",
-  "English" : "English", 
-  "Japanese" : "Japanese",
+  "Language:_" : "Language: ",
+  "Failed_to_open_folder" : "Failed to open folder."
 
-  "does_not_exist_file" : " does not exist or is not a valid file.",
-  "does_not_exist_folder" : " does not exist or is not a valid folder.",
-  "cannot_write_to" : "Cannot write to ",
-  "cannot_read" : "Cannot read ",
-  "cannot_read_from" : "Cannot read from "
+
 
 
 

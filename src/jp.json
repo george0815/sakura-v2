@@ -95,11 +95,12 @@
   "Focus_background_color:_" : "フォーカス背景色：　",
   "Focus_text color:_" : "フォーカステキスト色：　",
   "Hotkey_text color:_" : "ホットキーテキスト色：　",
-  "ASCII color:_" : "ASCII色：　",
+  "ASCII_color:_" : "ASCII色：　",
+  "Text_and_border_color:_" : "テキストとボーダー色：　",
   "Disable_ASCII" : "ASCIIを無効にする",
+  "Language:_" : "言語：　",
  
 
-  "sakura_init" : "sakura-v2: 初期化",
   "Save" : "保存",
   "Select_log_file_path" : "ログファイルのパスを選択",
   "Select_filename_for_the_log_file." : "ログファイルのファイル名を選択してください。",
@@ -130,17 +131,11 @@
   "Errors" : "エラー",
   "HELP" : "ヘルプ",
   "folder/file_path" : "ファイル/フォルダー",
+  "Failed_to_open_folder" : "フォルダーを開くことができませんでした。"
 
 
-  "English" : "英語", 
-  "Japanese" : "日本語",
 
 
-  "does_not_exist_file" : " 存在していない、または有効なファイルではありません。",
-  "does_not_exist_folder" : " 存在していない、または有効なフォルダーではありません。",
-  "cannot_write_to" : "書き出せません： ",
-  "cannot_read" : "読み込めません”： ",
-  "cannot_read_from" : "このフォルダーから読み込めません： "
 
 }
 

@@ -85,7 +85,7 @@ Component SettingsComponent() {
              Padding(),
              Renderer([&] { return separator(); }),
 
-             GeneralViews::TextInputComponent(I18nObject.tr("Rom_paths:_"),
+             GeneralViews::TextInputComponent(I18nObject.tr("Roms_paths:_"),
                                               RomsPaths),
              Padding(),
 
