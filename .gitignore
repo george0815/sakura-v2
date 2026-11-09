@@ -44,6 +44,11 @@ build/
 Build/
 build-*/
 
+
+
+# Roms
+src/roms/
+
 # CMake generated files
 CMakeFiles/
 CMakeCache.txt
