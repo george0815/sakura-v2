@@ -3,7 +3,6 @@
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
-#include <iostream>
 
 // ftxui
 #include <ftxui/component/captured_mouse.hpp>
@@ -14,6 +13,12 @@
 
 using namespace std;
 using namespace filesystem;
+using namespace GeneralViews; // LanguageComponent, ColorComponent, Padding
+using namespace Settings; // DisableColoredHotkeyInfo, DisableASCII, Language,
+                          // BackgroundColor, TextAndBorderColor, ASCIIColor,
+                          // RomsPaths, DefaultRomPath, LogPath,
+                          // EnableDetailedLogging, SRAMPath, SaveStatePath
+using namespace UIState;  // I18nObject
 
 //==========================
 //
@@ -24,10 +29,7 @@ using namespace filesystem;
 //
 //==========================
 
-// TODO: i18n, add save button logic, and input verfication, error handling,
-// etc, also add a language drop down box, also add a general component that
-// just returns Renderer([&] {return text ("")}) for padding
-
+// TODO: i18n
 namespace SettingsComponent {
 
 // Returns controls menu component
@@ -40,36 +42,37 @@ Component SettingsComponent() {
              // UI OPTIONS
              //************
 
-             Renderer([&] { return text("UI"); }),
+             Renderer([&] { return text(I18nObject.tr("UI")); }),
 
              // UI bools
 
              Renderer([&] { return separator(); }),
-             Renderer([&] { return text(""); }),
+             Padding(),
 
-             Checkbox("Disable colored hotekey info",
-                      &Settings::DisableColoredHotkeyInfo),
-             Renderer([&] { return text(""); }),
+             Checkbox(I18nObject.tr("Disable_colored_hotkey_information"),
+                      &DisableColoredHotkeyInfo),
+             Padding(),
 
-             Checkbox("Disable ASCII", &Settings::DisableASCII),
-             Renderer([&] { return text(""); }),
+             Checkbox(I18nObject.tr("Disable_ASCII"), &DisableASCII),
+             Padding(),
 
-             GeneralViews::LanguageComponent("Language :", Settings::Language),
-             Renderer([&] { return text(""); }),
+             GeneralViews::LanguageComponent(I18nObject.tr("Language:_"),
+                                             Language),
+             Padding(),
 
              // Color options
 
-             GeneralViews::ColorComponent("Background color :",
-                                          Settings::BackgroundColor),
-             Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent(I18nObject.tr("Background_color:_"),
+                                          BackgroundColor),
+             Padding(),
 
-             GeneralViews::ColorComponent("Text and border color :",
-                                          Settings::TextAndBorderColor),
-             Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent(
+                 I18nObject.tr("Text_and_border_color:_"), TextAndBorderColor),
+             Padding(),
 
-             GeneralViews::ColorComponent("ASCII color :",
-                                          Settings::ASCIIColor),
-             Renderer([&] { return text(""); }),
+             GeneralViews::ColorComponent(I18nObject.tr("ASCII_color:_"),
+                                          ASCIIColor),
+             Padding(),
 
              //************
              // SYSTEM OPTIONS
@@ -79,35 +82,37 @@ Component SettingsComponent() {
                return text("System");
              }), // Roms paths, Default rom path, Log path, SRAM path, save
                  // state path, Enable detailed logging
+             Padding(),
              Renderer([&] { return separator(); }),
 
-             Renderer([&] { return text(""); }),
-             GeneralViews::TextInputComponent("Roms paths :",
-                                              Settings::RomsPaths),
-             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent(I18nObject.tr("Rom_paths:_"),
+                                              RomsPaths),
+             Padding(),
 
-             GeneralViews::TextInputComponent("Default rom path :",
-                                              Settings::DefaultRomPath),
-             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent(
+                 I18nObject.tr("Default_rom_path:_"), DefaultRomPath),
+             Padding(),
 
-             GeneralViews::TextInputComponent("Log path :", Settings::LogPath),
-             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent(I18nObject.tr("Log_path:_"),
+                                              LogPath),
+             Padding(),
 
-             GeneralViews::TextInputComponent("SRAM path :",
-                                              Settings::SRAMPath),
-             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent(I18nObject.tr("SRAM_path:_"),
+                                              SRAMPath),
+             Padding(),
 
-             GeneralViews::TextInputComponent("Save state path :",
-                                              Settings::SaveStatePath),
-             Renderer([&] { return text(""); }),
+             GeneralViews::TextInputComponent(
+                 I18nObject.tr("Save_state_path:_"), SaveStatePath),
+             Padding(),
 
-             Checkbox("Enable detailed logging",
-                      &Settings::EnableDetailedLogging),
-             Renderer([&] { return text(""); }),
+             Checkbox(I18nObject.tr("Enable_detailed_logging"),
+                      &EnableDetailedLogging),
+             Padding(),
 
              // Save button TODO: implement logic
              Button(
-                 "Save", [&] { cout << "test"; }, ButtonOption::Ascii()),
+                 I18nObject.tr("Save"), [&] { SaveSettings(false); },
+                 ButtonOption::Ascii()),
 
          }) |
          borderEmpty;

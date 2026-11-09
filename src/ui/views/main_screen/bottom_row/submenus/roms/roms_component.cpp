@@ -5,6 +5,7 @@
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
+#include "../controls/controls_component.h"
 #include "../log/log_component.h"
 
 // std
@@ -26,7 +27,8 @@
 // Rom Component, as of now just returns a table but as settings are implemented
 // and the emulator is built out more behavior will be added
 //
-// Current members: RomTableComponent, StartRom, LoadAllRoms, LoadRomFolder
+// Current members: RomTableComponent, StartRom, LoadAllRoms, LoadRomFolder,
+// InitializedRomComponent
 //
 //==========================
 
@@ -146,4 +148,39 @@ Component RomTableComponent() {
                         I18nObject.tr("Size"), 3, SelectedRomTableIndex);
 }
 
+// Returns a RomTableComponent wrapped in an event listener, also laods roms
+Component InitializedRomComponent() {
+
+  // Sets subcomponent and loads roms
+  RomsComponent::RomSubmenuComponent = RomsComponent::RomTableComponent();
+  RomsComponent::LoadAllRoms();
+
+  return CatchEvent(RomsComponent::RomSubmenuComponent, [](Event event) {
+    // Set both values to uppercase to handle cases where the values have
+    // different casing
+
+    // Start rom (stop rom is handled in the core)
+    if (ControlsComponent::ToUpper(event.character()) ==
+        ControlsComponent::ToUpper(StartRomLabel)) {
+      RomsComponent::StartRom();
+    }
+
+    // Open rom folder
+    else if (ControlsComponent::ToUpper(event.character()) ==
+             ControlsComponent::ToUpper(OpenRomFolderLabel)) {
+      RomsComponent::OpenRomFolder();
+    }
+
+    // Open SRAM folder
+    else if (ControlsComponent::ToUpper(event.character()) ==
+             ControlsComponent::ToUpper(OpenSRAMFolderLabel)) {
+      RomsComponent::OpenSRAMFolder();
+    }
+
+    return false;
+  });
+}
+
 } // namespace RomsComponent
+
+// namespace RomsComponent

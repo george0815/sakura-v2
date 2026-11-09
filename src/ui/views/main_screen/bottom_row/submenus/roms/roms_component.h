@@ -17,7 +17,11 @@ namespace RomsComponent {
 //=======================
 
 // Returns rom submenu component
-ftxui::Component RomTableComponent();
+Component RomTableComponent();
+
+// Loads roms, sets RomSubmenuComponent, and wraps RomTableComponent in an event
+// handler
+Component InitializedRomComponent();
 
 // Variable that holds rom component
 inline Component RomSubmenuComponent;

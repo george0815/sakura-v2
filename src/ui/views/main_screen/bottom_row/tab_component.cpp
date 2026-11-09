@@ -35,6 +35,7 @@
 
 using namespace ftxui;
 using namespace std;
+using namespace UIState; // SelectedMenu, I18nObject
 
 // Menu tab options
 std::vector<std::string> submenus;
@@ -46,8 +47,8 @@ Component TabContainerComponent() {
 
   // Set components in function rather in at the namespace scope so that text
   // can be properly translated (if I don't do this then the submenu component
-  // varibles will be set before the local is properly set)
-  RomsComponent::RomSubmenuComponent = RomsComponent::RomTableComponent();
+  // varibles will be set before the local is properly set) (NOTE:
+  // RomSubmenuComponent is set in InitializedRomComponent)
   SettingsComponent::SettingsSubmenuComponent =
       SettingsComponent::SettingsComponent();
   LogComponent::LogSubmenuComponent = LogComponent::LogComponent();
@@ -55,36 +56,16 @@ Component TabContainerComponent() {
   ControlsComponent::ControlsSubmenuComponent =
       ControlsComponent::ControlsComponent();
 
-  // Load roms
-  RomsComponent::LoadAllRoms();
-
-  // Wraps roms component in CatchEvent so that it can respond to key presses
-  // (for launching the rom from the table, opening folders, etc)
-  auto wrapped_roms =
-      CatchEvent(RomsComponent::RomSubmenuComponent, [](Event event) {
-        // This was me testing  // TODO: read actual controls and implement
-        // proper logic
-        if (ControlsComponent::ToUpper(event.character()) ==
-            ControlsComponent::ToUpper(UIState::StartRomLabel)) {
-          RomsComponent::StartRom();
-        } else if (event == Event::Return) {
-          RomsComponent::OpenRomFolder();
-        } else if (event == Event::ArrowDown) {
-          RomsComponent::OpenSRAMFolder();
-        }
-
-        return false;
-      });
-
   // Main content
   return Container::Tab(
 
              // vscroll_indicator and frame is needed for scrolling TODO: fix
-             // glitch where scrolling is eabled only after clicking on a
+             // glitch where scrolling is enabled only after clicking on a
              // dropdown or input
              {
 
-                 wrapped_roms | vscroll_indicator | frame,
+                 RomsComponent::InitializedRomComponent() | vscroll_indicator |
+                     frame,
                  SavesComponent::SavesSubmenuComponent | vscroll_indicator |
                      frame,
                  SettingsComponent::SettingsSubmenuComponent |
@@ -94,26 +75,29 @@ Component TabContainerComponent() {
                  LogComponent::LogSubmenuComponent | vscroll_indicator | frame,
 
              },
-             &UIState::SelectedMenu) |
+             &SelectedMenu) |
          flex;
 }
 
 // Menu that displays on the left side of the screen
 Component TabMenuComponent() {
 
-  submenus = {UIState::I18nObject.tr("Roms"), UIState::I18nObject.tr("Saves"),
-              "Settings", "Controls", "log"};
+  // Menu options
+  submenus = {I18nObject.tr("Roms"), I18nObject.tr("Saves"),
+              I18nObject.tr("Settings"), I18nObject.tr("Controls"),
+              I18nObject.tr("Log")};
 
   return Container::Vertical({
 
       // Menu with options
-      Menu(&submenus, &UIState::SelectedMenu) |
+      Menu(&submenus, &SelectedMenu) |
           size(ftxui::WIDTH, ftxui::GREATER_THAN, 18) | flex,
 
       // Exit button, rather than having exit logic here, sets a flag that is
       // observed in the main loop
       Button(
-          " Exit ", [&] { UIState::Exit = true; }, ButtonOption::Ascii()) |
+          " " + I18nObject.tr("Exit") + " ", [&] { Exit = true; },
+          ButtonOption::Ascii()) |
           center | size(ftxui::HEIGHT, ftxui::LESS_THAN, 3) | borderEmpty,
 
   });

@@ -21,9 +21,6 @@ using namespace ftxui;
 //
 //==========================
 
-// TODO: Add i18n, replace log section placeholder data with the most recent log
-// entry
-
 // Component composing of the entire bottom row,
 Component BottomRow::BottomRowComponent() {
 
