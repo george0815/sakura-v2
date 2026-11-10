@@ -29,8 +29,39 @@ class CART {
   //  HELPER FUNCTIONS
   //==========================
 
+  // Combinmes read flag and read rom helper functions, parses and loads ROM
+  // metadata.
+  int READ_HEADER(array<uint8_t, 16> bytes) {
+
+    // Verify that tht first 4 bytes equal "NES<EOF>"
+
+    // Load ROM sizes
+
+    // Load flags
+
+    return 0;
+  }
+
   // Attempts to load rom using provided file name
-  int READ_ROM(string file_name) { return 0; }
+  int READ_ROM(string file_name) {
+
+    // Load file and check if file is over 16 bytes
+
+    // Load header_buffer and parse header
+    array<uint8_t, 16> header_buffer;
+
+    if (READ_HEADER(header_buffer) != 0) {
+      // TODO: error handling
+    }
+
+    // Load trainer data if available
+
+    // Load PRG and CHR ROM
+
+    // TODO: Implement playchoice (if im bored or have the time)
+
+    return 0;
+  }
 
   // Verifies if the ROM is valid by check the first 4 bytes of the header, the
   // first 4 bytes should be equal to "NES<EOF>"

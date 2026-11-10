@@ -1,6 +1,7 @@
 #include <array>
 #include <cstdint>
 #include <string>
+#include <sys/types.h>
 #include <vector>
 
 using namespace std;
@@ -76,26 +77,26 @@ public:
   // HEADER - for iNES 1.0 bytes 11-15 are unused
 
   // Combines the flag helper functions to read the entire ROM header
-  int READ_HEADER();
+  int READ_HEADER(array<uint8_t, 16> bytes);
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
-  int READ_ROM_SIZE_INES_1();
+  int READ_ROM_SIZE_INES_1(uint16_t rom_bytes);
 
   // Reads the mapper, mirroring, battery, and trainer data from byte 6
-  int READ_FLAGS_6_INES_1();
+  int READ_FLAGS_6_INES_1(uint8_t byte_6);
 
   // Reads the mapper, VS/Playchoice data, and the iNES 2.0 from byte 7
-  int READ_FLAGS_7_INES_1();
+  int READ_FLAGS_7_INES_1(uint8_t byte_7);
 
   // Reads the PRG RAM size from byte 8 (rarely used)
-  int READ_FLAGS_8_INES_1();
+  int READ_FLAGS_8_INES_1(uint8_t byte_8);
 
   // Reads the TV system data from byte 9 (also rarely used)
-  int READ_FLAGS_9_INES_1();
+  int READ_FLAGS_9_INES_1(uint8_t byte_9);
 
   // Reads the TV system data, and PRG RAM presence from byte 10 (also rarely
   // used, in addition to being unofficial)
-  int READ_FLAGS_10_INES_1();
+  int READ_FLAGS_10_INES_1(uint8_t byte_10);
 
   // DATA
 

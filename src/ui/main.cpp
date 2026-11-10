@@ -1,5 +1,4 @@
-// this project
-#include "../core/CPU/CPU.h"
+// UI
 #include "./settings/settings.h"
 #include "state.h"
 #include "views/general/general_views.h"
@@ -54,11 +53,6 @@ int main() {
   I18nObject.loadLocaleFromFile("en.json");
   I18nObject.loadLocaleFromFile("jp.json");
   I18nObject.setLocale(LocaleEntries[Language]);
-
-  // Delare hardware components
-  // LogComponent::AddLogEntry(LogComponent::LogSubmenuComponent,
-  //                         i18n_object.tr("sakura_init"));
-  CPU *cpu = new CPU();
 
   // Declare screen, ScreenInteractive::Fullscreen uses the entire terminal
   // window
