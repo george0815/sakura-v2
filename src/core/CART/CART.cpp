@@ -15,6 +15,10 @@ using namespace std;
 // there's one fucntion that puts it all together that loads all the data and
 // flags into the object.
 //
+//
+// As some flags are not commonly supported by emulators, not everything will be
+// implemented at first, only the necessary fucntions.
+//
 // Current members: TODO: Update this
 //
 //==========================

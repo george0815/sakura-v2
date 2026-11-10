@@ -12,19 +12,15 @@ public:
   //  FLAGS, METADATA, AND ROM
   //==========================
 
-  // ROM
-  vector<uint8_t> PRG_ROM;
-  vector<uint8_t> CHR_ROM;
-
-  // FLAG 6 DATA
+  // FLAGS 6 DATA
   enum NAMETABLE_ARRANGEMENT {
 
     VERTICAL,
     HORIZONTAL
 
   };
-
   int NAMETABLE_ARRANGEMENT;
+
   bool SRAM_PRESENT;
 
   bool TRAINER_PRESENT;
@@ -32,7 +28,46 @@ public:
 
   uint8_t MAPPER_NUMBER_LOWER_4_BITS;
 
-  // FLAG 6 DATA
+  // FLAGS 7 DATA
+
+  bool PLAYCHOICE;
+
+  bool VS_UNISYSTEM;
+
+  enum CART_VERSION {
+
+    ARCH_NES,
+    INES_1,
+    INES_2,
+
+  };
+
+  int CART_VERSION;
+
+  uint8_t MAPPER_NUMBER_UPPER_4_BITS;
+
+  // FLAGS 8 DATA
+
+  uint8_t PRG_RAM_SIZE;
+
+  // FLAGS 9 DATA
+
+  enum TV_SYSTEM { NTSC, PAL };
+
+  int TV_SYSTEM;
+
+  // FLAGS 10 DATA
+
+  bool PRG_RAM_PRESENT;
+
+  // TRAINER
+
+  // ROM
+  vector<uint8_t> PRG_ROM;
+  vector<uint8_t> CHR_ROM;
+
+  // PLAYCHOICE INST-ROM
+  // PLAYCHOICE PROM
 
   //==========================
   //  HELPER FUNCTIONS
