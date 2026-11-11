@@ -1,4 +1,5 @@
 #include <array>
+#include <cstddef>
 #include <cstdint>
 #include <string>
 #include <sys/types.h>
@@ -46,9 +47,9 @@ public:
 
   enum CART_VERSION {
 
-    ARCH_NES,
-    INES_1,
-    INES_2,
+    ARCH_NES = 0,
+    INES_1 = 1,
+    INES_2 = 2,
 
   };
 
@@ -58,17 +59,18 @@ public:
 
   // FLAGS 8 DATA
 
-  uint8_t PRG_RAM_SIZE;
+  size_t PRG_RAM_SIZE;
 
   // FLAGS 9 DATA
 
-  enum TV_SYSTEM { NTSC, PAL };
+  enum TV_SYSTEM { NTSC = 0, PAL = 1 };
 
   int TV_SYSTEM;
 
   // FLAGS 10 DATA
 
   bool PRG_RAM_PRESENT;
+  bool BUS_CONFLICTS;
 
   // TRAINER
 

@@ -31,7 +31,8 @@ using namespace LogComponent; // AddLogEntry
 // implemented at first, only the necessary fucntions.
 //
 // Current members: READ_HEADER,
-//
+// NOTE: In this project when I say "5th bit" or "2nd bit", I am NOT starting
+// from index 0. For example, with 0000 0100 I would say the "3rd" bit is set
 //==========================
 
 //==========================
@@ -99,11 +100,74 @@ int CART::READ_FLAGS_INES_1() {
   // Get lower 4 bits of mapper number (mask last for bits then left shift 4)
   MAPPER_NUMBER_LOWER_4_BITS = (flags_6 & 0xF0) >> 4;
 
-  // Parse flags 8 byte
+  // FLAGS 7
 
-  // Parse flags 9 byte
+  // Does the rom use the VS unisystem (I dont even know what the hell that is,
+  // right now I'm basing my implemtation off iNES format page on nesdev wiki
+  // and saw vs system. Maybe I'll implement it down the line if I'm bored and I
+  // want to make this emulator more accurate)
+  VS_UNISYSTEM = ((flags_7 & 0x01) == 0x01);
 
-  // Parse flags 10 byte
+  // Same as above, apparently PC10 was some arcade thing I guess?
+  PLAYCHOICE = ((flags_7 & 0x02) == 0x02);
+
+  // Add bytes 12 - 15 together (this is for determining iNES format
+  // version)
+  array<uint8_t, 4> byte_confirm;
+  uint16_t byte_total = 0;
+  copy(HEADER_BUFFER.begin() + 12,
+       HEADER_BUFFER.begin() +
+           16, // the index pointed to by the second arg of copy() is NOT
+               // included in the copy, so this copies the data in indicies 12,
+               // 13, 14, and 15, but not 16
+       byte_confirm.begin());
+  for (uint8_t byte : byte_confirm) {
+    byte_total += byte;
+  }
+
+  // iNES format version (if 3rd bit not set and 4th bit set (value of 2),
+  // then iNES 2.0)
+  if ((flags_7 & 0x0C) == 0x08) {
+    CART_VERSION = CART_VERSION::INES_2;
+  }
+  // If 3rd bit set bit set and 4th not set (value of 1), the archaic iNES
+  else if ((flags_7 & 0x0C) == 0x04) {
+    CART_VERSION = CART_VERSION::ARCH_NES;
+  }
+  // If both 3rd and 4th bits are unset AND bytes 12-15 are 0, then iNES
+  else if (((flags_7 & 0x0C) == 0x00) && byte_total == 0) {
+    CART_VERSION = CART_VERSION::INES_1;
+  }
+  // else, archaic iNES
+  else {
+    CART_VERSION = CART_VERSION::ARCH_NES;
+  }
+
+  // Get upper 4 bits of mapper number (mask last for bits then left shift 4)
+  MAPPER_NUMBER_UPPER_4_BITS = (flags_7 & 0xF0) >> 4;
+
+  // FLAGS 8 - flags 8 byte just contains the PRG RAM size, although in iNES 1.0
+  // this is not considered reliable. I'm setting it this way for now and will
+  // change is once iNES 2.0 is supported
+
+  if (flags_8 == 0) { // for compatibility purposes, a value of 0 infers 8KB
+    PRG_RAM_SIZE = 0x2000;
+  } else { // like CHR ROM size, it is in 8KB units, so multiply by 0x2000
+    PRG_RAM_SIZE = flags_8 * 0x2000;
+  }
+
+  // FLAGS 9 - TV system, although official it is almost never used
+  TV_SYSTEM = (flags_9 & 0x01);
+
+  // FLAGS 10
+  // NOTE: The first 2 bits of the flag 10 byte actually also denote the TV
+  // system, but since the flag 10 byte isn't even official and I already set is
+  // using the flag 9 byte (not that that byte is commonly used anyway...), I'm
+  // deciding to not parse the TV system value again
+  PRG_RAM_PRESENT = (flags_10 & 0x10); // if 5th bit is set
+  BUS_CONFLICTS =
+      (flags_10 & 0x20); // if 6th bit is set (nesdev wiki barely says anything
+                         // about this, but fuck it we ball)
 
   return 0;
 }
