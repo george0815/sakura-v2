@@ -41,7 +41,7 @@
   "Error_initializing_the_sakura_core:_" : "サクラのコアの初期化中にエラーが発生しました：　",
   "Waiting_for_input..." : "入力待機中",
   "Input_Key" : "キー入力",
-  "Rom_added:_" : "ロムを追加しました：　",
+  "ROM_ADDED:_" : "ロムを追加しました：　",
   "Start_rom:_" : "ロム起動：　",
   "Stop_rom:_" : "ロム停止：　",
   "Save_state:_" : "ステート保存：　",
@@ -131,8 +131,18 @@
   "Errors" : "エラー",
   "HELP" : "ヘルプ",
   "folder/file_path" : "ファイル/フォルダー",
-  "Failed_to_open_folder" : "フォルダーを開くことができませんでした。"
+  "Failed_to_open_folder" : "フォルダーを開くことができませんでした。",
+  "Unable_to_read_rom." : "",
+  "ROM_CONFIRMED:_" : "ロム確認：　",
+  "FAILED_HEADER_CHECK:_" : "ヘッダー確認中にエラーが発生しました：　",
+  "sakura_init" : "sakura-v2: 初期化",
 
+  "Japanese" : "日本語",
+  "does_not_exist_file" : " 存在していない、または有効なファイルではありません。",
+  "does_not_exist_folder" : " 存在していない、または有効なフォルダーではありません。",
+  "cannot_write_to" : "書き出せません： ",
+  "cannot_read" : "読み込めません”： ",
+  "cannot_read_from" : "このフォルダーから読み込めません： "
 
 
 

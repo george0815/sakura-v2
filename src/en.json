@@ -125,7 +125,10 @@
   "HELP" : "HELP",
   "folder/file_path" : "folder/file path",
   "Language:_" : "Language: ",
-  "Failed_to_open_folder" : "Failed to open folder."
+  "Failed_to_open_folder" : "Failed to open folder.",
+  "Unable_to_read_rom." : "Unable to read rom.",
+  "ROM_CONFIRMED:_" : "ROM CONFIRMED: ",
+  "FAILED_HEADER_CHECK:_" : "FAILED HEADER CHECK: "
 
 
 

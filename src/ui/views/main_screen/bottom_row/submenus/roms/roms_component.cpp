@@ -106,7 +106,7 @@ void LoadRomFolder(string directory) {
 
         // Push to list and log
         RomList.push_back(tmp_rom);
-        AddLogEntry(I18nObject.tr("Rom_added:_") + tmp_rom.name);
+        AddLogEntry(I18nObject.tr("ROM_ADDED:_") + tmp_rom.name);
 
         // Add row in UI;
         GeneralViews::AddRow(RomSubmenuComponent, tmp_rom.name, tmp_rom.path,

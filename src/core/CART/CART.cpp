@@ -8,10 +8,12 @@
 #include <sstream>
 #include <string>
 
+#include "../../ui/state.h"
 #include "../../ui/views/main_screen/bottom_row/submenus/log/log_component.h"
 
 using namespace std;
-using namespace LogComponent;
+using namespace UIState;      // I18nObject
+using namespace LogComponent; // AddLogEntry
 
 //==========================
 //
@@ -28,7 +30,7 @@ using namespace LogComponent;
 // As some flags are not commonly supported by emulators, not everything will be
 // implemented at first, only the necessary fucntions.
 //
-// Current members: TODO: Update this
+// Current members: READ_HEADER,
 //
 //==========================
 
@@ -38,22 +40,14 @@ using namespace LogComponent;
 
 // Combinmes read flag and read rom helper functions, parses and loads ROM
 // metadata.
-int CART::READ_HEADER(array<uint8_t, 16> bytes) {
-
-  stringstream test;
-
-  for (streamsize i = 0; i < 16; ++i) {
-    test << format("{:02x} ", bytes[i]);
-  }
-
-  string test_result = test.str();
-
-  AddLogEntry("CHECK :" + test_result);
+int CART::READ_HEADER() {
 
   // Verify that tht first 4 bytes equal "NES<EOF>"
   array<uint8_t, 4> nes_confirm;
-  copy(bytes.begin(), bytes.begin() + 4, nes_confirm.begin());
-  CHECK_HEADER(nes_confirm);
+  copy(HEADER_BUFFER.begin(), HEADER_BUFFER.begin() + 4, nes_confirm.begin());
+  if (CHECK_HEADER(nes_confirm) != 0) {
+    AddLogEntry(I18nObject.tr("FAILED_HEADER_CHECK:_"));
+  }
 
   // Load ROM sizes
 
@@ -68,49 +62,24 @@ int CART::READ_ROM(string file_name) {
   // Load file and check if file is over 16 bytes
   ifstream rom_file(file_name, ios::binary);
   if (!rom_file) {
-    // TODO: error handling
+    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    return -1;
   }
-  AddLogEntry("ROM OPENED");
-
-  // Load header_buffer and parse header
-  array<uint8_t, 16> header_buffer;
-  // array<uint8_t, 16> test_buffer;
-  /*
-    rom_file.read(reinterpret_cast<char *>(test_buffer.data()),
-                  test_buffer.size());
-    streamsize buffer_size = rom_file.gcount();
-
-    stringstream test;
-
-    for (streamsize i = 0; i < buffer_size; ++i) {
-      test << format("{:02x} ", test_buffer[i]);
-    }
-
-    string test_result = test.str();
-
-    AddLogEntry(test_result);
-
-    rom_file.close(); */
 
   // reinterpret_cast allows any pointer to be converted into any other pointer
-  // type, ifstream read takes in char* and streamsize, so header_buffer is
+  // type, ifstream .read takes in char* and streamsize, so header_buffer is
   // casted to char*
-  rom_file.read(reinterpret_cast<char *>(header_buffer.data()),
-                header_buffer.size());
-
-  streamsize buffer_size2 = rom_file.gcount();
-  AddLogEntry("HEADER LOADED");
-
-  stringstream test2;
-  for (streamsize i = 0; i < buffer_size2; ++i) {
-    test2 << format("{:02x} ", header_buffer[i]);
+  if (!rom_file.read(reinterpret_cast<char *>(HEADER_BUFFER.data()),
+                     HEADER_BUFFER.size())) {
+    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    return -1;
   }
 
-  string test_result = test2.str();
-
-  AddLogEntry("TEST" + test_result);
-
-  READ_HEADER(header_buffer);
+  // Read all values from header
+  if (READ_HEADER() != 0) {
+    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    return -1;
+  }
 
   // Load trainer data if available
 
@@ -125,39 +94,22 @@ int CART::READ_ROM(string file_name) {
 // first 4 bytes should be equal to "NES<EOF>"
 int CART::CHECK_HEADER(array<uint8_t, 4> bytes) {
 
-  stringstream test;
-
+  // NES<EOF>
   array<uint8_t, 4> good_header = {0x4E, 0x45, 0x53, 0x1A};
 
+  // If the first for bytes equal the canonical NES header above
   if (good_header == bytes) {
-    AddLogEntry("NES");
-  }
 
-  for (streamsize i = 0; i < 4; ++i) {
-    test << format("{:02x} ", bytes[i]);
-  }
+    // Convert first 4 bytes to string
+    stringstream byte_stringstream;
+    for (streamsize i = 0; i < 4; ++i) {
+      byte_stringstream << format("{:02x} ", bytes[i]);
+    }
+    string byte_string = byte_stringstream.str();
 
-  string test_result = test.str();
-
-  uint32_t tmp = 0;
-
-  tmp = (tmp | bytes[0]) << 8;
-  tmp = (tmp | bytes[1]) << 8;
-  tmp = (tmp | bytes[2]) << 8;
-  tmp = (tmp | bytes[3]) << 8;
-
-  stringstream tmp_string;
-
-  tmp_string << hex << tmp;
-
-  string res(tmp_string.str());
-
-  AddLogEntry(test_result);
-
-  AddLogEntry(to_string(tmp));
-  if (test_result == to_string(0x4E45531A)) {
-    AddLogEntry(to_string(tmp));
+    AddLogEntry(I18nObject.tr("ROM_CONFIRMED:_") + byte_string);
     return 0;
+  } else {
+    return -1;
   }
-  return -1;
 }
