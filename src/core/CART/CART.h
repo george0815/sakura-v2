@@ -13,16 +13,23 @@ public:
   //  FLAGS, METADATA, AND ROM
   //==========================
 
+  // Roms sizes, these values will be multiplied by 16KB and 8KB respectively to
+  // get the actual size
+  size_t PRG_ROM_SIZE;
+  size_t CHR_ROM_SIZE;
+
+  bool USES_CHR_RAM;
+
   array<uint8_t, 16> HEADER_BUFFER;
 
   // FLAGS 6 DATA
-  enum NAMETABLE_ARRANGEMENT {
+  enum NAMETABLE_MIRRORING {
 
-    VERTICAL,
-    HORIZONTAL
+    HORIZONTAL = 0,
+    VERTICAL = 1
 
   };
-  int NAMETABLE_ARRANGEMENT;
+  int NAMETABLE_MIRRORING;
 
   bool SRAM_PRESENT;
 
@@ -82,7 +89,7 @@ public:
   int READ_HEADER();
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
-  int READ_ROM_SIZE_INES_1(uint16_t rom_bytes);
+  int READ_ROM_SIZE_INES_1();
 
   // Reads the mapper, mirroring, battery, and trainer data from byte 6,
   // the VS/Playchoice data, and the iNES 2.0 from byte 7,
@@ -90,7 +97,7 @@ public:
   // the TV system data from byte 9 (also rarely used),
   // and the TV system data, and PRG RAM presence from byte 10 (also rarely
   // used, in addition to being unofficial)
-  int READ_FLAGS_INES_1(uint8_t byte_6);
+  int READ_FLAGS_INES_1();
 
   // DATA
 
