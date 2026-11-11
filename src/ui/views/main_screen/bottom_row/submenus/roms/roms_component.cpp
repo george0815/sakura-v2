@@ -2,6 +2,7 @@
 // this project
 #include "roms_component.h"
 #include "../../../../../../core/CART/CART.h"
+#include "../../../../../../core/EMU/EMU.h"
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
@@ -133,13 +134,12 @@ void StartRom() {
   // TODO: Replace this when starting the core
 
   // Get path of rom to start by getting selected index of the rom table, then
-  string tmp = "/run/media/Hunter/Programming/Github/sakura/sakura " +
-               RomList.at(SelectedRomTableIndex - 1).path;
-
   AddLogEntry(I18nObject.tr("Roms_started:_") +
               RomList.at(SelectedRomTableIndex - 1).name);
 
-  int result = system(tmp.c_str());
+  // Actually launch rom
+  EMU *sakura = new EMU();
+  sakura->START_ROM(RomList.at(SelectedRomTableIndex - 1).path);
 }
 
 // Simple roms table
