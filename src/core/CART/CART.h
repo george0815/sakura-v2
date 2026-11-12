@@ -73,6 +73,7 @@ public:
   bool BUS_CONFLICTS;
 
   // TRAINER
+  array<uint8_t, 512> TRAINER;
 
   // ROM
   vector<uint8_t> PRG_ROM;

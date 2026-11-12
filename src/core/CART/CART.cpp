@@ -220,9 +220,32 @@ int CART::READ_ROM(string file_name) {
     return -1;
   }
 
-  // Load trainer data if available
+  // Load trainer data if available (next 512 bytes)
+  if (TRAINER_PRESENT) {
+    // rom_file.seekg(16); // Set read position to the 17th byte (byte at index
+    // 16)
+    if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
+                       TRAINER.size())) {
+      AddLogEntry(I18nObject.tr("Unable_to_read_trainer."));
+      return -1;
+    }
+  }
 
-  // Load PRG and CHR ROM
+  // Load PRG ROM
+  if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE)) {
+    AddLogEntry(I18nObject.tr("Unable_to_read_PRG_ROM."));
+    return -1;
+  }
+
+  // Load CHR ROM (if present)
+  if (!USES_CHR_RAM) {
+    // Load CHR ROM
+    if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
+                       CHR_ROM_SIZE)) {
+      AddLogEntry(I18nObject.tr("Unable_to_read_CHR_ROM."));
+      return -1;
+    }
+  }
 
   // TODO: Implement playchoice (if im bored or have the time)
 
