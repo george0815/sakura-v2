@@ -96,18 +96,11 @@ int CART::READ_FLAGS_NES_2() { return 0; }
 // Read flag bytes and set values for iNES 1.0
 int CART::READ_FLAGS_INES_1() {
 
-  // Set flag bytes
-  uint8_t flags_6 = HEADER_BUFFER[6];
-  uint8_t flags_7 = HEADER_BUFFER[7];
-  uint8_t flags_8 = HEADER_BUFFER[8];
-  uint8_t flags_9 = HEADER_BUFFER[9];
-  uint8_t flags_10 = HEADER_BUFFER[10];
-
   // FLAGS 6
 
   // Parse nametable arrangement, horizontal arrangement means vertical
   // mirroring and vice-versa
-  NAMETABLE_MIRRORING = (flags_6 & 0x1);
+  NAMETABLE_MIRRORING = (FLAGS_6 & 0x1);
   if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::HORIZONTAL) {
     AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: HORIZONTAL"));
   } else if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::VERTICAL) {
@@ -116,16 +109,16 @@ int CART::READ_FLAGS_INES_1() {
 
   // Determine if persistent saving is used (ex. battery-backed SRAM) (if 2nd
   // bit is set)
-  SRAM_PRESENT = (flags_6 & 0x2);
+  SRAM_PRESENT = (FLAGS_6 & 0x2);
 
   // Determine if trainer is present (if 3rd bit is set)
-  TRAINER_PRESENT = (flags_6 & 0x4);
+  TRAINER_PRESENT = (FLAGS_6 & 0x4);
 
   // Determine if an alternative nametable layout is used (if 4th bit is set)
-  ALTERNATE_NAMETABLE_LAYOUT = (flags_6 & 0x8);
+  ALTERNATE_NAMETABLE_LAYOUT = (FLAGS_6 & 0x8);
 
   // Get lower 4 bits of mapper number (mask last for bits then left shift 4)
-  MAPPER_NUMBER_LOWER_4_BITS = (flags_6 & 0xF0) >> 4;
+  uint8_t mapper_lower_4_bits = (FLAGS_6 & 0xF0) >> 4;
 
   // FLAGS 7
 
@@ -136,38 +129,43 @@ int CART::READ_FLAGS_INES_1() {
     // is, right now I'm basing my implemtation off iNES format page on nesdev
     // wiki and saw vs system. Maybe I'll implement it down the line if I'm
     // bored and I want to make this emulator more accurate)
-    VS_UNISYSTEM = ((flags_7 & 0x01) == 0x01);
+    VS_UNISYSTEM = ((FLAGS_7 & 0x01) == 0x01);
 
     // Same as above, apparently PC10 was some arcade thing I guess?
-    PLAYCHOICE = ((flags_7 & 0x02) == 0x02);
+    PLAYCHOICE = ((FLAGS_7 & 0x02) == 0x02);
 
     // Get upper 4 bits of mapper number (mask last for bits then left shift 4)
-    MAPPER_NUMBER_UPPER_4_BITS = (flags_7 & 0xF0) >> 4;
+    uint8_t mapper_upper_4_bits = (FLAGS_7 & 0xF0) >> 4;
+
+    // Get final mapper number
+    MAPPER_NUMBER = (mapper_upper_4_bits << 4) | mapper_lower_4_bits;
 
     // FLAGS 8 - flags 8 byte just contains the PRG RAM size, although in
     // iNES 1.0 this is not considered reliable. I'm setting it this way for now
     // and will change is once iNES 2.0 is supported
 
-    if (flags_8 == 0) { // for compatibility purposes, a value of 0 infers 8KB
+    if (FLAGS_8 == 0) { // for compatibility purposes, a value of 0 infers 8KB
       PRG_RAM_SIZE = 0x2000;
     } else { // like CHR ROM size, it is in 8KB units, so multiply by 0x2000
-      PRG_RAM_SIZE = flags_8 * 0x2000;
+      PRG_RAM_SIZE = FLAGS_8 * 0x2000;
     }
 
     // FLAGS 9 - TV system, although official it is almost never used
-    TV_SYSTEM = (flags_9 & 0x01);
+    TV_SYSTEM = (FLAGS_9 & 0x01);
 
     // FLAGS 10
     // NOTE: The first 2 bits of the flag 10 byte actually also denote the TV
     // system, but since the flag 10 byte isn't even official and I already set
     // is using the flag 9 byte (not that that byte is commonly used anyway...),
     // I'm deciding to not parse the TV system value again
-    PRG_RAM_PRESENT = (flags_10 & 0x10); // if 5th bit is set
+    PRG_RAM_PRESENT = (FLAGS_10 & 0x10); // if 5th bit is set
     BUS_CONFLICTS =
-        (flags_10 & 0x20); // if 6th bit is set (nesdev wiki barely says
+        (FLAGS_10 & 0x20); // if 6th bit is set (nesdev wiki barely says
                            // anything about this, but fuck it we ball)
 
     return 0;
+  } else {
+    MAPPER_NUMBER = mapper_lower_4_bits;
   }
   return 0;
 }

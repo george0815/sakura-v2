@@ -14,6 +14,8 @@ public:
   //  FLAGS, METADATA, AND ROM
   //==========================
 
+  uint8_t MAPPER_NUMBER;
+
   // Roms sizes, these values will be multiplied by 16KB and 8KB respectively to
   // get the actual size
   size_t PRG_ROM_SIZE;
@@ -37,8 +39,6 @@ public:
   bool TRAINER_PRESENT;
   bool ALTERNATE_NAMETABLE_LAYOUT;
 
-  uint8_t MAPPER_NUMBER_LOWER_4_BITS;
-
   // FLAGS 7 DATA
 
   bool PLAYCHOICE;
@@ -54,8 +54,6 @@ public:
   };
 
   int CART_VERSION;
-
-  uint8_t MAPPER_NUMBER_UPPER_4_BITS;
 
   // FLAGS 8 DATA
 
@@ -78,6 +76,13 @@ public:
   // ROM
   vector<uint8_t> PRG_ROM;
   vector<uint8_t> CHR_ROM;
+
+  // flag bytes
+  uint8_t FLAGS_6;
+  uint8_t FLAGS_7;
+  uint8_t FLAGS_8;
+  uint8_t FLAGS_9;
+  uint8_t FLAGS_10;
 
   // PLAYCHOICE INST-ROM
   // PLAYCHOICE PROM
