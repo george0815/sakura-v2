@@ -88,11 +88,15 @@ public:
 
   // HEADER - for iNES 1.0 bytes 11-15 are unused
 
-  // Combines the flag helper functions to read the entire ROM header
-  int READ_HEADER();
+  // Reads the Least Significant Bits of the CHR ROM and PRG ROM size values
+  // from bytes 4 and 5 of the header
+  int READ_ROM_SIZE_NES_2();
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
   int READ_ROM_SIZE_INES_1();
+
+  // Combines the flag helper functions to read the entire ROM header
+  int READ_HEADER();
 
   // Reads the mapper, mirroring, battery, and trainer data from byte 6,
   // the VS/Playchoice data, and the iNES 2.0 from byte 7,
@@ -102,17 +106,14 @@ public:
   // used, in addition to being unofficial)
   int READ_FLAGS_INES_1();
 
+  // Reads the data from the byte flags of the header for NES 2.0 roms
+  int READ_FLAGS_NES_2();
+
   // DATA
 
   // Reads trainer data if available, trainers are 512 bytes which are loaded
   // before the game starts, enabling cheats
   int READ_TRAINER();
-
-  // Reads PRG ROM into buffer
-  int READ_PRG_ROM_INES_1();
-
-  // Reads CHR ROM into buffer
-  int READ_CHR_ROM_INES_1();
 
   // PC10 data, might implement this far into the future if im bored
   int READ_PLAYCHOICE_INST_ROM_INES_1();
