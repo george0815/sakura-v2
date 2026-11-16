@@ -1,6 +1,7 @@
 #include "CART.h"
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstdint>
 #include <fstream>
 #include <ios>
@@ -52,6 +53,19 @@ int CART::READ_HEADER() {
     return -1;
   }
 
+  // Set flag bytes
+  FLAGS_6 = HEADER_BUFFER[6];
+  FLAGS_7 = HEADER_BUFFER[7];
+  FLAGS_8 = HEADER_BUFFER[8];
+  FLAGS_9 = HEADER_BUFFER[9];
+  FLAGS_10 = HEADER_BUFFER[10];
+
+  FLAGS_11 = HEADER_BUFFER[11];
+  FLAGS_12 = HEADER_BUFFER[12];
+  FLAGS_13 = HEADER_BUFFER[13];
+  FLAGS_14 = HEADER_BUFFER[14];
+  FLAGS_15 = HEADER_BUFFER[15];
+
   // iNES 1.0
   if (CART_VERSION == CART_VERSION::INES_1) {
 
@@ -72,15 +86,11 @@ int CART::READ_HEADER() {
   // iNES 2.0
   else if (CART_VERSION == CART_VERSION::INES_2) {
 
-    // Get size of CHR ROM, PRG ROM, and determine whether CHR RAM is used
-    if (READ_ROM_SIZE_NES_2() != 0) {
-      AddLogEntry(I18nObject.tr("FAILED_READING_ROM_SIZE:_"));
-      return -1;
-    }
-
-    // Load flags
-    if (READ_FLAGS_NES_2() != 0) {
-      AddLogEntry(I18nObject.tr("FAILED_READING_FLAGS:_"));
+    // Read entire NES 2.0 header. Since bytes 4 and 5 only store the LSB (Least
+    // Significant Bits) of the CHR and PRG rom sizes, I think its better not to
+    // make a separate function to read the rom size.
+    if (READ_HEADER_NES_2() != 0) {
+      AddLogEntry(I18nObject.tr("FAILED_READING_HEADER:_"));
       return -1;
     }
 
@@ -91,7 +101,157 @@ int CART::READ_HEADER() {
 }
 
 // iNES 2.0
-int CART::READ_FLAGS_NES_2() { return 0; }
+int CART::READ_HEADER_NES_2() {
+
+  // Read PRG and CHR rom size LSB from bytes 4 and 5
+  uint8_t prg_rom_size_lsb = HEADER_BUFFER[4];
+  uint8_t chr_rom_size_lsb = HEADER_BUFFER[5];
+
+  // FLAGS 6
+
+  // Parse nametable arrangement, horizontal arrangement means vertical
+  // mirroring and vice-versa
+  NAMETABLE_MIRRORING = (FLAGS_6 & 0x1);
+  if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::HORIZONTAL) {
+    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: HORIZONTAL"));
+  } else if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::VERTICAL) {
+    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: VERTICAL"));
+  }
+
+  // Determine if persistent saving is used (ex. battery-backed SRAM) (if 2nd
+  // bit is set)
+  SRAM_PRESENT = (FLAGS_6 & 0x2);
+
+  // Determine if trainer is present (if 3rd bit is set)
+  TRAINER_PRESENT = (FLAGS_6 & 0x4);
+
+  // Determine if an alternative nametable layout is used (if 4th bit is set)
+  ALTERNATE_NAMETABLE_LAYOUT = (FLAGS_6 & 0x8);
+
+  // Get lower 4 bits of mapper number (mask last for bits then left shift 4)
+  uint8_t mapper_lower_4_bits = (FLAGS_6 & 0xF0) >> 4;
+
+  // FLAGS 7
+
+  // Decides console type
+  if ((FLAGS_7 & 0x03) == 0x00) {
+    CONSOLE_TYPE = CONSOLE_TYPE::STANDARD_NES;
+  } else if ((FLAGS_7 & 0x01) == 0x01) {
+    CONSOLE_TYPE = CONSOLE_TYPE::VS_SYSTEM;
+  } else if ((FLAGS_7 & 0x02) == 0x02) {
+    CONSOLE_TYPE = CONSOLE_TYPE::PC10;
+  } else if ((FLAGS_7 & 0x03) == 0x03) {
+    CONSOLE_TYPE = CONSOLE_TYPE::EXTENDED_CONSOLE_TYPE;
+  }
+
+  // Get middle 4 bits of mapper number (mask last for bits then left shift 4),
+  // in iNES 1.0 this would be the upper 4 bits of the mapper number, but mapper
+  // numbers in NES 2.0 are 12 bits, there is also a 4 bit submapper number
+  uint8_t mapper_middle_4_bits = (FLAGS_7 & 0xF0) >> 4;
+
+  // FLAGS 8
+
+  // Get most sig bits of mapper number
+  uint8_t mapper_upper_4_bits = (FLAGS_8 & 0x0F);
+
+  // Get final mapper
+  MAPPER_NUMBER = ((mapper_upper_4_bits << 8) | (mapper_middle_4_bits << 4)) |
+                  mapper_lower_4_bits;
+  // According to nesdev wiki, used for "designating functionally distinct
+  // variants of iNES mappers that cannot be distinguished from the memory size
+  // fields alone."
+  SUBMAPPER_NUMBER = (FLAGS_8 & 0xF0) >> 4;
+
+  // FLAGS 9, if the size msb is 0xF (1111), the exponent multiplier notation is
+  // used to calculate the size.
+
+  uint8_t prg_rom_size_msb = (FLAGS_9 & 0x0F);
+  uint8_t chr_rom_size_msb = (FLAGS_9 & 0xF0) >> 4;
+
+  // Get final PRG ROM size
+  if (prg_rom_size_msb == 0x0F) { // exponent multiplier notation
+
+    uint8_t exponent = (prg_rom_size_lsb & 0xFC) >>
+                       2; // FC masks the most sig 6 bits (1111 11xx)
+    uint8_t multiplier = (prg_rom_size_lsb & 0x03); // Get first 2 bits
+
+    // Formula is 2^exponent * (multiplier * 2 + 1)
+    PRG_ROM_SIZE =
+        static_cast<uint8_t>((pow(2, exponent))) * ((multiplier * 2) + 1);
+
+  } else { // if not 0xF, calculate normally
+
+    PRG_ROM_SIZE = (prg_rom_size_msb << 8) | (prg_rom_size_lsb);
+  }
+
+  // Get final CHR ROM size
+  if (chr_rom_size_msb == 0x0F) { // exponent multiplier notation
+
+    uint8_t exponent = (chr_rom_size_lsb & 0xFC) >>
+                       2; // FC masks the most sig 6 bits (1111 11xx)
+    uint8_t multiplier = (chr_rom_size_lsb & 0x03); // Get first 2 bits
+
+    // Formula is 2^exponent * (multiplier * 2 + 1)
+    CHR_ROM_SIZE =
+        static_cast<uint8_t>((pow(2, exponent))) * ((multiplier * 2) + 1);
+
+  } else { // if not 0xF, calculate normally
+
+    CHR_ROM_SIZE = (chr_rom_size_msb << 8) | (chr_rom_size_lsb);
+  }
+
+  // FLAGS 10
+
+  uint8_t prg_ram_size_shift_count = (FLAGS_10 & 0x0F);
+  uint8_t eeprom_size_shift_count = ((FLAGS_10 & 0xF0) >> 4);
+
+  if (prg_ram_size_shift_count == 0x00) {
+    PRG_RAM_PRESENT = false;
+  } else { // if shift count is not 0, 64 << shift value
+    PRG_RAM_SIZE = 0x40 << prg_ram_size_shift_count;
+  }
+  if (eeprom_size_shift_count == 0x00) {
+    EEPROM_PRESENT = false;
+  } else {
+    EEPROM_SIZE = 0x40 << eeprom_size_shift_count;
+  }
+
+  // FLAGS 11
+
+  uint8_t chr_ram_size_shift_count = (FLAGS_10 & 0x0F);
+  uint8_t chr_nvram_size_shift_count = ((FLAGS_10 & 0xF0) >> 4);
+
+  if (chr_ram_size_shift_count == 0x00) {
+    CHR_RAM_PRESENT = false;
+  } else { // if shift count is not 0, 64 << shift value
+    CHR_RAM_SIZE = 0x40 << chr_ram_size_shift_count;
+  }
+  if (chr_nvram_size_shift_count == 0x00) {
+    CHR_NVRAM_PRESENT = false;
+  } else {
+    CHR_NVRAM_SIZE = 0x40 << chr_nvram_size_shift_count;
+  }
+
+  // FLAGS 12
+
+  CPU_PPU_TIMING = (FLAGS_12 & 0x3);
+
+  // FLAGS 13
+  if (CONSOLE_TYPE == CONSOLE_TYPE::VS_SYSTEM) {
+    VS_PPU_TYPE = (FLAGS_13 & 0x0F);
+    VS_HARDWARE_TYPE = (FLAGS_13 & 0xF0) >> 4;
+  } else if (CONSOLE_TYPE == CONSOLE_TYPE::EXTENDED_CONSOLE_TYPE) {
+    EXT_SYS_TYPE = (FLAGS_13 & 0x0F);
+  }
+
+  // FLAGS 14
+  MISC_ROMS = FLAGS_15;
+
+  // FLAGS 15
+  DEFAULT_EXPANSION_DEVICE = FLAGS_15;
+
+  return 0;
+}
 
 // Read flag bytes and set values for iNES 1.0
 int CART::READ_FLAGS_INES_1() {
@@ -129,10 +289,15 @@ int CART::READ_FLAGS_INES_1() {
     // is, right now I'm basing my implemtation off iNES format page on nesdev
     // wiki and saw vs system. Maybe I'll implement it down the line if I'm
     // bored and I want to make this emulator more accurate)
-    VS_UNISYSTEM = ((FLAGS_7 & 0x01) == 0x01);
-
+    if ((FLAGS_7 & 0x01) == 0x01) {
+      CONSOLE_TYPE = CONSOLE_TYPE::VS_SYSTEM;
+    }
     // Same as above, apparently PC10 was some arcade thing I guess?
-    PLAYCHOICE = ((FLAGS_7 & 0x02) == 0x02);
+    else if ((FLAGS_7 & 0x02) == 0x02) {
+      CONSOLE_TYPE = CONSOLE_TYPE::PC10;
+    } else if ((FLAGS_7 & 0x03) == 0x00) {
+      CONSOLE_TYPE = CONSOLE_TYPE::STANDARD_NES;
+    }
 
     // Get upper 4 bits of mapper number (mask last for bits then left shift 4)
     uint8_t mapper_upper_4_bits = (FLAGS_7 & 0xF0) >> 4;
@@ -169,9 +334,6 @@ int CART::READ_FLAGS_INES_1() {
   }
   return 0;
 }
-
-// Load ROM size values LSB from bytes 4 and 5
-int CART::READ_ROM_SIZE_NES_2() { return 0; }
 
 // Load ROM sizes from bytes 4 and 5
 int CART::READ_ROM_SIZE_INES_1() {

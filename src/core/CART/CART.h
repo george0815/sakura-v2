@@ -14,7 +14,8 @@ public:
   //  FLAGS, METADATA, AND ROM
   //==========================
 
-  uint8_t MAPPER_NUMBER;
+  uint16_t MAPPER_NUMBER;
+  uint8_t SUBMAPPER_NUMBER;
 
   // Roms sizes, these values will be multiplied by 16KB and 8KB respectively to
   // get the actual size
@@ -41,9 +42,16 @@ public:
 
   // FLAGS 7 DATA
 
-  bool PLAYCHOICE;
+  enum CONSOLE_TYPE {
 
-  bool VS_UNISYSTEM;
+    STANDARD_NES = 0,
+    VS_SYSTEM = 1,
+    PC10 = 2,
+    EXTENDED_CONSOLE_TYPE = 3
+
+  };
+
+  int CONSOLE_TYPE;
 
   enum CART_VERSION {
 
@@ -58,6 +66,9 @@ public:
   // FLAGS 8 DATA
 
   size_t PRG_RAM_SIZE;
+  size_t EEPROM_SIZE;
+  size_t CHR_RAM_SIZE;
+  size_t CHR_NVRAM_SIZE;
 
   // FLAGS 9 DATA
 
@@ -68,7 +79,38 @@ public:
   // FLAGS 10 DATA
 
   bool PRG_RAM_PRESENT;
+  bool EEPROM_PRESENT;
+  bool CHR_RAM_PRESENT;
+  bool CHR_NVRAM_PRESENT;
+
   bool BUS_CONFLICTS;
+
+  // FLAGS  12 DATA
+  enum CPU_PPU_TIMING {
+
+    RP2C02 = 0,
+    RP2C07 = 1,
+    MULTIPLE_REGION = 2,
+    UA6538 = 3,
+
+  };
+  int CPU_PPU_TIMING;
+
+  // FLAG 13 DATA
+  uint8_t VS_HARDWARE_TYPE;
+  uint8_t VS_PPU_TYPE;
+  uint8_t EXT_SYS_TYPE;
+
+  // FLAGS 14 DATA - byte 14 denotes the number of miscellaneous roms. Some NES
+  // console types (like the PC10) can have extra chips. The memory for it
+  // occupies the remaining space after the CHR_ROM.
+  uint8_t MISC_ROMS;
+
+  // FLAGS 15 DATA - byte 15 denotes the expansion device (such as the power
+  // pad, zapper, etc) the rom expects at CPU $4016/$4017. For example if byte
+  // 15 == $08, then the rom expects a Zapper. $00 is unspecified and $01 is for
+  // standard NES controllers
+  uint8_t DEFAULT_EXPANSION_DEVICE;
 
   // TRAINER
   array<uint8_t, 512> TRAINER;
@@ -77,25 +119,24 @@ public:
   vector<uint8_t> PRG_ROM;
   vector<uint8_t> CHR_ROM;
 
-  // flag bytes
+  // flag bytes, 11-15 are only used in the NES 2.0 format
   uint8_t FLAGS_6;
   uint8_t FLAGS_7;
   uint8_t FLAGS_8;
   uint8_t FLAGS_9;
   uint8_t FLAGS_10;
 
-  // PLAYCHOICE INST-ROM
-  // PLAYCHOICE PROM
+  uint8_t FLAGS_11;
+  uint8_t FLAGS_12;
+  uint8_t FLAGS_13;
+  uint8_t FLAGS_14;
+  uint8_t FLAGS_15;
 
   //==========================
   //  HELPER FUNCTIONS
   //==========================
 
   // HEADER - for iNES 1.0 bytes 11-15 are unused
-
-  // Reads the Least Significant Bits of the CHR ROM and PRG ROM size values
-  // from bytes 4 and 5 of the header
-  int READ_ROM_SIZE_NES_2();
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
   int READ_ROM_SIZE_INES_1();
@@ -112,7 +153,7 @@ public:
   int READ_FLAGS_INES_1();
 
   // Reads the data from the byte flags of the header for NES 2.0 roms
-  int READ_FLAGS_NES_2();
+  int READ_HEADER_NES_2();
 
   // DATA
 
