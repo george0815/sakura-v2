@@ -248,6 +248,8 @@ int CART::READ_ROM(string file_name) {
     CART_VERSION = CART_VERSION::ARCH_NES;
   }
 
+  AddLogEntry(to_string(CART_VERSION));
+
   // Read all values from header
   if (READ_HEADER() != 0) {
     AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
