@@ -29,7 +29,8 @@ using namespace filesystem;
 //
 
 using namespace std;
-using namespace UIState; // I18nObject, control button labels
+using namespace UIState;      // I18nObject, control button labels
+using namespace LogComponent; // AddLogEntry
 
 namespace Settings {
 
@@ -41,7 +42,8 @@ int OpenFolder(string folder, string &error_message) {
   // For linux,
   string tmp = "xdg-open " + folder + " >nul 2>nul";
   if (system(tmp.c_str()) != 0) {
-    error_message = I18nObject.tr("Failed_to_open_folder");
+    error_message =
+        I18nObject.tr("Error") + ": " + I18nObject.tr("Failed_to_open_folder");
     return -1;
   }
 
@@ -145,7 +147,7 @@ int LoadSettings(bool backup) {
     OpenSRAMFolderControl = settings_json["OpenSRAMFolderControl"];
     SaveStateControl = settings_json["SaveStateControl"];
     LoadStateControl = settings_json["LoadStateControl"];
-    StartControl = settings_json["StartControl"];
+    StartControl = settings_json["StartControlt"];
     SelectControl = settings_json["SelectControl"];
     AControl = settings_json["AControl"];
     BControl = settings_json["BControl"];
@@ -175,11 +177,19 @@ int LoadSettings(bool backup) {
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
-    LogComponent::AddLogEntry(I18nObject.tr("Error_loading_settings:_"));
+    AddLogEntry(I18nObject.tr("Error_loading_settings:_"));
     config_stream.close();
     return -1;
   }
   config_stream.close();
+
+  if (backup) {
+    AddLogEntry(I18nObject.tr("Settings_saved"));
+  } else {
+    AddLogEntry(I18nObject.tr("Settings_saved_successfully._Some_changes_will_"
+                              "take_effect_after_restarting."));
+  }
+
   return 0;
 }
 

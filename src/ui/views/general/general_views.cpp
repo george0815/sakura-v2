@@ -97,6 +97,8 @@ Component ControlOptionComponent(string str, int &control_setting,
                  [&label] {
                    // Set label while waiting for input
                    label = "...";
+                   LogComponent::AddLogEntry(
+                       I18nObject.tr("Waiting_for_input..."));
                    WaitingForInput = true;
                  },
                  ButtonOption::Ascii()),
