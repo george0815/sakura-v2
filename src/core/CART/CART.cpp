@@ -84,7 +84,7 @@ int CART::READ_HEADER() {
     return 0;
   }
   // iNES 2.0
-  else if (CART_VERSION == CART_VERSION::INES_2) {
+  else if (CART_VERSION == CART_VERSION::NES_2) {
 
     // Read entire NES 2.0 header. Since bytes 4 and 5 only store the LSB (Least
     // Significant Bits) of the CHR and PRG rom sizes, I think its better not to
@@ -118,9 +118,9 @@ int CART::READ_HEADER_NES_2() {
     AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: VERTICAL"));
   }
 
-  // Determine if persistent saving is used (ex. battery-backed SRAM) (if 2nd
+  // Determine if persistent saving is used (ex. battery-backed RAM) (if 2nd
   // bit is set)
-  SRAM_PRESENT = (FLAGS_6 & 0x2);
+  PRG_RAM_PRESENT = (FLAGS_6 & 0x2);
 
   // Determine if trainer is present (if 3rd bit is set)
   TRAINER_PRESENT = (FLAGS_6 & 0x4);
@@ -157,9 +157,7 @@ int CART::READ_HEADER_NES_2() {
   // Get final mapper
   MAPPER_NUMBER = ((mapper_upper_4_bits << 8) | (mapper_middle_4_bits << 4)) |
                   mapper_lower_4_bits;
-  // According to nesdev wiki, used for "designating functionally distinct
-  // variants of iNES mappers that cannot be distinguished from the memory size
-  // fields alone."
+  // Get submapper number, see comment in cart.h on what a submapper is
   SUBMAPPER_NUMBER = (FLAGS_8 & 0xF0) >> 4;
 
   // FLAGS 9, if the size msb is 0xF (1111), the exponent multiplier notation is
@@ -222,7 +220,7 @@ int CART::READ_HEADER_NES_2() {
   uint8_t chr_nvram_size_shift_count = ((FLAGS_10 & 0xF0) >> 4);
 
   if (chr_ram_size_shift_count == 0x00) {
-    CHR_RAM_PRESENT = false;
+    USES_CHR_RAM = false;
   } else { // if shift count is not 0, 64 << shift value
     CHR_RAM_SIZE = 0x40 << chr_ram_size_shift_count;
   }
@@ -269,7 +267,7 @@ int CART::READ_FLAGS_INES_1() {
 
   // Determine if persistent saving is used (ex. battery-backed SRAM) (if 2nd
   // bit is set)
-  SRAM_PRESENT = (FLAGS_6 & 0x2);
+  PRG_RAM_PRESENT = (FLAGS_6 & 0x2);
 
   // Determine if trainer is present (if 3rd bit is set)
   TRAINER_PRESENT = (FLAGS_6 & 0x4);
@@ -395,7 +393,7 @@ int CART::READ_ROM(string file_name) {
   // then iNES 2.0)
   uint8_t flags_7 = HEADER_BUFFER[7];
   if ((flags_7 & 0x0C) == 0x08) {
-    CART_VERSION = CART_VERSION::INES_2;
+    CART_VERSION = CART_VERSION::NES_2;
   }
   // If 3rd bit set bit set and 4th not set (value of 1), the archaic iNES
   else if ((flags_7 & 0x0C) == 0x04) {
@@ -445,7 +443,7 @@ int CART::READ_ROM(string file_name) {
     }
   }
 
-  // TODO: Implement playchoice (if im bored or have the time)
+  // TODO: Implement playchoice (If I'm bored or have the time)
 
   return 0;
 }

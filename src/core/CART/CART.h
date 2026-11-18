@@ -11,20 +11,94 @@ class CART {
 
 public:
   //==========================
-  //  FLAGS, METADATA, AND ROM
+  //  CHR and PRG ROM
   //==========================
 
-  uint16_t MAPPER_NUMBER;
-  uint8_t SUBMAPPER_NUMBER;
-
-  // Roms sizes, these values will be multiplied by 16KB and 8KB respectively to
-  // get the actual size
+  // Roms sizes, for iNES 1.0, these values will be multiplied by 16KB and 8KB
+  // respectively to get the actual size. For NES 2.0, the least significant
+  // bits read from bytes 4-5 of the header are combined with the most
+  // significant bits from byte to get the total size. If the last 4 bits are
+  // 0xF, the exponent-multiplier notation is used
   size_t PRG_ROM_SIZE;
   size_t CHR_ROM_SIZE;
 
-  bool USES_CHR_RAM;
+  // PRG ROM is the part of the rom chip that holds the games program (hence
+  // "PRG") data. This is where the PC reads instructions from. At a minimum
+  // there is always at least one PRG ROM
+  vector<uint8_t> PRG_ROM;
+  // CHR ROM contains the sprites and the visual assets of the game. This is
+  // available to the PPU "from the moment it turns on".
+  vector<uint8_t> CHR_ROM;
 
+  //==========================
+  //  RAM
+  //==========================
+
+  bool USES_CHR_RAM; // CHR RAM contains visual assets that the CPU has loaded
+                     // from PRG ROM.
+  bool PRG_RAM_PRESENT;   // Battery-backed RAM, mapped to address space
+                          // $6000-$7FFF, used for persistent saving
+  bool EEPROM_PRESENT;    // Used in homebrew roms to store save data without a
+                          // battery, rarely used by offiial NES games
+  bool CHR_NVRAM_PRESENT; // Battery backed CHR RAM
+
+  // Sizes for the above RAM types
+  size_t PRG_RAM_SIZE;
+  size_t EEPROM_SIZE;
+  size_t CHR_RAM_SIZE;
+  size_t CHR_NVRAM_SIZE;
+
+  //==========================
+  //  MAPPER DATA
+  //==========================
+
+  uint16_t MAPPER_NUMBER; // Mappers extend the capabilities of the NES. For
+                          // example it can utilize bank switching to allow a
+                          // cartridge to have more data than the address space
+                          // would otherwise allow. Nametable mirroring is
+                          // another fucntion of a mapper. (There will be a more
+                          // detailed explanation in the comments in the files
+                          // for the mapper files) Potential values:
+                          //   Archaic iNES: 0-15 (4 bits)
+                          //   iNES 1.0    : 0-255 (8 bits)
+                          //   NES 2.0     : 0-4095 (12 bits)
+
+  uint8_t SUBMAPPER_NUMBER; // According to nesdev wiki, used for "designating
+                            // functionally distinct variants of iNES mappers
+                            // that cannot be distinguished from the memory size
+                            // fields alone."
+
+  //==========================
+  //  HEADER DATA AND METADATA
+  //==========================
+
+  // Holds first 16 bytes of the ROM file
   array<uint8_t, 16> HEADER_BUFFER;
+
+  // flag bytes, 11-15 are only used in the NES 2.0 format
+  uint8_t FLAGS_6; //
+  uint8_t FLAGS_7;
+  uint8_t FLAGS_8;
+  uint8_t FLAGS_9;
+  uint8_t FLAGS_10;
+
+  uint8_t FLAGS_11;
+  uint8_t FLAGS_12;
+  uint8_t FLAGS_13;
+  uint8_t FLAGS_14;
+  uint8_t FLAGS_15;
+
+  // Most modern roms use NES 2.0 rather than iNES 1.0, but NES 2.0 is backwards
+  // compatible
+  enum CART_VERSION {
+
+    ARCH_NES = 0,
+    INES_1 = 1,
+    NES_2 = 2,
+
+  };
+
+  int CART_VERSION;
 
   // FLAGS 6 DATA
   enum NAMETABLE_MIRRORING {
@@ -34,8 +108,6 @@ public:
 
   };
   int NAMETABLE_MIRRORING;
-
-  bool SRAM_PRESENT;
 
   bool TRAINER_PRESENT;
   bool ALTERNATE_NAMETABLE_LAYOUT;
@@ -53,22 +125,7 @@ public:
 
   int CONSOLE_TYPE;
 
-  enum CART_VERSION {
-
-    ARCH_NES = 0,
-    INES_1 = 1,
-    INES_2 = 2,
-
-  };
-
-  int CART_VERSION;
-
   // FLAGS 8 DATA
-
-  size_t PRG_RAM_SIZE;
-  size_t EEPROM_SIZE;
-  size_t CHR_RAM_SIZE;
-  size_t CHR_NVRAM_SIZE;
 
   // FLAGS 9 DATA
 
@@ -77,11 +134,6 @@ public:
   int TV_SYSTEM;
 
   // FLAGS 10 DATA
-
-  bool PRG_RAM_PRESENT;
-  bool EEPROM_PRESENT;
-  bool CHR_RAM_PRESENT;
-  bool CHR_NVRAM_PRESENT;
 
   bool BUS_CONFLICTS;
 
@@ -114,23 +166,6 @@ public:
 
   // TRAINER
   array<uint8_t, 512> TRAINER;
-
-  // ROM
-  vector<uint8_t> PRG_ROM;
-  vector<uint8_t> CHR_ROM;
-
-  // flag bytes, 11-15 are only used in the NES 2.0 format
-  uint8_t FLAGS_6;
-  uint8_t FLAGS_7;
-  uint8_t FLAGS_8;
-  uint8_t FLAGS_9;
-  uint8_t FLAGS_10;
-
-  uint8_t FLAGS_11;
-  uint8_t FLAGS_12;
-  uint8_t FLAGS_13;
-  uint8_t FLAGS_14;
-  uint8_t FLAGS_15;
 
   //==========================
   //  HELPER FUNCTIONS
