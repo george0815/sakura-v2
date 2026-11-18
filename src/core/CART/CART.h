@@ -119,11 +119,14 @@ public:
   //  CONSOLE TYPES/TV SYSTEM
   //==========================
 
-  // TODO: Add more comments on hardware type/TV system
-  uint8_t VS_HARDWARE_TYPE;
-  uint8_t VS_PPU_TYPE;
-  uint8_t EXT_SYS_TYPE;
+  uint8_t VS_HARDWARE_TYPE; // If the rom is for the VS system, denotes whether
+                            // its for the Vs. Unisystem or Dual System
+  uint8_t VS_PPU_TYPE;      // PPU type of the Vs. System
+  uint8_t EXT_SYS_TYPE; // If the rom is for one of the extended console types,
+                        // denotes which one
 
+  // The NES had 2 arcade variants - The VS. System and the Playchoice-10, in
+  // addition to various other versions such as the Famiclone
   enum CONSOLE_TYPE {
 
     STANDARD_NES = 0,
@@ -132,18 +135,19 @@ public:
     EXTENDED_CONSOLE_TYPE = 3
 
   };
-
   int CONSOLE_TYPE;
 
+  // Different TV system
+  // NTSC: NA/Japan, 60hz, ~17 faster, PAL: AUS/EUR, 50hz, slower
   enum TV_SYSTEM { NTSC = 0, PAL = 1 };
-
   int TV_SYSTEM;
 
   //==========================
   //  BUS CONFLICTS, TIMING, MISC ROMS, DEFAULT EXPANSION DEVICE
   //==========================
 
-  // TODO: Add more comments on bus conflicts
+  // A bus confllict occurs "when two logic devices output different values on
+  // the same bus line"
   bool BUS_CONFLICTS;
 
   // TODO: Add more comments on timing

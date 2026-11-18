@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <string>
 
 using namespace std;
@@ -6,8 +5,6 @@ using namespace std;
 class EMU {
 
 public:
-  int START_ROM(string file_name);
-
-  // Converts buffer to string: mainly for testing
-  // string BYTES_TO_STRING(HHH);
+  // Starts rom, contains main emulation loop
+  int START_ROM(string file_name, string &error_message);
 };
