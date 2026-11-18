@@ -418,8 +418,6 @@ int CART::READ_ROM(string file_name) {
 
   // Load trainer data if available (next 512 bytes)
   if (TRAINER_PRESENT) {
-    // rom_file.seekg(16); // Set read position to the 17th byte (byte at index
-    // 16)
     if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
                        TRAINER.size())) {
       AddLogEntry(I18nObject.tr("Unable_to_read_trainer."));

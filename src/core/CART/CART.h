@@ -11,7 +11,7 @@ class CART {
 
 public:
   //==========================
-  //  CHR and PRG ROM
+  //  CHR/PRG ROM, TRAINER DATA
   //==========================
 
   // Roms sizes, for iNES 1.0, these values will be multiplied by 16KB and 8KB
@@ -29,6 +29,10 @@ public:
   // CHR ROM contains the sprites and the visual assets of the game. This is
   // available to the PPU "from the moment it turns on".
   vector<uint8_t> CHR_ROM;
+
+  // TRAINER
+  array<uint8_t, 512> TRAINER;
+  bool TRAINER_PRESENT;
 
   //==========================
   //  RAM
@@ -49,7 +53,7 @@ public:
   size_t CHR_NVRAM_SIZE;
 
   //==========================
-  //  MAPPER DATA
+  //  MAPPER DATA/NAMETABLE MIRRORING
   //==========================
 
   uint16_t MAPPER_NUMBER; // Mappers extend the capabilities of the NES. For
@@ -68,6 +72,16 @@ public:
                             // that cannot be distinguished from the memory size
                             // fields alone."
 
+  // TODO: Add comment explaining nametables
+  enum NAMETABLE_MIRRORING {
+
+    HORIZONTAL = 0,
+    VERTICAL = 1
+
+  };
+  int NAMETABLE_MIRRORING;
+  bool ALTERNATE_NAMETABLE_LAYOUT;
+
   //==========================
   //  HEADER DATA AND METADATA
   //==========================
@@ -76,17 +90,18 @@ public:
   array<uint8_t, 16> HEADER_BUFFER;
 
   // flag bytes, 11-15 are only used in the NES 2.0 format
-  uint8_t FLAGS_6; //
-  uint8_t FLAGS_7;
-  uint8_t FLAGS_8;
-  uint8_t FLAGS_9;
-  uint8_t FLAGS_10;
+  uint8_t FLAGS_6;  // Mapper, mirroring, battery, trainer
+  uint8_t FLAGS_7;  // Mapper, console type, NES 2.0 flag
+  uint8_t FLAGS_8;  // iNES 1.0: PRG RAM size, NES 2.0: Mapper/submapper
+  uint8_t FLAGS_9;  // iNES 1.0: TV system, NES 2.0: PRG/CHR ROM size
+  uint8_t FLAGS_10; // iNES 1.0: TV system, PRG RAM presence, NES 2.0:
+                    // PRG-RAM/EEPROM size
 
-  uint8_t FLAGS_11;
-  uint8_t FLAGS_12;
-  uint8_t FLAGS_13;
-  uint8_t FLAGS_14;
-  uint8_t FLAGS_15;
+  uint8_t FLAGS_11; // CHR-RAM size
+  uint8_t FLAGS_12; // CPU/PPU timing
+  uint8_t FLAGS_13; // Console type
+  uint8_t FLAGS_14; // Misc roms
+  uint8_t FLAGS_15; // Default expansion device
 
   // Most modern roms use NES 2.0 rather than iNES 1.0, but NES 2.0 is backwards
   // compatible
@@ -100,19 +115,14 @@ public:
 
   int CART_VERSION;
 
-  // FLAGS 6 DATA
-  enum NAMETABLE_MIRRORING {
+  //==========================
+  //  CONSOLE TYPES/TV SYSTEM
+  //==========================
 
-    HORIZONTAL = 0,
-    VERTICAL = 1
-
-  };
-  int NAMETABLE_MIRRORING;
-
-  bool TRAINER_PRESENT;
-  bool ALTERNATE_NAMETABLE_LAYOUT;
-
-  // FLAGS 7 DATA
+  // TODO: Add more comments on hardware type/TV system
+  uint8_t VS_HARDWARE_TYPE;
+  uint8_t VS_PPU_TYPE;
+  uint8_t EXT_SYS_TYPE;
 
   enum CONSOLE_TYPE {
 
@@ -125,19 +135,18 @@ public:
 
   int CONSOLE_TYPE;
 
-  // FLAGS 8 DATA
-
-  // FLAGS 9 DATA
-
   enum TV_SYSTEM { NTSC = 0, PAL = 1 };
 
   int TV_SYSTEM;
 
-  // FLAGS 10 DATA
+  //==========================
+  //  BUS CONFLICTS, TIMING, MISC ROMS, DEFAULT EXPANSION DEVICE
+  //==========================
 
+  // TODO: Add more comments on bus conflicts
   bool BUS_CONFLICTS;
 
-  // FLAGS  12 DATA
+  // TODO: Add more comments on timing
   enum CPU_PPU_TIMING {
 
     RP2C02 = 0,
@@ -148,30 +157,20 @@ public:
   };
   int CPU_PPU_TIMING;
 
-  // FLAG 13 DATA
-  uint8_t VS_HARDWARE_TYPE;
-  uint8_t VS_PPU_TYPE;
-  uint8_t EXT_SYS_TYPE;
-
-  // FLAGS 14 DATA - byte 14 denotes the number of miscellaneous roms. Some NES
+  // Denotes the number of miscellaneous roms. Some NES
   // console types (like the PC10) can have extra chips. The memory for it
   // occupies the remaining space after the CHR_ROM.
   uint8_t MISC_ROMS;
 
-  // FLAGS 15 DATA - byte 15 denotes the expansion device (such as the power
+  // Denotes the expansion device (such as the power
   // pad, zapper, etc) the rom expects at CPU $4016/$4017. For example if byte
   // 15 == $08, then the rom expects a Zapper. $00 is unspecified and $01 is for
   // standard NES controllers
   uint8_t DEFAULT_EXPANSION_DEVICE;
 
-  // TRAINER
-  array<uint8_t, 512> TRAINER;
-
   //==========================
   //  HELPER FUNCTIONS
   //==========================
-
-  // HEADER - for iNES 1.0 bytes 11-15 are unused
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
   int READ_ROM_SIZE_INES_1();
@@ -190,17 +189,9 @@ public:
   // Reads the data from the byte flags of the header for NES 2.0 roms
   int READ_HEADER_NES_2();
 
-  // DATA
-
-  // Reads trainer data if available, trainers are 512 bytes which are loaded
-  // before the game starts, enabling cheats
-  int READ_TRAINER();
-
   // PC10 data, might implement this far into the future if im bored
-  int READ_PLAYCHOICE_INST_ROM_INES_1();
-  int READ_PLAYCHOICE_PROM_INES_1();
-
-  // GENERAL HELPER FUNCTIONS
+  int READ_PLAYCHOICE_INST_ROM_INES_1(); // NOTE: NOT CURRENTLY IMPLEMENTED
+  int READ_PLAYCHOICE_PROM_INES_1();     // NOTE: NOT CURRENTLY IMPLEMENTED
 
   // Attempts to load rom using provided file name
   int READ_ROM(string file_name);
