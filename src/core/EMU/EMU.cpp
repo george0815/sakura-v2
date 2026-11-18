@@ -22,7 +22,7 @@ int EMU::START_ROM(string file_name, string &error_message) {
   // init
   SDL_Window *sakura_window;
   if (SDL_Init(SDL_INIT_VIDEO)) {
-    error_message = I18nObject.tr("ERROR_INITIALIZING_SDL");
+    error_message = I18nObject.tr("FAILED_TO_INITIALIZE_SDL");
     return -1;
   }
   sakura_window = SDL_CreateWindow("sakura-v2", 500, 500, 0);
@@ -30,7 +30,13 @@ int EMU::START_ROM(string file_name, string &error_message) {
   // Main emu loop var
   bool emu_running = true;
 
-  // TODO: Explain why Im using FillSurfaceRect
+  // I tried using SDL_CreateRenderer with SDL_RenderPresent but for some reason
+  // the window would just refuse to open. I also ran into the same thing when I
+  // create the window with the SDL_WINDOW_OPENGL flag. Both of these issues
+  // could be due to me using wayland. RenderPresent uses hardware-accelerated
+  // GPU rendering while UpdateWindowSurface is CPU-based software rendering,
+  // which doesn't support shaders. So unless I do some hacky trick I will
+  // really need to solve the above issue.
   SDL_Surface *sakura_surface = SDL_GetWindowSurface(sakura_window);
   uint32_t red = SDL_MapSurfaceRGB(sakura_surface, 0xFF, 0x00, 0x00);
   SDL_FillSurfaceRect(sakura_surface, NULL, red);
