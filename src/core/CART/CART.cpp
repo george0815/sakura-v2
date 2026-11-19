@@ -49,7 +49,7 @@ int CART::READ_HEADER() {
   array<uint8_t, 4> nes_confirm;
   copy(HEADER_BUFFER.begin(), HEADER_BUFFER.begin() + 4, nes_confirm.begin());
   if (CHECK_HEADER(nes_confirm) != 0) {
-    AddLogEntry(I18nObject.tr("FAILED_HEADER_CHECK:_"));
+    AddLogEntry(I18nObject.tr("FAILED_HEADER_CHECK"));
     return -1;
   }
 
@@ -65,19 +65,18 @@ int CART::READ_HEADER() {
   FLAGS_13 = HEADER_BUFFER[13];
   FLAGS_14 = HEADER_BUFFER[14];
   FLAGS_15 = HEADER_BUFFER[15];
-
   // iNES 1.0
   if (CART_VERSION == CART_VERSION::INES_1) {
 
     // Get size of CHR ROM, PRG ROM, and determine whether CHR RAM is used
     if (READ_ROM_SIZE_INES_1() != 0) {
-      AddLogEntry(I18nObject.tr("FAILED_READING_ROM_SIZE:_"));
+      AddLogEntry(I18nObject.tr("FAILED_READING_ROM_SIZE"));
       return -1;
     }
 
     // Load flags
     if (READ_FLAGS_INES_1() != 0) {
-      AddLogEntry(I18nObject.tr("FAILED_READING_FLAGS:_"));
+      AddLogEntry(I18nObject.tr("FAILED_READING_FLAGS"));
       return -1;
     }
 
@@ -90,7 +89,7 @@ int CART::READ_HEADER() {
     // Significant Bits) of the CHR and PRG rom sizes, I think its better not to
     // make a separate function to read the rom size.
     if (READ_HEADER_NES_2() != 0) {
-      AddLogEntry(I18nObject.tr("FAILED_READING_HEADER:_"));
+      AddLogEntry(I18nObject.tr("FAILED_READING_HEADER"));
       return -1;
     }
 
@@ -113,20 +112,24 @@ int CART::READ_HEADER_NES_2() {
   // mirroring and vice-versa
   NAMETABLE_MIRRORING = (FLAGS_6 & 0x1);
   if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::HORIZONTAL) {
-    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: HORIZONTAL"));
+    AddLogEntry(I18nObject.tr("NAMETABLE_MIRRORING:_HORIZONTAL"));
   } else if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::VERTICAL) {
-    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: VERTICAL"));
+    AddLogEntry(I18nObject.tr("NAMETABLE_MIRRORING:_VERTICAL"));
   }
 
   // Determine if persistent saving is used (ex. battery-backed RAM) (if 2nd
   // bit is set)
   PRG_RAM_PRESENT = (FLAGS_6 & 0x2);
+  AddLogEntry(I18nObject.tr("PRG_RAM_PRESENT:_") + to_string(PRG_RAM_PRESENT));
 
   // Determine if trainer is present (if 3rd bit is set)
   TRAINER_PRESENT = (FLAGS_6 & 0x4);
+  AddLogEntry(I18nObject.tr("TRAINER_PRESENT:_") + to_string(TRAINER_PRESENT));
 
   // Determine if an alternative nametable layout is used (if 4th bit is set)
   ALTERNATE_NAMETABLE_LAYOUT = (FLAGS_6 & 0x8);
+  AddLogEntry(I18nObject.tr("ALTERNATE_NAMETABLE_LAYOUT:_") +
+              to_string(ALTERNATE_NAMETABLE_LAYOUT));
 
   // Get lower 4 bits of mapper number (mask last for bits then left shift 4)
   uint8_t mapper_lower_4_bits = (FLAGS_6 & 0xF0) >> 4;
@@ -144,6 +147,8 @@ int CART::READ_HEADER_NES_2() {
     CONSOLE_TYPE = CONSOLE_TYPE::EXTENDED_CONSOLE_TYPE;
   }
 
+  AddLogEntry(I18nObject.tr("CONSOLE_TYPE:_") + to_string(CONSOLE_TYPE));
+
   // Get middle 4 bits of mapper number (mask last for bits then left shift 4),
   // in iNES 1.0 this would be the upper 4 bits of the mapper number, but mapper
   // numbers in NES 2.0 are 12 bits, there is also a 4 bit submapper number
@@ -159,6 +164,10 @@ int CART::READ_HEADER_NES_2() {
                   mapper_lower_4_bits;
   // Get submapper number, see comment in cart.h on what a submapper is
   SUBMAPPER_NUMBER = (FLAGS_8 & 0xF0) >> 4;
+
+  AddLogEntry(I18nObject.tr("MAPPER_NUMBER:_") + to_string(MAPPER_NUMBER));
+  AddLogEntry(I18nObject.tr("SUBMAPPER_NUMBER:_") +
+              to_string(SUBMAPPER_NUMBER));
 
   // FLAGS 9, if the size msb is 0xF (1111), the exponent multiplier notation is
   // used to calculate the size.
@@ -198,6 +207,11 @@ int CART::READ_HEADER_NES_2() {
     CHR_ROM_SIZE = (chr_rom_size_msb << 8) | (chr_rom_size_lsb);
   }
 
+  // Actual value are stored as amount of bytes, but for readability divide by
+  // 1KB (0x400)
+  AddLogEntry("PRG ROM: " + to_string(PRG_ROM_SIZE / 0x400) + "KB");
+  AddLogEntry("CHR ROM: " + to_string(CHR_ROM_SIZE / 0x400) + "KB");
+
   // FLAGS 10
 
   uint8_t prg_ram_size_shift_count = (FLAGS_10 & 0x0F);
@@ -207,11 +221,13 @@ int CART::READ_HEADER_NES_2() {
     PRG_RAM_PRESENT = false;
   } else { // if shift count is not 0, 64 << shift value
     PRG_RAM_SIZE = 0x40 << prg_ram_size_shift_count;
+    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") + to_string(PRG_RAM_SIZE));
   }
   if (eeprom_size_shift_count == 0x00) {
     EEPROM_PRESENT = false;
   } else {
     EEPROM_SIZE = 0x40 << eeprom_size_shift_count;
+    AddLogEntry(I18nObject.tr("EEPROM_SIZE:_") + to_string(EEPROM_SIZE));
   }
 
   // FLAGS 11
@@ -223,11 +239,13 @@ int CART::READ_HEADER_NES_2() {
     USES_CHR_RAM = false;
   } else { // if shift count is not 0, 64 << shift value
     CHR_RAM_SIZE = 0x40 << chr_ram_size_shift_count;
+    AddLogEntry(I18nObject.tr("CHR_RAM_SIZE:_") + to_string(CHR_RAM_SIZE));
   }
   if (chr_nvram_size_shift_count == 0x00) {
     CHR_NVRAM_PRESENT = false;
   } else {
     CHR_NVRAM_SIZE = 0x40 << chr_nvram_size_shift_count;
+    AddLogEntry(I18nObject.tr("CHR_NVRAM_SIZE:_") + to_string(CHR_NVRAM_SIZE));
   }
 
   // FLAGS 12
@@ -260,20 +278,24 @@ int CART::READ_FLAGS_INES_1() {
   // mirroring and vice-versa
   NAMETABLE_MIRRORING = (FLAGS_6 & 0x1);
   if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::HORIZONTAL) {
-    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: HORIZONTAL"));
+    AddLogEntry(I18nObject.tr("NAMETABLE_MIRRORING:_HORIZONTAL"));
   } else if (NAMETABLE_MIRRORING == NAMETABLE_MIRRORING::VERTICAL) {
-    AddLogEntry(I18nObject.tr("NAMETABLE MIRRORING: VERTICAL"));
+    AddLogEntry(I18nObject.tr("NAMETABLE_MIRRORING:_VERTICAL"));
   }
 
   // Determine if persistent saving is used (ex. battery-backed SRAM) (if 2nd
   // bit is set)
   PRG_RAM_PRESENT = (FLAGS_6 & 0x2);
+  AddLogEntry(I18nObject.tr("PRG_RAM_PRESENT:_") + to_string(PRG_RAM_PRESENT));
 
   // Determine if trainer is present (if 3rd bit is set)
   TRAINER_PRESENT = (FLAGS_6 & 0x4);
+  AddLogEntry(I18nObject.tr("TRAINER_PRESENT:_") + to_string(TRAINER_PRESENT));
 
   // Determine if an alternative nametable layout is used (if 4th bit is set)
   ALTERNATE_NAMETABLE_LAYOUT = (FLAGS_6 & 0x8);
+  AddLogEntry(I18nObject.tr("ALTERNATE_NAMETABLE_LAYOUT:_") +
+              to_string(ALTERNATE_NAMETABLE_LAYOUT));
 
   // Get lower 4 bits of mapper number (mask last for bits then left shift 4)
   uint8_t mapper_lower_4_bits = (FLAGS_6 & 0xF0) >> 4;
@@ -302,6 +324,7 @@ int CART::READ_FLAGS_INES_1() {
 
     // Get final mapper number
     MAPPER_NUMBER = (mapper_upper_4_bits << 4) | mapper_lower_4_bits;
+    AddLogEntry(I18nObject.tr("MAPPER_NUMBER:_") + to_string(MAPPER_NUMBER));
 
     // FLAGS 8 - flags 8 byte just contains the PRG RAM size, although in
     // iNES 1.0 this is not considered reliable. I'm setting it this way for now
@@ -312,6 +335,7 @@ int CART::READ_FLAGS_INES_1() {
     } else { // like CHR ROM size, it is in 8KB units, so multiply by 0x2000
       PRG_RAM_SIZE = FLAGS_8 * 0x2000;
     }
+    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") + to_string(PRG_RAM_SIZE));
 
     // FLAGS 9 - TV system, although official it is almost never used
     TV_SYSTEM = (FLAGS_9 & 0x01);
@@ -329,6 +353,7 @@ int CART::READ_FLAGS_INES_1() {
     return 0;
   } else {
     MAPPER_NUMBER = mapper_lower_4_bits;
+    AddLogEntry(I18nObject.tr("MAPPER_NUMBER:_") + to_string(MAPPER_NUMBER));
   }
   return 0;
 }
@@ -362,7 +387,7 @@ int CART::READ_ROM(string file_name) {
   // Load file and check if file is over 16 bytes
   ifstream rom_file(file_name, ios::binary);
   if (!rom_file) {
-    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_ROM"));
     return -1;
   }
 
@@ -371,7 +396,7 @@ int CART::READ_ROM(string file_name) {
   // header_buffer is casted to char*
   if (!rom_file.read(reinterpret_cast<char *>(HEADER_BUFFER.data()),
                      HEADER_BUFFER.size())) {
-    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_ROM"));
     return -1;
   }
 
@@ -412,7 +437,7 @@ int CART::READ_ROM(string file_name) {
 
   // Read all values from header
   if (READ_HEADER() != 0) {
-    AddLogEntry(I18nObject.tr("Unable_to_read_rom."));
+    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_HEADER"));
     return -1;
   }
 
@@ -420,14 +445,14 @@ int CART::READ_ROM(string file_name) {
   if (TRAINER_PRESENT) {
     if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
                        TRAINER.size())) {
-      AddLogEntry(I18nObject.tr("Unable_to_read_trainer."));
+      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_TRAINER"));
       return -1;
     }
   }
 
   // Load PRG ROM
   if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE)) {
-    AddLogEntry(I18nObject.tr("Unable_to_read_PRG_ROM."));
+    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_PRG_ROM"));
     return -1;
   }
 
@@ -436,7 +461,7 @@ int CART::READ_ROM(string file_name) {
     // Load CHR ROM
     if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
                        CHR_ROM_SIZE)) {
-      AddLogEntry(I18nObject.tr("Unable_to_read_CHR_ROM."));
+      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_CHR_ROM"));
       return -1;
     }
   }
