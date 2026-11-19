@@ -52,6 +52,10 @@ public:
   size_t CHR_RAM_SIZE;
   size_t CHR_NVRAM_SIZE;
 
+  // Vectors for ram NOTE: only CHR RAM and PRG RAM are impelmented for now
+  vector<uint8_t> PRG_RAM;
+  vector<uint8_t> CHR_RAM;
+
   //==========================
   //  MAPPER DATA/NAMETABLE MIRRORING
   //==========================

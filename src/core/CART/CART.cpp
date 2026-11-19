@@ -187,10 +187,13 @@ int CART::READ_HEADER_NES_2() {
     PRG_ROM_SIZE =
         static_cast<uint8_t>((pow(2, exponent))) * ((multiplier * 2) + 1);
 
+    PRG_ROM.resize(PRG_ROM_SIZE); // resize backing vector
+
   } else { // if not 0xF, calculate normally
 
     PRG_ROM_SIZE = (prg_rom_size_msb << 8) | (prg_rom_size_lsb);
     PRG_ROM_SIZE = PRG_ROM_SIZE * 0x4000; // Multiply by 16kb
+    PRG_ROM.resize(PRG_ROM_SIZE);         // Resize backing vector
   }
 
   // Get final CHR ROM size
@@ -203,11 +206,13 @@ int CART::READ_HEADER_NES_2() {
     // Formula is 2^exponent * (multiplier * 2 + 1)
     CHR_ROM_SIZE =
         static_cast<uint8_t>((pow(2, exponent))) * ((multiplier * 2) + 1);
+    CHR_ROM.resize(CHR_ROM_SIZE); // resize backing vector
 
   } else { // if not 0xF, calculate normally
 
     CHR_ROM_SIZE = (chr_rom_size_msb << 8) | (chr_rom_size_lsb);
     CHR_ROM_SIZE = CHR_ROM_SIZE * 0x2000; // Multiply by 8kb
+    CHR_ROM.resize(CHR_ROM_SIZE);         // resize backing vector
   }
 
   // Actual value are stored as amount of bytes, but for readability divide by
@@ -224,6 +229,7 @@ int CART::READ_HEADER_NES_2() {
     PRG_RAM_PRESENT = false;
   } else { // if shift count is not 0, 64 << shift value
     PRG_RAM_SIZE = 0x40 << prg_ram_size_shift_count;
+    PRG_RAM.resize(PRG_RAM_SIZE); // resize backing vector
     AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") + to_string(PRG_RAM_SIZE));
   }
   if (eeprom_size_shift_count == 0x00) {
@@ -242,6 +248,7 @@ int CART::READ_HEADER_NES_2() {
     USES_CHR_RAM = false;
   } else { // if shift count is not 0, 64 << shift value
     CHR_RAM_SIZE = 0x40 << chr_ram_size_shift_count;
+    CHR_RAM.resize(CHR_RAM_SIZE); // resize backing vector
     AddLogEntry(I18nObject.tr("CHR_RAM_SIZE:_") + to_string(CHR_RAM_SIZE));
   }
   if (chr_nvram_size_shift_count == 0x00) {
@@ -445,31 +452,33 @@ int CART::READ_ROM(string file_name) {
     return -1;
   }
 
-  /*
-
-    // Load trainer data if available (next 512 bytes)
-    if (TRAINER_PRESENT) {
-      if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
-                         TRAINER.size())) {
-        AddLogEntry(I18nObject.tr("UNABLE_TO_READ_TRAINER"));
-        return -1;
-      }
+  // Load trainer data if available (next 512 bytes)
+  if (TRAINER_PRESENT) {
+    if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
+                       TRAINER.size())) {
+      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_TRAINER"));
+      return -1;
     }
+    AddLogEntry(I18nObject.tr("PRG_ROM_LOADED"));
+  }
 
-    // Load PRG ROM
-    if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE))
-    { AddLogEntry(I18nObject.tr("UNABLE_TO_READ_PRG_ROM")); return -1;
+  // Load PRG ROM
+  if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE)) {
+    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_PRG_ROM"));
+    return -1;
+  }
+  AddLogEntry(I18nObject.tr("PRG_ROM_LOADED"));
+
+  // Load CHR ROM (if present)
+  if (!USES_CHR_RAM) {
+    // Load CHR ROM
+    if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
+                       CHR_ROM_SIZE)) {
+      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_CHR_ROM"));
+      return -1;
     }
-
-    // Load CHR ROM (if present)
-    if (!USES_CHR_RAM) {
-      // Load CHR ROM
-      if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
-                         CHR_ROM_SIZE)) {
-        AddLogEntry(I18nObject.tr("UNABLE_TO_READ_CHR_ROM"));
-        return -1;
-      }
-    } */
+    AddLogEntry(I18nObject.tr("CHR_ROM_LOADED"));
+  }
 
   // TODO: Implement playchoice (If I'm bored or have the time)
 
