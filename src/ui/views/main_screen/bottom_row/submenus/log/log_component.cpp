@@ -34,7 +34,8 @@ void AddLogEntry(string str) {
 Component LogComponent() {
   return Container::Vertical({{
 
-      // It was seg faulting unless I had at least one component here, so the
+      // It was seg faulting unless I had at least one component here, so
+      // the
       // log will always start with this entry
       FocusableTextComponent(I18nObject.tr("sakura_init")),
 

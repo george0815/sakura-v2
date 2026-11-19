@@ -72,9 +72,7 @@ Component TabContainerComponent() {
                      vscroll_indicator | frame,
                  ControlsComponent::ControlsSubmenuComponent |
                      vscroll_indicator | frame,
-                 LogComponent::LogSubmenuComponent | vscroll_indicator | frame,
-
-             },
+                 LogComponent::LogSubmenuComponent | vscroll_indicator | frame},
              &SelectedMenu) |
          flex;
 }

@@ -62,11 +62,12 @@ Component FocusableTextComponent(string str, int padding) {
   // Captures str param, takes in bool focused
   return Renderer([str, final_padding_amount](bool focused) {
     if (focused) {
-      return text(format("{:^{}}", str, final_padding_amount)) |
-             bgcolor(Color::White) |
-             color(Color::Black); // TODO:: After settings are implemented,
-                                  // replace colors with the colors determined
-                                  // by the settings
+      return select(
+          text(format("{:^{}}", str, final_padding_amount)) |
+          bgcolor(Color::White) |
+          color(Color::Black)); // TODO:: After settings are
+                                // implemented, replace colors with the
+                                // colors determined by the settings
     }
 
     // No else needed since this wont run if focused anyway
