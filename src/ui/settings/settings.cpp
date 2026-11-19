@@ -177,18 +177,10 @@ int LoadSettings(bool backup) {
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
-    AddLogEntry(I18nObject.tr("Error_loading_settings:_"));
     config_stream.close();
     return -1;
   }
   config_stream.close();
-
-  if (backup) {
-    AddLogEntry(I18nObject.tr("Settings_saved"));
-  } else {
-    AddLogEntry(I18nObject.tr("Settings_saved_successfully._Some_changes_will_"
-                              "take_effect_after_restarting."));
-  }
 
   return 0;
 }

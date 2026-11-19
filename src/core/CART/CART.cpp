@@ -190,6 +190,7 @@ int CART::READ_HEADER_NES_2() {
   } else { // if not 0xF, calculate normally
 
     PRG_ROM_SIZE = (prg_rom_size_msb << 8) | (prg_rom_size_lsb);
+    PRG_ROM_SIZE = PRG_ROM_SIZE * 0x4000; // Multiply by 16kb
   }
 
   // Get final CHR ROM size
@@ -206,6 +207,7 @@ int CART::READ_HEADER_NES_2() {
   } else { // if not 0xF, calculate normally
 
     CHR_ROM_SIZE = (chr_rom_size_msb << 8) | (chr_rom_size_lsb);
+    CHR_ROM_SIZE = CHR_ROM_SIZE * 0x2000; // Multiply by 8kb
   }
 
   // Actual value are stored as amount of bytes, but for readability divide by
@@ -418,6 +420,7 @@ int CART::READ_ROM(string file_name) {
   // iNES format version (if 3rd bit not set and 4th bit set (value of 2),
   // then iNES 2.0)
   uint8_t flags_7 = HEADER_BUFFER[7];
+
   if ((flags_7 & 0x0C) == 0x08) {
     CART_VERSION = CART_VERSION::NES_2;
   }
@@ -442,30 +445,31 @@ int CART::READ_ROM(string file_name) {
     return -1;
   }
 
-  // Load trainer data if available (next 512 bytes)
-  if (TRAINER_PRESENT) {
-    if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
-                       TRAINER.size())) {
-      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_TRAINER"));
-      return -1;
-    }
-  }
+  /*
 
-  // Load PRG ROM
-  if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE)) {
-    AddLogEntry(I18nObject.tr("UNABLE_TO_READ_PRG_ROM"));
-    return -1;
-  }
-
-  // Load CHR ROM (if present)
-  if (!USES_CHR_RAM) {
-    // Load CHR ROM
-    if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
-                       CHR_ROM_SIZE)) {
-      AddLogEntry(I18nObject.tr("UNABLE_TO_READ_CHR_ROM"));
-      return -1;
+    // Load trainer data if available (next 512 bytes)
+    if (TRAINER_PRESENT) {
+      if (!rom_file.read(reinterpret_cast<char *>(TRAINER.data()),
+                         TRAINER.size())) {
+        AddLogEntry(I18nObject.tr("UNABLE_TO_READ_TRAINER"));
+        return -1;
+      }
     }
-  }
+
+    // Load PRG ROM
+    if (!rom_file.read(reinterpret_cast<char *>(PRG_ROM.data()), PRG_ROM_SIZE))
+    { AddLogEntry(I18nObject.tr("UNABLE_TO_READ_PRG_ROM")); return -1;
+    }
+
+    // Load CHR ROM (if present)
+    if (!USES_CHR_RAM) {
+      // Load CHR ROM
+      if (!rom_file.read(reinterpret_cast<char *>(CHR_ROM.data()),
+                         CHR_ROM_SIZE)) {
+        AddLogEntry(I18nObject.tr("UNABLE_TO_READ_CHR_ROM"));
+        return -1;
+      }
+    } */
 
   // TODO: Implement playchoice (If I'm bored or have the time)
 
