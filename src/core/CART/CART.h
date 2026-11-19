@@ -72,15 +72,24 @@ public:
                             // that cannot be distinguished from the memory size
                             // fields alone."
 
-  // TODO: Add comment explaining nametables
+  // PPU nametables are basically areas of memory (1024 - 1KB size) used by the
+  // PPU to layout backgrounds.
+  // - Each byte of the nametable controls an 8x8 pixel cell/tile.
+  // - 30 rows of 32 tiles, 960 totol tiles. 30 x 8 = 240, 32 * 8 = 256 for a
+  // width of 240px and a height of 256px
+  //
+  // As for mirroring, the NES has 4 logical nametables but only enough ram
+  // for 2. Mirroring controls which areas of memory contain which nametables
   enum NAMETABLE_MIRRORING {
 
-    HORIZONTAL = 0,
-    VERTICAL = 1
+    HORIZONTAL = 0, // $2000 and $2400, contain the first, with $2800 and $2C00
+                    // containing the second
+    VERTICAL = 1    // $2000 and $2800, contain the first, with $2400 and $2C00
+                    // containing the second
 
   };
   int NAMETABLE_MIRRORING;
-  bool ALTERNATE_NAMETABLE_LAYOUT;
+  bool ALTERNATE_NAMETABLE_LAYOUT; // Some mappers can use alternate schemes
 
   //==========================
   //  HEADER DATA AND METADATA
@@ -150,13 +159,14 @@ public:
   // the same bus line"
   bool BUS_CONFLICTS;
 
-  // TODO: Add more comments on timing
+  // Denotes which PPU/CPU combo's timing that should be used when emulating the
+  // game
   enum CPU_PPU_TIMING {
 
-    RP2C02 = 0,
-    RP2C07 = 1,
-    MULTIPLE_REGION = 2,
-    UA6538 = 3,
+    RP2C02 = 0, // NTSC
+    RP2C07 = 1, // PAL
+    MULTIPLE = 2,
+    UA6538 = 3, // Dendy (NOTE: I have no clue what Dendy means)
 
   };
   int CPU_PPU_TIMING;
