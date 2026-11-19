@@ -147,7 +147,7 @@ int LoadSettings(bool backup) {
     OpenSRAMFolderControl = settings_json["OpenSRAMFolderControl"];
     SaveStateControl = settings_json["SaveStateControl"];
     LoadStateControl = settings_json["LoadStateControl"];
-    StartControl = settings_json["StartControlt"];
+    StartControl = settings_json["StartControl"];
     SelectControl = settings_json["SelectControl"];
     AControl = settings_json["AControl"];
     BControl = settings_json["BControl"];
