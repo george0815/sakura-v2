@@ -1,4 +1,3 @@
-#include "CART.h"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -10,8 +9,10 @@
 #include <string>
 #include <sys/types.h>
 
+// this project
 #include "../../ui/state.h"
 #include "../../ui/views/main_screen/bottom_row/submenus/log/log_component.h"
+#include "CART.h"
 
 using namespace std;
 using namespace UIState;      // I18nObject
