@@ -53,52 +53,69 @@ int OpenFolder(string folder, string &error_message) {
 // Serializes settings namespace to JSON
 int SaveSettings(bool backup) {
 
-  // Declare json object
-  json settings_json;
+  try {
 
-  // Set values in json object
+    // Declare json object
+    json settings_json;
 
-  // Bool values
-  settings_json["EnableDetailedLogging"] = EnableDetailedLogging;
-  settings_json["DisableColoredHotkeyInfo"] = DisableColoredHotkeyInfo;
-  settings_json["DisableASCII"] = DisableASCII;
+    // Set values in json object
 
-  // Inputs
-  settings_json["DefaultRomPath"] = DefaultRomPath;
-  settings_json["RomsPaths"] = RomsPaths;
-  settings_json["LogPath"] = LogPath;
-  settings_json["SRAMPath"] = SRAMPath;
-  settings_json["SaveStatePath"] = SaveStatePath;
+    // Bool values
+    settings_json["EnableDetailedLogging"] = EnableDetailedLogging;
+    settings_json["DisableColoredHotkeyInfo"] = DisableColoredHotkeyInfo;
+    settings_json["DisableASCII"] = DisableASCII;
 
-  // Color and language
-  settings_json["BackgroundColor"] = BackgroundColor;
-  settings_json["TextAndBorderColor"] = TextAndBorderColor;
-  settings_json["ASCIIColor"] = ASCIIColor;
-  settings_json["language"] = Language;
+    // Inputs
+    settings_json["DefaultRomPath"] = DefaultRomPath;
+    settings_json["RomsPaths"] = RomsPaths;
+    settings_json["LogPath"] = LogPath;
+    settings_json["SRAMPath"] = SRAMPath;
+    settings_json["SaveStatePath"] = SaveStatePath;
 
-  // Controls
-  settings_json["StartRomControl"] = StartRomControl;
-  settings_json["StopRomControl"] = StopRomControl;
-  settings_json["OpenRomFolderControl"] = OpenRomFolderControl;
-  settings_json["OpenSRAMFolderControl"] = OpenSRAMFolderControl;
-  settings_json["SaveStateControl"] = SaveStateControl;
-  settings_json["LoadStateControl"] = LoadStateControl;
-  settings_json["StartControl"] = StartControl;
-  settings_json["SelectControl"] = SelectControl;
-  settings_json["AControl"] = AControl;
-  settings_json["BControl"] = BControl;
-  settings_json["UpControl"] = UpControl;
-  settings_json["DownControl"] = DownControl;
-  settings_json["LeftControl"] = LeftControl;
-  settings_json["RightControl"] = RightControl;
+    // Color and language
+    settings_json["BackgroundColor"] = BackgroundColor;
+    settings_json["TextAndBorderColor"] = TextAndBorderColor;
+    settings_json["ASCIIColor"] = ASCIIColor;
+    settings_json["language"] = Language;
 
-  // Create and write to file, either main or create a backup
-  string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
-  ofstream config_stream(tmp_config_filename);
-  config_stream << settings_json;
-  config_stream.close();
+    // Controls
+    settings_json["StartRomControl"] = StartRomControl;
+    settings_json["StopRomControl"] = StopRomControl;
+    settings_json["OpenRomFolderControl"] = OpenRomFolderControl;
+    settings_json["OpenSRAMFolderControl"] = OpenSRAMFolderControl;
+    settings_json["SaveStateControl"] = SaveStateControl;
+    settings_json["LoadStateControl"] = LoadStateControl;
+    settings_json["StartControl"] = StartControl;
+    settings_json["SelectControl"] = SelectControl;
+    settings_json["AControl"] = AControl;
+    settings_json["BControl"] = BControl;
+    settings_json["UpControl"] = UpControl;
+    settings_json["DownControl"] = DownControl;
+    settings_json["LeftControl"] = LeftControl;
+    settings_json["RightControl"] = RightControl;
 
-  return 0;
+    // Create and write to file, either main or create a backup
+    string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
+    ofstream config_stream(tmp_config_filename);
+    config_stream << settings_json;
+    config_stream.close();
+
+    // Check if LogSubmenuComponent is initialized.
+    if (LogComponent::LogSubmenuComponent != nullptr) {
+      AddLogEntry(I18nObject.tr("Settings_saved_successfully._Some_changes_"
+                                "will_take_effect_after_restarting."));
+    }
+
+    return 0;
+  } catch (...) {
+
+    // Check if LogSubmenuComponent is initialized.
+    if (LogComponent::LogSubmenuComponent != nullptr) {
+      AddLogEntry(I18nObject.tr("Error_saving_settings:_"));
+    }
+
+    return -1;
+  }
 }
 
 // Serializes settings namespace to JSON
@@ -177,6 +194,12 @@ int LoadSettings(bool backup) {
   }
   // There's a shitton of exceptions that can be thrown here so I'm catching all
   catch (...) {
+
+    // Check if LogSubmenuComponent is initialized.
+    if (LogComponent::LogSubmenuComponent != nullptr) {
+      AddLogEntry(I18nObject.tr("Error_loading_settings:_"));
+    }
+
     config_stream.close();
     return -1;
   }
