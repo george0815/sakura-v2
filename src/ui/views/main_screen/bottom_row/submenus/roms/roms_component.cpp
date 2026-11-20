@@ -131,8 +131,6 @@ void LoadRomFolder(string directory) {
 // Launches rom for now using the old sakura core until the new one is done
 void StartRom() {
 
-  // TODO: Replace this when starting the core
-
   // Get path of rom to start by getting selected index of the rom table, then
   AddLogEntry(I18nObject.tr("Roms_started:_") +
               RomList.at(SelectedRomTableIndex - 1).name);
@@ -164,20 +162,17 @@ Component InitializedRomComponent() {
     // different casing
 
     // Start rom (stop rom is handled in the core)
-    if (ControlsComponent::ToUpper(event.character()) ==
-        ControlsComponent::ToUpper(StartRomLabel)) {
+    if (ControlsComponent::KeyCodeToSDL3(event) == StartRomControl) {
       RomsComponent::StartRom();
     }
 
     // Open rom folder
-    else if (ControlsComponent::ToUpper(event.character()) ==
-             ControlsComponent::ToUpper(OpenRomFolderLabel)) {
+    else if (ControlsComponent::KeyCodeToSDL3(event) == OpenRomFolderControl) {
       RomsComponent::OpenRomFolder();
     }
 
     // Open SRAM folder
-    else if (ControlsComponent::ToUpper(event.character()) ==
-             ControlsComponent::ToUpper(OpenSRAMFolderLabel)) {
+    else if (ControlsComponent::KeyCodeToSDL3(event) == OpenSRAMFolderControl) {
       RomsComponent::OpenSRAMFolder();
     }
 
