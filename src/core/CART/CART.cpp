@@ -67,16 +67,16 @@ int CART::READ_HEADER() {
   FLAGS_14 = HEADER_BUFFER[14];
   FLAGS_15 = HEADER_BUFFER[15];
   // iNES 1.0
-  if (CART_VERSION == CART_VERSION::INES_1) {
+  if (CART_VERSION == CART_VERSION::INES) {
 
     // Get size of CHR ROM, PRG ROM, and determine whether CHR RAM is used
-    if (READ_ROM_SIZE_INES_1() != 0) {
+    if (READ_ROM_SIZE_INES() != 0) {
       AddLogEntry(I18nObject.tr("FAILED_READING_ROM_SIZE"));
       return -1;
     }
 
     // Load flags
-    if (READ_FLAGS_INES_1() != 0) {
+    if (READ_FLAGS_INES() != 0) {
       AddLogEntry(I18nObject.tr("FAILED_READING_FLAGS"));
       return -1;
     }
@@ -217,8 +217,10 @@ int CART::READ_HEADER_NES_2() {
 
   // Actual value are stored as amount of bytes, but for readability divide by
   // 1KB (0x400)
-  AddLogEntry("PRG ROM: " + to_string(PRG_ROM_SIZE / 0x400) + "KB");
-  AddLogEntry("CHR ROM: " + to_string(CHR_ROM_SIZE / 0x400) + "KB");
+  AddLogEntry(I18nObject.tr("PRG_ROM_SIZE:_") +
+              to_string(PRG_ROM_SIZE / 0x400) + "KB");
+  AddLogEntry(I18nObject.tr("CHR_ROM_SIZE:_") +
+              to_string(CHR_ROM_SIZE / 0x400) + "KB");
 
   // FLAGS 10
 
@@ -230,13 +232,15 @@ int CART::READ_HEADER_NES_2() {
   } else { // if shift count is not 0, 64 << shift value
     PRG_RAM_SIZE = 0x40 << prg_ram_size_shift_count;
     PRG_RAM.resize(PRG_RAM_SIZE); // resize backing vector
-    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") + to_string(PRG_RAM_SIZE));
+    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") +
+                to_string(PRG_RAM_SIZE / 0x400) + "KB");
   }
   if (eeprom_size_shift_count == 0x00) {
     EEPROM_PRESENT = false;
   } else {
     EEPROM_SIZE = 0x40 << eeprom_size_shift_count;
-    AddLogEntry(I18nObject.tr("EEPROM_SIZE:_") + to_string(EEPROM_SIZE));
+    AddLogEntry(I18nObject.tr("EEPROM_SIZE:_") +
+                to_string(EEPROM_SIZE / 0x400) + "KB");
   }
 
   // FLAGS 11
@@ -249,13 +253,15 @@ int CART::READ_HEADER_NES_2() {
   } else { // if shift count is not 0, 64 << shift value
     CHR_RAM_SIZE = 0x40 << chr_ram_size_shift_count;
     CHR_RAM.resize(CHR_RAM_SIZE); // resize backing vector
-    AddLogEntry(I18nObject.tr("CHR_RAM_SIZE:_") + to_string(CHR_RAM_SIZE));
+    AddLogEntry(I18nObject.tr("CHR_RAM_SIZE:_") +
+                to_string(CHR_RAM_SIZE / 0x400) + "KB");
   }
   if (chr_nvram_size_shift_count == 0x00) {
     CHR_NVRAM_PRESENT = false;
   } else {
     CHR_NVRAM_SIZE = 0x40 << chr_nvram_size_shift_count;
-    AddLogEntry(I18nObject.tr("CHR_NVRAM_SIZE:_") + to_string(CHR_NVRAM_SIZE));
+    AddLogEntry(I18nObject.tr("CHR_NVRAM_SIZE:_") +
+                to_string(CHR_NVRAM_SIZE / 0x400) + "KB");
   }
 
   // FLAGS 12
@@ -280,7 +286,7 @@ int CART::READ_HEADER_NES_2() {
 }
 
 // Read flag bytes and set values for iNES 1.0
-int CART::READ_FLAGS_INES_1() {
+int CART::READ_FLAGS_INES() {
 
   // FLAGS 6
 
@@ -313,7 +319,7 @@ int CART::READ_FLAGS_INES_1() {
   // FLAGS 7
 
   if (CART_VERSION !=
-      CART_VERSION::ARCH_NES) { // bytes 7-15 are unused in archaic iNES
+      CART_VERSION::ARCH_INES) { // bytes 7-15 are unused in archaic iNES
 
     // Does the rom use the VS unisystem (I dont even know what the hell that
     // is, right now I'm basing my implemtation off iNES format page on nesdev
@@ -345,7 +351,8 @@ int CART::READ_FLAGS_INES_1() {
     } else { // like CHR ROM size, it is in 8KB units, so multiply by 0x2000
       PRG_RAM_SIZE = FLAGS_8 * 0x2000;
     }
-    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") + to_string(PRG_RAM_SIZE));
+    AddLogEntry(I18nObject.tr("PRG_RAM_SIZE:_") +
+                to_string(PRG_RAM_SIZE / 0x400) + "KB");
 
     // FLAGS 9 - TV system, although official it is almost never used
     TV_SYSTEM = (FLAGS_9 & 0x01);
@@ -369,7 +376,7 @@ int CART::READ_FLAGS_INES_1() {
 }
 
 // Load ROM sizes from bytes 4 and 5
-int CART::READ_ROM_SIZE_INES_1() {
+int CART::READ_ROM_SIZE_INES() {
 
   // Get PRG ROM size value (byte 4) and multiply it by 16kb (0x4000)
   PRG_ROM_SIZE = HEADER_BUFFER[4] * 0x4000;
@@ -385,8 +392,11 @@ int CART::READ_ROM_SIZE_INES_1() {
 
   // Actual value are stored as amount of bytes, but for readability divide by
   // 1KB (0x400)
-  AddLogEntry("PRG ROM: " + to_string(PRG_ROM_SIZE / 0x400) + "KB");
-  AddLogEntry("CHR ROM: " + to_string(CHR_ROM_SIZE / 0x400) + "KB");
+  AddLogEntry(I18nObject.tr("PRG_ROM_SIZE:_") +
+              to_string(PRG_ROM_SIZE / 0x400) + "KB");
+
+  AddLogEntry(I18nObject.tr("CHR_ROM_SIZE:_") +
+              to_string(CHR_ROM_SIZE / 0x400) + "KB");
 
   return 0;
 }
@@ -430,21 +440,23 @@ int CART::READ_ROM(string file_name) {
 
   if ((flags_7 & 0x0C) == 0x08) {
     CART_VERSION = CART_VERSION::NES_2;
+    AddLogEntry(I18nObject.tr("CART_VERSION:_") + "NES 2.0");
   }
   // If 3rd bit set bit set and 4th not set (value of 1), the archaic iNES
   else if ((flags_7 & 0x0C) == 0x04) {
-    CART_VERSION = CART_VERSION::ARCH_NES;
+    CART_VERSION = CART_VERSION::ARCH_INES;
+    AddLogEntry(I18nObject.tr("CART_VERSION:_") + "ARCHAIC INES");
   }
   // If both 3rd and 4th bits are unset AND bytes 12-15 are 0, then iNES
   else if (((flags_7 & 0x0C) == 0x00) && byte_total == 0) {
-    CART_VERSION = CART_VERSION::INES_1;
+    CART_VERSION = CART_VERSION::INES;
+    AddLogEntry(I18nObject.tr("CART_VERSION:_") + "INES 1.0");
   }
   // else, archaic iNES
   else {
-    CART_VERSION = CART_VERSION::ARCH_NES;
+    CART_VERSION = CART_VERSION::ARCH_INES;
+    AddLogEntry(I18nObject.tr("CART_VERSION:_") + "ARCHAIC INES");
   }
-
-  AddLogEntry(to_string(CART_VERSION));
 
   // Read all values from header
   if (READ_HEADER() != 0) {

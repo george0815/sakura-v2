@@ -120,8 +120,8 @@ public:
   // compatible
   enum CART_VERSION {
 
-    ARCH_NES = 0,
-    INES_1 = 1,
+    ARCH_INES = 0,
+    INES = 1,
     NES_2 = 2,
 
   };
@@ -191,7 +191,7 @@ public:
   //==========================
 
   // Reads the CHR ROM and PRG ROM size values from bytes 4 and 5 of the header
-  int READ_ROM_SIZE_INES_1();
+  int READ_ROM_SIZE_INES();
 
   // Combines the flag helper functions to read the entire ROM header
   int READ_HEADER();
@@ -202,14 +202,14 @@ public:
   // the TV system data from byte 9 (also rarely used),
   // and the TV system data, and PRG RAM presence from byte 10 (also rarely
   // used, in addition to being unofficial)
-  int READ_FLAGS_INES_1();
+  int READ_FLAGS_INES();
 
   // Reads the data from the byte flags of the header for NES 2.0 roms
   int READ_HEADER_NES_2();
 
   // PC10 data, might implement this far into the future if im bored
-  int READ_PLAYCHOICE_INST_ROM_INES_1(); // NOTE: NOT CURRENTLY IMPLEMENTED
-  int READ_PLAYCHOICE_PROM_INES_1();     // NOTE: NOT CURRENTLY IMPLEMENTED
+  int READ_PLAYCHOICE_INST_ROM_INES(); // NOTE: NOT CURRENTLY IMPLEMENTED
+  int READ_PLAYCHOICE_PROM_INES();     // NOTE: NOT CURRENTLY IMPLEMENTED
 
   // Attempts to load rom using provided file name
   int READ_ROM(string file_name);
