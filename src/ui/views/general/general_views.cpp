@@ -98,8 +98,7 @@ Component ControlOptionComponent(string str, int &control_setting,
                  [&label] {
                    // Set label while waiting for input
                    label = "...";
-                   LogComponent::AddLogEntry(
-                       I18nObject.tr("Waiting_for_input..."));
+                   MostRecentLog = I18nObject.tr("Waiting_for_input...");
                    WaitingForInput = true;
                  },
                  ButtonOption::Ascii()),
@@ -119,6 +118,7 @@ Component ControlOptionComponent(string str, int &control_setting,
 
              // Translate to SDL3 key code
              control_setting = ControlsComponent::KeyCodeToSDL3(event);
+             MostRecentLog = "";
 
              return true;
            }
