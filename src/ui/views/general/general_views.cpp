@@ -84,47 +84,44 @@ Component FocusableTextComponent(string str, int padding) {
 Component ControlOptionComponent(string str, int &control_setting,
                                  string &label) {
 
-  return Container::Horizontal({
+  // Create actual button
+  auto ControlButton =
+      Button(
+          &label,
+          [&label] {
+            // Set label while waiting for input
+            label = "...";
+            MostRecentLog = I18nObject.tr("Waiting_for_input...");
+            WaitingForInput = true;
+          },
+          ButtonOption::Ascii())
 
-             // Used as a label
-             Renderer([str] { return text(" " + format("{:<{}}", str, 25)); }),
+      | CatchEvent([&label, &control_setting](Event event) {
+          // Ignore mouse events
+          if (event.is_mouse()) {
+            return false;
+          }
 
-             // User clicks button -> wait for input -> next input is the value
-             // of the
-             // NES control being configured
+          // Only while waiting for input get the key, without this it will
+          // catch any key the user types while the button is focused
+          if (WaitingForInput == true) {
+            WaitingForInput = false;
 
-             Button(
-                 &label,
-                 [&label] {
-                   // Set label while waiting for input
-                   label = "...";
-                   MostRecentLog = I18nObject.tr("Waiting_for_input...");
-                   WaitingForInput = true;
-                 },
-                 ButtonOption::Ascii()),
+            // Translate to SDL3 key code
+            control_setting = ControlsComponent::KeyCodeToSDL3(event);
+            label = ControlsComponent::KeyCodeToFTXUI(control_setting);
+            MostRecentLog = "";
 
-         }) |
-         CatchEvent([&label, &control_setting](Event event) {
-           // Ignore mouse events
-           if (event.is_mouse()) {
-             return false;
-           }
+            return true;
+          }
 
-           // Only while waiting for input get the key, without this it will
-           // catch any key the user types while the button is focused
-           if (WaitingForInput == true) {
-             label = event.character();
-             WaitingForInput = false;
+          return false;
+        });
 
-             // Translate to SDL3 key code
-             control_setting = ControlsComponent::KeyCodeToSDL3(event);
-             MostRecentLog = "";
-
-             return true;
-           }
-
-           return false;
-         });
+  // Wrap renderer around it and add label
+  return Renderer(ControlButton, [str, ControlButton] {
+    return hbox(text(" " + format("{:<{}}", str, 25)), ControlButton->Render());
+  });
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text

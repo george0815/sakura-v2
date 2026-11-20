@@ -28,20 +28,20 @@ inline int ASCIIColor = 5;
 inline int Language = 1;
 
 // Controls
-inline int StartRomControl = 0;
-inline int StopRomControl = 0;
-inline int OpenRomFolderControl = 0;
-inline int OpenSRAMFolderControl = 0;
-inline int SaveStateControl = 0;
-inline int LoadStateControl = 0;
-inline int StartControl = 0;
-inline int SelectControl = 0;
-inline int AControl = 0;
-inline int BControl = 0;
-inline int UpControl = 0;
-inline int DownControl = 0;
-inline int LeftControl = 0;
-inline int RightControl = 0;
+inline int StartRomControl = 0x4000003au;
+inline int StopRomControl = 0x4000003bu;
+inline int OpenRomFolderControl = 0x4000003cu;
+inline int OpenSRAMFolderControl = 0x4000003du;
+inline int SaveStateControl = 0x4000003eu;
+inline int LoadStateControl = 0x4000003fu;
+inline int StartControl = 0x0000000du;
+inline int SelectControl = 0x00000008u;
+inline int AControl = (int)'a';
+inline int BControl = (int)'z';
+inline int UpControl = 0x40000052u;
+inline int DownControl = 0x40000051u;
+inline int LeftControl = 0x40000050u;
+inline int RightControl = 0x4000004fu;
 
 //=======================
 // SAVING AND LOADING

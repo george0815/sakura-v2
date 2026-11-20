@@ -18,57 +18,51 @@ int EMU::START_ROM(string file_name, string &error_message) {
   CART *cartridge = new CART();
   cartridge->READ_ROM(file_name);
 
-  /*
+  // Create SDL3 OpenGL compatible window to handle video, audio, input, etc and
+  // init
+  SDL_Window *sakura_window;
+  if (!SDL_Init(SDL_INIT_VIDEO)) {
+    error_message = I18nObject.tr("FAILED_TO_INITIALIZE_SDL");
+    return -1;
+  }
+  sakura_window = SDL_CreateWindow("sakura-v2", 500, 500, 0);
 
+  // Main emu loop var
+  bool emu_running = true;
 
-    // Create SDL3 OpenGL compatible window to handle video, audio, input, etc
-    and
-    // init
-    SDL_Window *sakura_window;
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
-      error_message = I18nObject.tr("FAILED_TO_INITIALIZE_SDL");
-      return -1;
-    }
-    sakura_window = SDL_CreateWindow("sakura-v2", 500, 500, 0);
+  // I tried using SDL_CreateRenderer with SDL_RenderPresent but for some reason
+  // the window would just refuse to open. I also ran into the same thing when I
+  // create the window with the SDL_WINDOW_OPENGL flag. Both of these issues
+  // could be due to me using wayland. RenderPresent uses hardware-accelerated
+  // GPU rendering while UpdateWindowSurface is CPU-based software rendering,
+  // which doesn't support shaders. So unless I do some hacky trick I will
+  // really need to solve the above issue.
+  SDL_Surface *sakura_surface = SDL_GetWindowSurface(sakura_window);
+  uint32_t red = SDL_MapSurfaceRGB(sakura_surface, 0xFF, 0x00, 0x00);
+  SDL_FillSurfaceRect(sakura_surface, NULL, red);
+  SDL_UpdateWindowSurface(sakura_window);
 
-    // Main emu loop var
-    bool emu_running = true;
+  // If there's an error creating the window
+  if (sakura_window == NULL) {
+    error_message = I18nObject.tr("ERROR_CREATING_WINDOW");
+    return -1;
+  }
 
-    // I tried using SDL_CreateRenderer with SDL_RenderPresent but for some
-    reason
-    // the window would just refuse to open. I also ran into the same thing when
-    I
-    // create the window with the SDL_WINDOW_OPENGL flag. Both of these issues
-    // could be due to me using wayland. RenderPresent uses hardware-accelerated
-    // GPU rendering while UpdateWindowSurface is CPU-based software rendering,
-    // which doesn't support shaders. So unless I do some hacky trick I will
-    // really need to solve the above issue.
-    SDL_Surface *sakura_surface = SDL_GetWindowSurface(sakura_window);
-    uint32_t red = SDL_MapSurfaceRGB(sakura_surface, 0xFF, 0x00, 0x00);
-    SDL_FillSurfaceRect(sakura_surface, NULL, red);
-    SDL_UpdateWindowSurface(sakura_window);
+  // Main emulation loop
+  while (emu_running) {
 
-    // If there's an error creating the window
-    if (sakura_window == NULL) {
-      error_message = I18nObject.tr("ERROR_CREATING_WINDOW");
-      return -1;
-    }
+    SDL_Event sakura_event;
 
-    Main emulation loop
-    while (emu_running) {
-
-      SDL_Event sakura_event;
-
-      // Right now the CPU isn't set up, so its just pollilng for escape key
-      while (SDL_PollEvent(&sakura_event)) {
-        if (sakura_event.type == SDL_EVENT_KEY_DOWN) {
-          if (sakura_event.key.key == SDLK_ESCAPE) {
-            emu_running = false;
-            SDL_DestroyWindow(sakura_window);
-            SDL_Quit();
-          }
+    // Right now the CPU isn't set up, so its just pollilng for escape key
+    while (SDL_PollEvent(&sakura_event)) {
+      if (sakura_event.type == SDL_EVENT_KEY_DOWN) {
+        if (sakura_event.key.key == SDLK_ESCAPE) {
+          emu_running = false;
+          SDL_DestroyWindow(sakura_window);
+          SDL_Quit();
         }
       }
-    } */
+    }
+  }
   return 0;
 }
