@@ -1,5 +1,6 @@
 // this project
 #include "general_views.h"
+#include "../../settings/settings.h"
 #include "../../state.h"
 #include "../main_screen/bottom_row/submenus/controls/controls_component.h"
 #include "../main_screen/bottom_row/submenus/log/log_component.h"
@@ -129,10 +130,14 @@ Component ControlOptionComponent(string str, int &control_setting,
 // element and an input component
 Component TextInputComponent(string label, string &var) {
 
-  // For some reason the color decorator refuses to work, so I can't
-  // make inputs have a white background since the actual text wont
-  // be visible
-  auto input_component = Input(&var);
+  // Set color of the text in the input to the correct color
+  InputOption option;
+  option.transform = [](InputState state) {
+    state.element | color(ColorEntries[Settings::TextAndBorderColor]);
+    return state.element;
+  };
+
+  auto input_component = Input(&var, option);
 
   // Wrap renderer around it and add label
   return Renderer(input_component, [label, input_component] {
