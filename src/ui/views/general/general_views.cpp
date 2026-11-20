@@ -85,7 +85,7 @@ Component ControlOptionComponent(string str, int &control_setting,
                                  string &label) {
 
   // Create actual button
-  auto ControlButton =
+  auto control_button =
       Button(
           &label,
           [&label] {
@@ -119,8 +119,9 @@ Component ControlOptionComponent(string str, int &control_setting,
         });
 
   // Wrap renderer around it and add label
-  return Renderer(ControlButton, [str, ControlButton] {
-    return hbox(text(" " + format("{:<{}}", str, 25)), ControlButton->Render());
+  return Renderer(control_button, [str, control_button] {
+    return hbox(text(" " + format("{:<{}}", str, 25)),
+                control_button->Render());
   });
 }
 
@@ -128,17 +129,17 @@ Component ControlOptionComponent(string str, int &control_setting,
 // element and an input component
 Component TextInputComponent(string label, string &var) {
 
-  return Container::Horizontal({
+  // For some reason the color decorator refuses to work, so I can't
+  // make inputs have a white background since the actual text wont
+  // be visible
+  auto input_component = Input(&var);
 
-             // Used as a label
-             Renderer([label] {
-               return text(" " + format("{:<{}}", label, 30));
-             }) | center,
-             // For some reason the color decorator refuses to work, so I can't
-             // make inputs have a white background since the actual text wont
-             // be visible
-             Input(&var)}) |
-         border;
+  // Wrap renderer around it and add label
+  return Renderer(input_component, [label, input_component] {
+    return hbox(text(" " + format("{:<{}}", label, 30)),
+                input_component->Render()) |
+           border;
+  });
 }
 
 // Used in the settings submenu, consists of a Container::Horizontal with a text
@@ -151,13 +152,12 @@ Component ColorComponent(string str, int &selection) {
                    I18nObject.tr("Orange"),  I18nObject.tr("Gray"),
                    I18nObject.tr("HotPink"), I18nObject.tr("White")};
 
-  return Container::Horizontal({
+  auto color_component = Dropdown(&color_entries, &selection);
 
-      // Used as a label
-      Renderer([str] { return text(" " + format("{:<{}}", str, 30)); }) |
-          center,
-      Dropdown(&color_entries, &selection)
-
+  // Wrap renderer around it and add label
+  return Renderer(color_component, [str, color_component] {
+    return hbox(text(" " + format("{:<{}}", str, 30)) | center,
+                color_component->Render());
   });
 }
 
@@ -168,13 +168,12 @@ Component LanguageComponent(string str, int &selection) {
   // Sets up language options
   lang_entries = {I18nObject.tr("English"), I18nObject.tr("Japanese")};
 
-  return Container::Horizontal({
+  auto language_component = Dropdown(&lang_entries, &selection);
 
-      // Used as a label
-      Renderer([str] { return text(" " + format("{:<{}}", str, 30)); }) |
-          center,
-      Dropdown(&lang_entries, &selection)
-
+  // Wrap renderer around it and add label
+  return Renderer(language_component, [str, language_component] {
+    return hbox(text(" " + format("{:<{}}", str, 30)) | center,
+                language_component->Render());
   });
 }
 
