@@ -65,4 +65,7 @@ inline string LocaleEntries[2] = {"en", "jp"};
 // waiting for input
 inline bool WaitingForInput = false;
 
+// Hold selected index for rom path list Container::Vertical
+inline int RomPathsListSelectedIndex = 0;
+
 } // namespace UIState

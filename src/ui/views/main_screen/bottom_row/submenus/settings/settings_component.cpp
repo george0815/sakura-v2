@@ -9,6 +9,7 @@
 #include <ftxui/component/captured_mouse.hpp>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
+#include <ftxui/component/event.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/color.hpp>
 
@@ -36,18 +37,8 @@ namespace SettingsComponent {
 // Returns controls menu component
 Component SettingsComponent() {
 
-  // Set roms path sub component
-  GeneralViews::RomPathsSubComponent =
-      GeneralViews::RomPathsContainer(I18nObject.tr("Rom_paths:_"));
-
-  auto rom_container_component = GeneralViews::RomPathsSubComponent |
-                                 vscroll_indicator | frame |
-                                 size(HEIGHT, ftxui::LESS_THAN, 5) | border;
-
-  string rom_paths_label = I18nObject.tr("Rom_paths:_");
-
-  // LogComponent::AddLogEntry("test");
-  //  LogComponent::AddLogEntry(RomsPathsList.at(0));
+  // Set rom component because it will be passes to a Rendererer lambda later on
+  auto rom_container_component = InitializedRomListComponent();
 
   // Main container
   return Container::Vertical({
@@ -100,9 +91,11 @@ Component SettingsComponent() {
              Padding(),
 
              Renderer(rom_container_component,
-                      [rom_paths_label, rom_container_component] {
+                      [rom_container_component] {
                         return vbox(
-                            text(" " + format("{:<{}}", rom_paths_label, 10)),
+                            text(" " + format("{:<{}}",
+                                              I18nObject.tr("Rom_paths:_"),
+                                              10)),
                             rom_container_component->Render());
                       }),
              GeneralViews::RomPathsButtonContainer(RomsPathsInputText) |

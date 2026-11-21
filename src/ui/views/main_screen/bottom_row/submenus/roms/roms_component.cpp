@@ -20,7 +20,6 @@
 #include <ftxui/dom/table.hpp>
 #include <ftxui/screen/color.hpp>
 #include <ftxui/screen/screen.hpp>
-#include <ranges>
 #include <vector>
 
 //==========================

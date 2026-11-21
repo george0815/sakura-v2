@@ -84,10 +84,12 @@ Component FocusableTextComponent(string str, int padding) {
 // Container::Vertical for store each path text element, then a
 Component RomPathsContainer(string label) {
 
-  return Container::Vertical({{
-             FocusableTextComponent(Settings::DefaultRomPath),
+  return Container::Vertical(
+             {{
+                 FocusableTextComponent(Settings::DefaultRomPath),
 
-         }}) |
+             }},
+             &RomPathsListSelectedIndex) |
          size(HEIGHT, ftxui::LESS_THAN, 100000) | borderEmpty;
 }
 
@@ -118,7 +120,48 @@ void AddRomPathEntry(string str) {
     RomPathsSubComponent->ChildAt(0)->ChildAt(0)->Add(
         FocusableTextComponent(str));
     Settings::RomsPathsInputText = "";
+    LogComponent::AddLogEntry(I18nObject.tr("Rom_path_added."));
   }
+}
+
+// Adds entry to rom path list
+void RemoveRomPathEntry() {
+
+  if (RomPathsListSelectedIndex == 0) {
+    LogComponent::AddLogEntry(I18nObject.tr("Cannot_delete_default_rom_path."));
+  } else {
+
+    // Remove from list
+    Settings::RomsPathsList.erase(Settings::RomsPathsList.begin() +
+                                  RomPathsListSelectedIndex - 1);
+
+    // Remove from ui
+    RomPathsSubComponent->ChildAt(0)
+        ->ChildAt(0)
+        ->ChildAt(RomPathsListSelectedIndex)
+        ->Detach();
+  }
+}
+
+// Hold fully initialized RomPathsSubComponent wrapped in catchevent
+Component InitializedRomListComponent() {
+
+  // Set roms path sub component
+  GeneralViews::RomPathsSubComponent =
+      GeneralViews::RomPathsContainer(I18nObject.tr("Rom_paths:_"));
+
+  auto event_handled_romlist_component =
+      CatchEvent(GeneralViews::RomPathsSubComponent, [](Event event) {
+        // Start rom (stop rom is handled in the core)
+        if (event == ftxui::Event::Delete) {
+          GeneralViews::RemoveRomPathEntry();
+        }
+
+        return false;
+      });
+
+  return event_handled_romlist_component | vscroll_indicator | frame |
+         size(HEIGHT, ftxui::LESS_THAN, 5) | border;
 }
 
 // Used in the controls submenu, consists of a Container::Horizontal with a text

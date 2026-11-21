@@ -1,4 +1,3 @@
-
 // std
 #include <string>
 
@@ -47,6 +46,9 @@ inline Component RomPathsSubComponent = nullptr;
 // Add entry to rom path list
 void AddRomPathEntry(string path);
 
+// Removes currently focues rom path from the rompathlist and the ui cotainer
+void RemoveRomPathEntry();
+
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
 Component TextInputComponent(string label, string &var);
@@ -73,5 +75,8 @@ void AddRow(Component &comp, string column1, string column2, string column3);
 // Returns table component given header string values
 Component TableComponent(string column1, string column2, string column3,
                          int padding, int &selected_tab);
+
+// Hold fully initialized RomPathsSubComponent wrapped in catchevent
+Component InitializedRomListComponent();
 
 } // namespace GeneralViews
