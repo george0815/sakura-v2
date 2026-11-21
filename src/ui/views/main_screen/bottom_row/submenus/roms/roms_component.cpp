@@ -60,7 +60,10 @@ void LoadAllRoms() {
   if (!RomsPathsList.empty()) {
     for (string dir : RomsPathsList) {
       LoadRomFolder(dir);
-      GeneralViews::AddRomPathEntry(dir);
+      // Add entry to container vertical in settings menu
+      if (GeneralViews::RomPathsSubComponent != nullptr) {
+        GeneralViews::AddRomPathEntry(dir);
+      }
     }
   }
 }

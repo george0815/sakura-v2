@@ -3,6 +3,7 @@
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
+#include "../../../../main_screen/bottom_row/submenus/log/log_component.h"
 
 // ftxui
 #include <ftxui/component/captured_mouse.hpp>
@@ -38,11 +39,15 @@ Component SettingsComponent() {
   // Set roms path sub component
   GeneralViews::RomPathsSubComponent =
       GeneralViews::RomPathsContainer(I18nObject.tr("Rom_paths:_"));
+
   auto rom_container_component = GeneralViews::RomPathsSubComponent |
                                  vscroll_indicator | frame |
                                  size(HEIGHT, ftxui::LESS_THAN, 5) | border;
 
   string rom_paths_label = I18nObject.tr("Rom_paths:_");
+
+  // LogComponent::AddLogEntry("test");
+  //  LogComponent::AddLogEntry(RomsPathsList.at(0));
 
   // Main container
   return Container::Vertical({

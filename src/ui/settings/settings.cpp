@@ -125,6 +125,9 @@ int LoadSettings(bool backup) {
   // be treated as a string
   json settings_json = json::object();
 
+  // Reserve memory for romspaths vector
+  RomsPathsList.reserve(10);
+
   string tmp_config_filename = backup ? "config_backup.ini" : "config.ini";
   ifstream config_stream(tmp_config_filename);
 
@@ -146,7 +149,9 @@ int LoadSettings(bool backup) {
 
     // Inputs
     DefaultRomPath = settings_json["DefaultRomPath"];
-    RomsPathsList = settings_json["RomsPathsList"];
+    RomsPathsList.clear();
+    RomsPathsList = settings_json["RomsPathsList"].get<vector<string>>();
+    // settings_json.at("RomsPathsList").get_to(RomsPathsList);
     LogPath = settings_json["LogPath"];
     SRAMPath = settings_json["SRAMPath"];
     SaveStatePath = settings_json["SaveStatePath"];

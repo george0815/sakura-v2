@@ -86,6 +86,7 @@ Component RomPathsContainer(string label) {
 
   return Container::Vertical({{
              FocusableTextComponent(Settings::DefaultRomPath),
+
          }}) |
          size(HEIGHT, ftxui::LESS_THAN, 100000) | borderEmpty;
 }
@@ -93,10 +94,14 @@ Component RomPathsContainer(string label) {
 // Container::Horizontal for storing the add/delete path buttons and the input.
 Component RomPathsButtonContainer(string &path) {
 
+  auto button = Button(" + ", [&] {
+    Settings::RomsPathsList.push_back(path);
+    AddRomPathEntry(path);
+  });
+
   return Container::Horizontal({
 
-      Input(&path) | border, Button("+", [&] { AddRomPathEntry(path); }),
-      Button("-", [&] { Settings::SaveSettings(false); })
+      Input(&path) | border, button
 
   });
 }
@@ -112,8 +117,6 @@ void AddRomPathEntry(string str) {
     // Add to container in the UI
     RomPathsSubComponent->ChildAt(0)->ChildAt(0)->Add(
         FocusableTextComponent(str));
-    // Add to vector
-    Settings::RomsPathsList.push_back(str);
     Settings::RomsPathsInputText = "";
   }
 }

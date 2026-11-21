@@ -42,7 +42,7 @@ Component RomPathsButtonContainer(string &path);
 Component RomPathsContainer(string label);
 
 // Holds final RomPathsComponent
-inline Component RomPathsSubComponent;
+inline Component RomPathsSubComponent = nullptr;
 
 // Add entry to rom path list
 void AddRomPathEntry(string path);
