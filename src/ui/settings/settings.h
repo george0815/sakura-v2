@@ -15,7 +15,8 @@ inline bool DisableASCII = false;
 
 // Inputs
 inline string DefaultRomPath = "roms/";
-inline string RomsPaths = "";
+inline string RomsPathsInputText = "";
+inline vector<string> RomsPathsList;
 inline string LogPath = "log.txt";
 inline string SRAMPath = "saves/SRAM/";
 inline string SaveStatePath = "saves/save_states/";

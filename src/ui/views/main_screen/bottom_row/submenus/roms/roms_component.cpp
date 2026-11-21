@@ -57,11 +57,10 @@ void LoadAllRoms() {
   // with it being represented in the UI as a text input, implement it as a
   // container vertical with a vector<string> backing it, with add/remove paths
   // buttons
-  vector<string> folders =
-      views::split(RomsPaths, "\n") | ranges::to<vector<string>>();
-  if (!folders.empty()) {
-    for (string dir : folders) {
+  if (!RomsPathsList.empty()) {
+    for (string dir : RomsPathsList) {
       LoadRomFolder(dir);
+      GeneralViews::AddRomPathEntry(dir);
     }
   }
 }

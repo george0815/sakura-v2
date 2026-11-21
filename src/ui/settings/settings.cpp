@@ -67,7 +67,7 @@ int SaveSettings(bool backup) {
 
     // Inputs
     settings_json["DefaultRomPath"] = DefaultRomPath;
-    settings_json["RomsPaths"] = RomsPaths;
+    settings_json["RomsPathsList"] = RomsPathsList;
     settings_json["LogPath"] = LogPath;
     settings_json["SRAMPath"] = SRAMPath;
     settings_json["SaveStatePath"] = SaveStatePath;
@@ -146,7 +146,7 @@ int LoadSettings(bool backup) {
 
     // Inputs
     DefaultRomPath = settings_json["DefaultRomPath"];
-    RomsPaths = settings_json["RomsPaths"];
+    RomsPathsList = settings_json["RomsPathsList"];
     LogPath = settings_json["LogPath"];
     SRAMPath = settings_json["SRAMPath"];
     SaveStatePath = settings_json["SaveStatePath"];

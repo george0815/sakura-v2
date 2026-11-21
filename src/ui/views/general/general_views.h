@@ -35,6 +35,18 @@ Component FocusableTextComponent(string str, int padding = 3);
 Component ControlOptionComponent(string str, int &control_setting,
                                  string &label);
 
+// Used in the settings submenu, consists of a Container::Vertical, with another
+// Container::Vertical for store each path text element, then a
+// Container::Horizontal for store the add/delete path buttons and the input.
+Component RomPathsButtonContainer(string &path);
+Component RomPathsContainer(string label);
+
+// Holds final RomPathsComponent
+inline Component RomPathsSubComponent;
+
+// Add entry to rom path list
+void AddRomPathEntry(string path);
+
 // Used in the settings submenu, consists of a Container::Horizontal with a text
 // element and an input component
 Component TextInputComponent(string label, string &var);

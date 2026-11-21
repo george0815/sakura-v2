@@ -35,6 +35,15 @@ namespace SettingsComponent {
 // Returns controls menu component
 Component SettingsComponent() {
 
+  // Set roms path sub component
+  GeneralViews::RomPathsSubComponent =
+      GeneralViews::RomPathsContainer(I18nObject.tr("Rom_paths:_"));
+  auto rom_container_component = GeneralViews::RomPathsSubComponent |
+                                 vscroll_indicator | frame |
+                                 size(HEIGHT, ftxui::LESS_THAN, 5) | border;
+
+  string rom_paths_label = I18nObject.tr("Rom_paths:_");
+
   // Main container
   return Container::Vertical({
 
@@ -79,14 +88,20 @@ Component SettingsComponent() {
              //************
 
              Renderer([&] {
-               return text("System");
+               return text(I18nObject.tr("System"));
              }), // Roms paths, Default rom path, Log path, SRAM path, save
                  // state path, Enable detailed logging
-             Padding(),
              Renderer([&] { return separator(); }),
+             Padding(),
 
-             GeneralViews::TextInputComponent(I18nObject.tr("Roms_paths:_"),
-                                              RomsPaths),
+             Renderer(rom_container_component,
+                      [rom_paths_label, rom_container_component] {
+                        return vbox(
+                            text(" " + format("{:<{}}", rom_paths_label, 10)),
+                            rom_container_component->Render());
+                      }),
+             GeneralViews::RomPathsButtonContainer(RomsPathsInputText) |
+                 size(HEIGHT, ftxui::EQUAL, 3),
              Padding(),
 
              GeneralViews::TextInputComponent(

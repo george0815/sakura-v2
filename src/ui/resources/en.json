@@ -55,28 +55,30 @@
   "Stop_rom:_" : "Stop rom: ",
   "Rom_added:_" : "Rom added: ",
   "Roms_started:_" : "Loading rom: ",
-  "Roms_paths:_" : "Rom paths: ",
+  "Rom_paths:_" : "Rom paths: ",
   "Default_rom_path:_" : "Default rom path: ",
   "Open_rom_folder:_" : "Open rom folder: ",
+ "Exceeded_max_limit_for_rom_paths." : "Exceeded max limit for rom paths.",
 
 
-  "Black" : "Black",
-  "Blue" : "Blue",
-  "Red" : "Red",
-  "Green" : "Green",
-  "Cyan" : "Cyan",
-  "Pink" : "Pink",
-  "Orange" : "Orange",
-  "Gray" : "Gray",
-  "HotPink" : "HotPink",
-  "White" : "White",
+  "Black" : "Black ",
+  "Blue" : "Blue ",
+  "Red" : "Red ",
+  "Green" : "Green ",
+  "Cyan" : "Cyan ",
+  "Pink" : "Pink ",
+  "Orange" : "Orange ",
+  "Gray" : "Gray ",
+  "HotPink" : "HotPink ",
+  "White" : "White ",
 
 
   "Settings" : "Settings",
   "Log_path:_" : "Log path: ",
+  "System" : "System",
   "Language:_" : "Language: ",
-  "Japanese" : "Japanese",
-  "English" : "English",
+  "Japanese" : "Japanese ",
+  "English" : "English ",
   "Disable_ASCII" : "Disable ASCII",
   "Settings_path:_" : "Settings path: ",
   "Enable_detailed_logging" : "Enable detailed logging",
@@ -189,7 +191,6 @@
   "PRG_ROM_SIZE:_" : "PRG ROM SIZE: ",
   "CHR_ROM_SIZE:_" : "CHR ROM SIZE: ",
   "CART_VERSION:_" : "CART VERSION: "
-
 
 
 }

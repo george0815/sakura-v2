@@ -80,6 +80,44 @@ Component FocusableTextComponent(string str, int padding) {
 // SETTINGS COMPONENTS
 //==========================
 
+// Used in the settings submenu, consists of a Container::Vertical, with another
+// Container::Vertical for store each path text element, then a
+Component RomPathsContainer(string label) {
+
+  return Container::Vertical({{
+             FocusableTextComponent(Settings::DefaultRomPath),
+         }}) |
+         size(HEIGHT, ftxui::LESS_THAN, 100000) | borderEmpty;
+}
+
+// Container::Horizontal for storing the add/delete path buttons and the input.
+Component RomPathsButtonContainer(string &path) {
+
+  return Container::Horizontal({
+
+      Input(&path) | border, Button("+", [&] { AddRomPathEntry(path); }),
+      Button("-", [&] { Settings::SaveSettings(false); })
+
+  });
+}
+
+// Adds entry to rom path list
+void AddRomPathEntry(string str) {
+
+  // Check if children will exceed max limit
+  if (RomPathsSubComponent->ChildAt(0)->ChildAt(0)->ChildCount() >= 100000) {
+    LogComponent::AddLogEntry(
+        I18nObject.tr("Exceeded_max_limit_for_rom_paths."));
+  } else {
+    // Add to container in the UI
+    RomPathsSubComponent->ChildAt(0)->ChildAt(0)->Add(
+        FocusableTextComponent(str));
+    // Add to vector
+    Settings::RomsPathsList.push_back(str);
+    Settings::RomsPathsInputText = "";
+  }
+}
+
 // Used in the controls submenu, consists of a Container::Horizontal with a text
 // element and a button
 Component ControlOptionComponent(string str, int &control_setting,
