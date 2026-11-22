@@ -61,7 +61,7 @@ int SaveSettings(bool backup) {
     // Set values in json object
 
     // Bool values
-    settings_json["EnableDetailedLogging"] = EnableDetailedLogging;
+    settings_json["EnableEmulationLogging"] = EnableEmulationLogging;
     settings_json["DisableColoredHotkeyInfo"] = DisableColoredHotkeyInfo;
     settings_json["DisableASCII"] = DisableASCII;
 
@@ -142,7 +142,8 @@ int LoadSettings(bool backup) {
     settings_json = json::parse(buffer.str());
 
     // Bool values
-    EnableDetailedLogging = settings_json["EnableDetailedLogging"].get<bool>();
+    EnableEmulationLogging =
+        settings_json["EnableEmulationLogging"].get<bool>();
     DisableColoredHotkeyInfo =
         settings_json["DisableColoredHotkeyInfo"].get<bool>();
     DisableASCII = settings_json["DisableASCII"].get<bool>();

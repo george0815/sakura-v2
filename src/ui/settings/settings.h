@@ -10,7 +10,7 @@ namespace Settings {
 
 // Bool values
 inline bool DisableColoredHotkeyInfo = false;
-inline bool EnableDetailedLogging = false;
+inline bool EnableEmulationLogging = false;
 inline bool DisableASCII = false;
 
 // Inputs

@@ -83,7 +83,7 @@
   "English" : "英語 ",
   "Disable_ASCII" : "ASCIIを無効にする",
   "Settings_path:_" : "設定のパス：　",
-  "Enable_detailed_logging" : "詳細ログを有効にする",
+  "Enable_emulation_logging" : "エミュレーションのログを有効にする",
   "Disable_colored_hotkey_information" : "カラーホットキー情報を無効にする",
 
 

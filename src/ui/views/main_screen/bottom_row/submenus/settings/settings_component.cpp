@@ -118,8 +118,8 @@ Component SettingsComponent() {
                  I18nObject.tr("Save_state_path:_"), SaveStatePath),
              Padding(),
 
-             Checkbox(I18nObject.tr("Enable_detailed_logging"),
-                      &EnableDetailedLogging),
+             Checkbox(I18nObject.tr("Enable_emulation_logging"),
+                      &EnableEmulationLogging),
              Padding(),
 
              // Save button TODO: implement logic
