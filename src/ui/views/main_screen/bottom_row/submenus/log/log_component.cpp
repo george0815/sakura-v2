@@ -1,5 +1,6 @@
 
 #include "log_component.h"
+#include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
 
@@ -25,6 +26,12 @@ namespace LogComponent {
 
 // Uses GeneralViews::AddFocusableText to add a log Entry
 void AddLogEntry(string str) {
+
+  // Do nothing and return early if emulation logging is off and a rom is
+  // currently begin emulated
+  if (CurrentlyEmulating && !Settings::EnableEmulationLogging) {
+    return;
+  }
   LogSubmenuComponent->Add(FocusableTextComponent(str));
   // Update header
   MostRecentLog = " " + str;

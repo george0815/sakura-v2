@@ -139,10 +139,13 @@ void StartRom() {
   // Actually launch rom
   EMU *sakura = new EMU();
   string error_message;
+  CurrentlyEmulating = true;
+
   if (sakura->START_ROM(RomList.at(SelectedRomTableIndex - 1).path,
                         error_message) != 0) {
     AddLogEntry(error_message);
   }
+  CurrentlyEmulating = false;
 }
 
 // Simple roms table

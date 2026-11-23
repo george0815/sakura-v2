@@ -33,6 +33,9 @@ inline int SelectedSRAMTableIndex = 0;
 // Hold the index of the current focus tab in the save states table
 inline int SelectedSaveStateTableIndex = 0;
 
+// Used by AddLogEntry to determine if there's a rom running and to write logs
+inline bool CurrentlyEmulating = false;
+
 // Label strings for control ui buttons
 inline string StartRomLabel = "...";
 inline string StopRomLabel = "...";
