@@ -127,6 +127,7 @@
 
   "Error" : "Error",
   "Error_saving_settings:_" : "Error saving settings: ",
+  "Error_saving_log." : "Error saving log file.",
   "Error_loading_settings:_" : "Error loading settings: ",
   "Settings_saved_successfully._Some_changes_will_take_effect_after_restarting." : "Settings saved successfully. Some changes will take effect after restarting.",
   "Settings_saved" : "Settings saved",

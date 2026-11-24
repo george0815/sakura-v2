@@ -60,7 +60,7 @@
   "Open_rom_folder:_" : "ロムフォルダーを開く：　",
   "Rom_path_added." : "ロムパスが追加しました。削除するにはDELを押してください。",
   "Cannot_delete_default_rom_path." : "デフォルトのロムパスを削除できません。",
- "Exceeded_max_limit_for_rom_paths." : "ロムパスの最大制限を超えました。",
+  "Exceeded_max_limit_for_rom_paths." : "ロムパスの最大制限を超えました。",
   
 
   "Black" : "黒 ",
@@ -127,6 +127,7 @@
 
   "Error" : "エラー",
   "Error_saving_settings:_" : "設定の保存中にエラーが発生しました：　",
+  "Error_saving_log." : "ログファイルの保存中にエラーが発生しました。",
   "Error_loading_settings:_" : "設定の読み込み中にエラーが発生しました：　",
   "Settings_saved_successfully._Some_changes_will_take_effect_after_restarting." : "設定が正常に保存されました。一部の変更は再起動後に有効になります。",
   "Settings_saved" : "設定が保存されました。",

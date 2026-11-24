@@ -57,6 +57,7 @@ int SaveLog() {
   // Prepare file for writing
   ofstream log_file(LogPath);
   if (!log_file) {
+    AddLogEntry(I18nObject.tr("Error_saving_log."));
     return -1;
   }
 
