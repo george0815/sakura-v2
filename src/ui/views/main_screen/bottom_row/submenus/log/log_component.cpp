@@ -33,8 +33,9 @@ void AddLogEntry(string str) {
     return;
   }
   LogSubmenuComponent->Add(FocusableTextComponent(str));
-  // Update header
+  // Update header and add log to vector
   MostRecentLog = " " + str;
+  LogVector.push_back(str);
 }
 
 // Returns log component, basically just a Container::Vertical

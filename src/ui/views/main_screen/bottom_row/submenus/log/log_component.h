@@ -24,4 +24,7 @@ inline Component LogSubmenuComponent = nullptr;
 // Uses GeneralViews::AddFocusableText to add a log Entry
 void AddLogEntry(string str = "");
 
+// Holds all log vector and gets written to disk on program exit
+inline vector<string> LogVector;
+
 } // namespace LogComponent

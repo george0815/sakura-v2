@@ -7,6 +7,7 @@
 #include <ftxui/dom/direction.hpp>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <ostream>
 #include <sstream>
 
 using namespace nlohmann;
@@ -45,6 +46,23 @@ int OpenFolder(string folder, string &error_message) {
     error_message =
         I18nObject.tr("Error") + ": " + I18nObject.tr("Failed_to_open_folder");
     return -1;
+  }
+
+  return 0;
+}
+
+// Saves contents of LogVector to disk
+int SaveLog() {
+
+  // Prepare file for writing
+  ofstream log_file(LogPath);
+  if (!log_file) {
+    return -1;
+  }
+
+  // Write each line to file
+  for (string line : LogVector) {
+    log_file << line << "\n";
   }
 
   return 0;

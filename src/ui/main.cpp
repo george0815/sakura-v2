@@ -76,13 +76,15 @@ int main() {
     // If exit flag is set
     if (Exit == true) {
 
-      // Save settings
-      if (SaveSettings(false) == 0) {
+      // Save settings and log
+      if ((SaveSettings(false) == 0) && SaveLog() == 0) {
         ExitScreen(screen);
+        return EXIT_SUCCESS;
+      } else {
+        ExitScreen(screen);
+        return EXIT_FAILURE;
       }
     }
     loop.RunOnce();
   }
-
-  return EXIT_SUCCESS;
 }

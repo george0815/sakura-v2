@@ -54,6 +54,9 @@ int SaveSettings(bool backup);
 // Deerializes, maps values from JSON to the namepsace
 int LoadSettings(bool backup);
 
+// Saves contents of log vector to disk
+int SaveLog();
+
 //=======================
 // VERIFICATION
 //=======================
