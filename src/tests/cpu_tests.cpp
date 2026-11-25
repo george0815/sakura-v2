@@ -7,4 +7,5 @@ int main() {
 
   test_cpu->SET_FLAG(CPU::STATUS_FLAG::INT_DISABLE);
   assert(test_cpu->GET_FLAG(CPU::STATUS_FLAG::INT_DISABLE));
+  return 0;
 }
