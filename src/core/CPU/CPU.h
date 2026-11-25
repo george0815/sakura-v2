@@ -32,6 +32,19 @@ public:
   uint8_t P = 0;   // Status Register
   uint16_t PC = 0; // 2 byte program counter
 
+  enum STATUS_FLAG {
+
+    CARRY = 0,
+    ZERO = 1,
+    INT_DISABLE = 2,
+    DEC = 3,
+    B_FLAG = 4,
+    // The 6th bit has not effect, technically neither does the b flag but the
+    // 6th is literally always pushed as 1
+    OVERFLOW = 6,
+    NEG = 7
+  };
+
   /*-------------------------
    * INTERRUPT VECTORS
    ------------------------*/
@@ -40,19 +53,21 @@ public:
   // interrupt occurs. For example in the case of a IRQ it will generally read a
   // new PC from FFFE - FFFF, the execute from there.
 
-  uint16_t resetVector = 0xFFFC;
-  uint16_t irqVector = 0xFFFE;
-  uint16_t nmiVector = 0xFFFA;
+  uint16_t RESET_VECTOR = 0xFFFC;
+  uint16_t IRQ_VECTOR = 0xFFFE;
+  uint16_t NMI_VECTOR = 0xFFFA;
 
   /*-------------------------
    * HELPER FUNCTIONS
    ------------------------*/
 
-  void Branch();
+  void BRANCH();
 
-  bool GetFlag();
+  bool GET_FLAG(int flag);
 
-  void SetFlag();
+  void SET_FLAG(int flag);
+
+  void CLEAR_FLAG(int flag);
 
   /*-------------------------
    * ADDRESSING MODES
@@ -60,33 +75,33 @@ public:
 
   // INDEXED
 
-  uint8_t ZeroPageIndexedX();
+  uint16_t ZERO_PAGE_INDEXED_X();
 
-  uint8_t ZeroPageIndexedY();
+  uint16_t ZERO_PAGE_INDEXED_Y();
 
-  uint8_t AbsoluteIndexedX();
+  uint16_t ABSOLUTE_INDEXED_X();
 
-  uint8_t AbsoluteIndexedY();
+  uint16_t ABSOLUTE_INDEXED_Y();
 
-  uint8_t IndexedIndirectX();
+  uint16_t INDEXED_INDIRECT_X();
 
-  uint8_t IndirectIndexedY();
+  uint16_t INDIRECT_INDEXED_Y();
 
   // NON-INDEXED
 
-  uint8_t Implicit();
+  uint16_t IMPLICIT();
 
-  uint8_t Accumulator();
+  uint16_t ACCUMULATOR();
 
-  uint8_t Immediate();
+  uint16_t IMMEDIATE();
 
-  uint8_t ZeroPage();
+  uint16_t ZERO_PAGE();
 
-  uint8_t Absolute();
+  uint16_t ABSOLUTE();
 
-  uint8_t Relative();
+  uint16_t RELATIVE();
 
-  uint8_t Indirect();
+  uint16_t INDIRECT();
 
   /*-------------------------
    * INTERRUPT HANDLERS
@@ -98,7 +113,7 @@ public:
 
   };
 
-  void Reset() {
+  void RESET() {
 
   };
 
@@ -111,7 +126,7 @@ public:
 
   // A - C
 
-  void ADC();
+  void ADC(uint16_t addr);
 
   // D - L
 
