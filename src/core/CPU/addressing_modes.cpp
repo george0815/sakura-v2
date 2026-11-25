@@ -8,7 +8,7 @@
  * The purpose of addressing modes is to determine how to get, and return, the
  * operand of an operation. So for example in the case of Accumulator, the
  * operand is the Accumulator. In the case of Immediate addressing, the operand
- * is the 8 bit value that the PC is pointing to.
+ * is the 16 bit value that the PC is pointing to.
  *
  * */
 
@@ -16,32 +16,32 @@
  * INDEXED ADDRESSING MODES
 ---------------------------------*/
 
-uint8_t CPU::ZeroPageIndexedX() { return PC; }
+uint16_t CPU::ZERO_PAGE_INDEXED_X() { return PC; }
 
-uint8_t CPU::ZeroPageIndexedY() { return PC; }
+uint16_t CPU::ZERO_PAGE_INDEXED_Y() { return PC; }
 
-uint8_t CPU::AbsoluteIndexedX() { return PC; }
+uint16_t CPU::ABSOLUTE_INDEXED_X() { return PC; }
 
-uint8_t CPU::AbsoluteIndexedY() { return PC; }
+uint16_t CPU::ABSOLUTE_INDEXED_Y() { return PC; }
 
-uint8_t CPU::IndexedIndirectX() { return PC; }
+uint16_t CPU::INDEXED_INDIRECT_X() { return PC; }
 
-uint8_t CPU::IndirectIndexedY() { return PC; }
+uint16_t CPU::INDIRECT_INDEXED_Y() { return PC; }
 
 /*---------------------------------
  * OTHER ADDRESSING MODES
 ---------------------------------*/
 
-uint8_t CPU::Implicit() { return PC; }
+uint16_t CPU::IMPLICIT() { return PC; }
 
-uint8_t CPU::Accumulator() { return PC; }
+uint16_t CPU::ACCUMULATOR() { return PC; }
 
-uint8_t CPU::Immediate() { return PC; }
+uint16_t CPU::IMMEDIATE() { return PC; }
 
-uint8_t CPU::ZeroPage() { return PC; }
+uint16_t CPU::ZERO_PAGE() { return PC; }
 
-uint8_t CPU::Absolute() { return PC; }
+uint16_t CPU::ABSOLUTE() { return PC; }
 
-uint8_t CPU::Relative() { return PC; }
+uint16_t CPU::RELATIVE() { return PC; }
 
-uint8_t CPU::Indirect() { return PC; }
+uint16_t CPU::INDIRECT() { return PC; }
