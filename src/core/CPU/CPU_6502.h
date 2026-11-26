@@ -2,9 +2,9 @@
 
 #include <cstdint>
 
-// Main class representing the CPU. For this emulator I went with a lookup table
-// appraach with the opcodes as oppossed to the mega-switch statement appraach
-// that is sometimes seen.
+// Main class representing the MOS 6502 CPU. For this emulator I went with a
+// lookup table appraach with the opcodes as oppossed to the mega-switch
+// statement appraach that is sometimes seen.
 //
 // Helper functions for gettings and settings flags, as well as branching are
 // also included. Now, you may see that I never use private values. This is by
@@ -12,10 +12,10 @@
 // work. An emulator is already pretty complicated to write so I wanted to make
 // things as simple as possible.
 
-class CPU {
+class CPU_6502 {
 
 public:
-  CPU();
+  CPU_6502();
 
   /*-------------------------
    * REGISTERS
@@ -49,9 +49,9 @@ public:
    * INTERRUPT VECTORS
    ------------------------*/
 
-  // The vectors are basically the location that the CPU jumps to when a given
-  // interrupt occurs. For example in the case of a IRQ it will generally read a
-  // new PC from FFFE - FFFF, the execute from there.
+  // The vectors are basically the location that the CPU_6502 jumps to when a
+  // given interrupt occurs. For example in the case of a IRQ it will generally
+  // read a new PC from FFFE - FFFF, the execute from there.
 
   uint16_t RESET_VECTOR = 0xFFFC;
   uint16_t IRQ_VECTOR = 0xFFFE;

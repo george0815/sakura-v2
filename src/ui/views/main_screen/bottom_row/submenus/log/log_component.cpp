@@ -3,6 +3,7 @@
 #include "../../../../../settings/settings.h"
 #include "../../../../../state.h"
 #include "../../../../general/general_views.h"
+#include <iostream>
 
 // ftxui
 #include <ftxui/component/component.hpp>
@@ -21,6 +22,7 @@
 
 using namespace GeneralViews; // FocusableTextComponent
 using namespace UIState;      // MostRecentLog, I18nObject
+using namespace std;          // cout
 
 namespace LogComponent {
 
@@ -32,10 +34,17 @@ void AddLogEntry(string str) {
   if (CurrentlyEmulating && !Settings::EnableEmulationLogging) {
     return;
   }
-  LogSubmenuComponent->Add(FocusableTextComponent(str));
-  // Update header and add log to vector
-  MostRecentLog = " " + str;
-  LogVector.push_back(str);
+  // I check if its a nullptr here because CART is used by sakura_v2_tests, but
+  // sakura_v2_tests doesn't set up the UI so AddLogEntry (which is called in
+  // CART's functions) would lead to a segfault here if called in the tests.
+  if (LogSubmenuComponent != nullptr) {
+    LogSubmenuComponent->Add(FocusableTextComponent(str));
+    // Update header and add log to vector
+    MostRecentLog = " " + str;
+    LogVector.push_back(str);
+  } else {
+    cout << str << endl;
+  }
 }
 
 // Returns log component, basically just a Container::Vertical
