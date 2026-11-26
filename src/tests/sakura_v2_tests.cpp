@@ -33,7 +33,7 @@ int main() {
   // Set up i18n
   I18nObject.loadLocaleFromFile("en.json");
   I18nObject.loadLocaleFromFile("jp.json");
-  I18nObject.setLocale(LocaleEntries[0]);
+  I18nObject.setLocale(LocaleEntries[0]); // english, 1 for japanese
 
   // Rom paths
   string smb = "roms/smb.nes";
@@ -43,17 +43,17 @@ int main() {
   cout << "STARTING CART TESTS...\n" << endl;
 
   // SUPER MARIO BROS.
-  cout << "SUPER MARIO BROS....\n" << endl;
+  cout << "\nSUPER MARIO BROS....\n" << endl;
   CART *cartridge = new CART();
   cartridge->READ_ROM(smb);
 
   // SUPER MARIO BROS 3.
-  cout << "SUPER MARIO BROS. 3...\n" << endl;
-  // cartridge = new CART();
+  cout << "\nSUPER MARIO BROS. 3...\n" << endl;
+  cartridge = new CART();
   cartridge->READ_ROM(smb3);
 
   // NINJA GAIDEN 3
-  cout << "NINJA GAIDEN 3...\n" << endl;
+  cout << "\nNINJA GAIDEN 3...\n" << endl;
   cartridge = new CART();
   cartridge->READ_ROM(ng3);
 
