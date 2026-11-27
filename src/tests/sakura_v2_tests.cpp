@@ -47,23 +47,104 @@ int main() {
   CART *cartridge = new CART();
   cartridge->READ_ROM(smb);
 
+  assert(cartridge->PRG_ROM_SIZE == 0x8000);
+  assert(cartridge->CHR_ROM_SIZE == 0x2000);
+  assert(cartridge->MAPPER_NUMBER == 0x0);
+  assert(cartridge->NAMETABLE_MIRRORING == CART::NAMETABLE_MIRRORING::VERTICAL);
+
   // SUPER MARIO BROS 3.
   cout << "\nSUPER MARIO BROS. 3...\n" << endl;
   cartridge = new CART();
   cartridge->READ_ROM(smb3);
 
-  // NINJA GAIDEN 3
+  assert(cartridge->PRG_ROM_SIZE == 0x40000);
+  assert(cartridge->CHR_ROM_SIZE == 0x20000);
+  assert(cartridge->MAPPER_NUMBER == 0x4);
+  assert(cartridge->NAMETABLE_MIRRORING ==
+         CART::NAMETABLE_MIRRORING::HORIZONTAL);
+
+  // NINJA GAIDEN
   cout << "\nNINJA GAIDEN 3...\n" << endl;
   cartridge = new CART();
   cartridge->READ_ROM(ng3);
+
+  assert(cartridge->PRG_ROM_SIZE == 0x20000);
+  assert(cartridge->CHR_ROM_SIZE == 0x20000);
+  assert(cartridge->MAPPER_NUMBER == 0x4);
+  // Ninja Gaiden's nametable mirroring is entirely controllered by mapper 4,
+  // thus no assert here.
 
   //===============================
   // FLAG TESTS
   //===============================
 
+  cout << "\nSTARTING CPU TESTS...\n" << endl;
+
+  cout << "\nFLAG TESTS...\n" << endl;
   CPU_6502 *test_cpu = new CPU_6502();
 
+  // INTERRUPT DISABLE
+
+  // For running the test without CMake
+  cout << "\nSET INT DISABLE...";
   test_cpu->SET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE);
+  cout << "\nINT DISABLE: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE));
+
+  // Assert
   assert(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE));
+
+  // For running the test without CMake
+  cout << "\nCLEAR INT DISABLE...";
+  test_cpu->CLEAR_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE);
+  cout << "\nINT DISABLE: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE))
+       << endl;
+
+  // Assert
+  assert(!test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE));
+
+  // CARRY
+
+  // For running the test without CMake
+  cout << "\nSET CARRY...";
+  test_cpu->SET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE);
+  cout << "\nCARRY: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE));
+
+  // Assert
+  assert(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::INT_DISABLE));
+
+  // For running the test without CMake
+  cout << "\nCLEAR CARRY...";
+  test_cpu->CLEAR_FLAG(CPU_6502::STATUS_FLAG::CARRY);
+  cout << "\nCARRY: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::CARRY))
+       << endl;
+
+  // Assert
+  assert(!test_cpu->GET_FLAG(!CPU_6502::STATUS_FLAG::CARRY));
+
+  // OVERFLOW
+
+  // For running the test without CMake
+  cout << "\nSET OVERFLOW...";
+  test_cpu->SET_FLAG(CPU_6502::STATUS_FLAG::OVERFLOW);
+  cout << "\nOVERFLOW: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::OVERFLOW));
+
+  // Assert
+  assert(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::OVERFLOW));
+
+  // For running the test without CMake
+  cout << "\nCLEAR OVERFLOW...";
+  test_cpu->CLEAR_FLAG(CPU_6502::STATUS_FLAG::OVERFLOW);
+  cout << "\nOVERFLOW: " +
+              to_string(test_cpu->GET_FLAG(CPU_6502::STATUS_FLAG::OVERFLOW))
+       << endl;
+
+  // Assert
+  assert(!test_cpu->GET_FLAG(!CPU_6502::STATUS_FLAG::OVERFLOW));
+
   return 0;
 }

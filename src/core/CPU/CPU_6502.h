@@ -29,8 +29,8 @@ public:
          // The NES uses an descending stack, which means that a value of FF for
          // the stack pointer mean that its empty, and that pushing something to
          // the stack will decrease the SP to FE.
-  uint8_t P = 0;   // Status Register
-  uint16_t PC = 0; // 2 byte program counter
+  uint8_t STATUS_REGISTER = 0; // Status Register
+  uint16_t PC = 0;             // 2 byte program counter
 
   enum STATUS_FLAG {
 
