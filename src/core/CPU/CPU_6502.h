@@ -34,15 +34,15 @@ public:
 
   enum STATUS_FLAG {
 
-    CARRY = 0,
-    ZERO = 1,
-    INT_DISABLE = 2,
-    DEC = 3,
-    B_FLAG = 4,
+    CARRY = 1 << 0,
+    ZERO = 1 << 1,
+    INT_DISABLE = 1 << 2,
+    DEC = 1 << 3,
+    B_FLAG = 1 << 4,
     // The 6th bit has not effect, technically neither does the b flag but the
     // 6th is literally always pushed as 1
-    OVERFLOW = 6,
-    NEG = 7
+    OVERFLOW = 1 << 6,
+    NEG = 1 << 7
   };
 
   /*-------------------------
